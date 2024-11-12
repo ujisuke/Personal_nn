@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Unity.Mathematics;
+using Assets.Scripts.Stage;
+using UnityEditor.SceneManagement;
 
 public class MoveTest : MonoBehaviour
 {
@@ -10,15 +12,8 @@ public class MoveTest : MonoBehaviour
     [SerializeField] private GameObject destination;
     private const int _tileSide = 8;
     private const float _tileHeight = 0.25f;
-    private readonly int[,] _tileZs = new int[_tileSide, _tileSide]{
-    {1,1,1,1,1,0,1,1},
-    {1,1,4,1,1,0,1,1},
-    {1,1,4,4,1,0,1,1},
-    {1,1,4,4,1,0,1,1},
-    {1,1,4,4,1,0,1,1},
-    {1,1,4,3,1,1,1,1},
-    {1,1,4,2,1,3,2,1},
-    {1,1,1,1,1,1,1,1},};
+    private readonly int[,] _tileZs = StageCreator._tileZs;
+
     private readonly float _moveSpeed = 2f;
     private readonly float _jumpHeight = 2.5f;
     private readonly float _jumpTime = 0.6f;
