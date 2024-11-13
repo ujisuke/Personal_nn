@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.Stage;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,9 +11,13 @@ namespace Assets.ScriptableObjects
     {
         [SerializeField] private List<Tile> _stageTiles;
 
-        public Tile GetStageTile(int height)
+        public void SetTile(int height, Vector3Int tilePosition, Tilemap tilemap)
         {
-            return _stageTiles[height - 1];
+            for(int i = 0; i < StageCreator._stageHeight; i++)
+                tilemap.SetTile(tilePosition + new Vector3Int(0, 0, i), null);
+            if(height <= 0) return;
+            for(int i = 0; i < height; i++)
+                tilemap.SetTile(tilePosition + new Vector3Int(0, 0, i), _stageTiles[0]);
         }
     }
 }

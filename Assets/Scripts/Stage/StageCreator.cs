@@ -2,18 +2,16 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Assets.ScriptableObjects;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using Random = UnityEngine.Random;
-using System.Linq;
 
 namespace Assets.Scripts.Stage
 {
     public class StageCreator : MonoBehaviour
     {
-        private const int _mapSide = 8;
-        private const int _mapHeight = 4;
-        public static int[,] _tileZs{ get; private set; } = new int[_mapSide, _mapSide];
-        [SerializeField] private Tilemap[] tilemapList_Stage = new Tilemap[_mapSide * 2 - 1];
+        private const int _stageSide = 8;
+        public const int _stageHeight = _stageSide * 2;
+        public static int[,] TileZs{ get; private set; } = new int[_stageSide, _stageSide];
+        [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_stageSide * 2 - 1];
         [SerializeField] private ScriptableObjects.TileData TileData;
 
         private void Start()
@@ -30,98 +28,86 @@ namespace Assets.Scripts.Stage
         private static void SetStageMatrix()
         {
             //行列の初期化
-            InitializeMatrix(_tileZs);
-            //BFS
-            SetAllZsByBFS();
-            //1マスの穴を埋める
-            FillHole();
+            InitializeMatrix(TileZs);
+            //高さを設定
+            SetAllZs();
         }
 
         private static void InitializeMatrix(int[,] matrix)
         {
-            for(int i = 0; i < _mapSide; i++)
-                for(int j = 0; j < _mapSide; j++)
-                    matrix[i, j] = 0;
-        }
-
-        private static void SetAllZsByBFS()
+            for(int i = 0; i < _stageSide; i++)
+                for(int j = 0; j < _stageSide; j++)
+                    matrix[i, j] = -1;
+        } 
+        
+        private static void SetAllZs()
         {
-            Queue<(int i, int j, int h)> queue = new();
-            queue.Enqueue((_mapSide - 1, _mapSide - 1, 1));
-            while(true)
+            Random.InitState(System.DateTime.Now.Millisecond);
+            List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
+            int clossI = Random.Range(2, _stageSide - 2);
+            int clossJ = Random.Range(2, _stageSide - 2);
+            List<(int startI, int startJ,  int endI, int endJ)> clossPointList = new();
+            switch(Random.Range(0, 4))
             {
-                if(queue.Count == 0) break;
-                (int i, int j, int h) = queue.Dequeue();
-                if(i < 0 || j < 0 || i >= _mapSide || j >= _mapSide) continue;
-                if(_tileZs[i, j] != 0) continue;
-                _tileZs[i, j] = AdjustHToSee(i, j, h);
-                int nextH = CalculateNextH(h);
-                queue.Enqueue((i - 1, j, nextH));
-                queue.Enqueue((i, j - 1, nextH));
+                case 0:
+                    clossPointList.Add((0, clossJ, _stageSide - 1, clossJ));
+                    clossPointList.Add((clossI, 0, clossI, clossJ - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, _stageSide - 1, _stageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, _stageSide - 1, clossJ - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, clossJ - 1));
+                    break;
+                case 1:
+                    clossPointList.Add((clossI, clossJ + 1, clossI, _stageSide - 1));
+                    clossPointList.Add((0, clossJ, _stageSide - 1, clossJ));
+                    stageAreaPointList.Add((clossI + 1, clossJ + 1, _stageSide - 1, _stageSide - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, _stageSide - 1));
+                    stageAreaPointList.Add((0, 0, _stageSide - 1, clossJ - 1));
+                    break;
+                case 2:
+                    clossPointList.Add((clossI, 0, clossI, _stageSide - 1));
+                    clossPointList.Add((0, clossJ, clossI - 1, clossJ));
+                    stageAreaPointList.Add((clossI + 1, 0, _stageSide - 1, _stageSide - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, _stageSide - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, clossJ - 1));
+                    break;
+                case 3:
+                    clossPointList.Add((clossI + 1, clossJ, _stageSide - 1, clossJ));
+                    clossPointList.Add((clossI, 0, clossI, _stageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, clossJ + 1, _stageSide - 1, _stageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, _stageSide - 1, clossJ - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, _stageSide - 1));
+                    break;
+            }
+            
+            int offsetZ = 0; 
+            for(int i = 0; i < stageAreaPointList.Count; i++)
+            {
+                int h = stageAreaPointList[i].endI - stageAreaPointList[i].startI + 1;
+                int w = stageAreaPointList[i].endJ - stageAreaPointList[i].startJ + 1;
+                int[,] _stageArea = new int[h, w];
+                StageElement.AssignStageElementZs(_stageArea);
+                for(int I = 0; I < h; I++)
+                    for(int J = 0; J < w; J++)
+                        TileZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
+                
+                if(clossPointList.Count < i + 1) break;
+                for(int I = clossPointList[i].startI; I < clossPointList[i].endI + 1; I++)
+                    for(int J = clossPointList[i].startJ; J < clossPointList[i].endJ + 1; J++)
+                        TileZs[I, J] = _stageArea[0, 0] + offsetZ;
+                offsetZ += _stageArea[0, 0] - 1;
             }
         }
-        
-        private static int AdjustHToSee(int i, int j, int h)
-        {
-            int adjustedH = h;
-            if(i + 1 < _mapSide) adjustedH = math.max(_tileZs[i + 1, j] - 1, adjustedH);
-            if(j + 1 < _mapSide) adjustedH = math.max(_tileZs[i, j + 1] - 1, adjustedH);
-            if(i + 1 < _mapSide && j + 1 < _mapSide) adjustedH = math.max(_tileZs[i + 1, j + 1] - 1, adjustedH); 
-            return adjustedH;
-        }
-        
-        private static void FillHole()
-        {
-            int[,] updatedTileZs = new int[_mapSide, _mapSide];
-            CopyMatrix(_tileZs, updatedTileZs);
-            for(int i = 0; i < _mapSide; i++)
-                for(int j = 0; j < _mapSide; j++)
-                    updatedTileZs[i, j] = AdjustHToFill(i, j);
-            CopyMatrix(updatedTileZs, _tileZs);
-        }
 
-        private static void CopyMatrix(int[,] matrix, int[,] copiedMatrix)
-        {
-            for(int i = 0; i < _mapSide; i++)
-                for(int j = 0; j < _mapSide; j++)
-                    copiedMatrix[i, j] = matrix[i, j];
-        }
-
-        private static int AdjustHToFill(int i, int j)
-        {
-            List<int> aroundTileZs = new();
-            if(i + 1 < _mapSide) aroundTileZs.Add(_tileZs[i + 1, j]);
-            if(j + 1 < _mapSide) aroundTileZs.Add(_tileZs[i, j + 1]);
-            if(i - 1 >= 0) aroundTileZs.Add(_tileZs[i - 1, j]);
-            if(j - 1 >= 0) aroundTileZs.Add(_tileZs[i, j - 1]);
-            return math.max(aroundTileZs.Min(), _tileZs[i, j]);
-        }
-        
-        private static int CalculateNextH(int h)
-        {
-            int nextH = h;
-            int r = Random.Range(0, 10);
-            if(r == 9) nextH++;
-            if (r == 8) nextH--;
-            if(nextH > _mapHeight) nextH = _mapHeight;
-            if(nextH < 1) nextH = 1;
-            return nextH;
-        }
-        
         private void SetAllTiles()
         {
-            for(int i = 0; i < _mapSide * 2 - 1; i++)
-            {
-                for(int j = 0; j < _mapSide * 2 - 1; j++)
+            for(int i = 0; i < _stageSide * 2 - 1; i++)
+                for(int j = 0; j < _stageSide * 2 - 1; j++)
                 {
-                    if(i - j >= _mapSide || i - j < 0 || j >= _mapSide) continue;
-                    int tileheight = _tileZs[i - j, j];
-                    if(tileheight == 0) continue;
-                    Tile tile = TileData.GetStageTile(tileheight);
-                    Vector3Int tilePosition = new((_mapSide - 1) / 2 - i + j, (_mapSide - 1) / 2 - j, 0);
-                    tilemapList_Stage[i].SetTile(tilePosition, tile);
+                    if(i - j >= _stageSide || i - j < 0 || j >= _stageSide) continue;
+                    int tileHeight = TileZs[i - j, j];
+                    Vector3Int tilePosition = new((_stageSide - 1) / 2 - i + j, (_stageSide - 1) / 2 - j, 0);
+                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[i]);
                 }
-            }
         }
     }
 }
