@@ -5,7 +5,7 @@ namespace Assets.Scripts.Stage
 {
     public class StageElement : MonoBehaviour
     {
-        private static readonly List<int[,]> _side2StageElementZs = new()
+        private static readonly List<int[,]> _StageElement2Zs = new()
         {
             new int[3,3]{
                 {2, 2, 2},
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Stage
             }
         }; 
 
-        private static readonly List<int[,]> _side3StageElementZs = new()
+        private static readonly List<int[,]> _StageElement3Zs = new()
         {
             new int[3,3]{
                 {3, 3, 3},
@@ -66,10 +66,10 @@ namespace Assets.Scripts.Stage
         public static void AssignStageElementZs(int[,] area)
         {
             Random.InitState(System.DateTime.Now.Millisecond);
-            int[,] selectedElementZs = _side3StageElementZs[Random.Range(0, _side3StageElementZs.Count)];
+            int[,] selectedElementZs = _StageElement3Zs[Random.Range(0, _StageElement3Zs.Count)];
             if(Random.Range(0, 2) == 1) FlipElementMatrix(selectedElementZs);
             if(area.GetLength(0) == 2 || area.GetLength(1) == 2)
-                selectedElementZs = _side2StageElementZs[Random.Range(0, _side2StageElementZs.Count)];
+                selectedElementZs = _StageElement2Zs[Random.Range(0, _StageElement2Zs.Count)];
             
             int areaH = area.GetLength(0);
             int areaW = area.GetLength(1);
