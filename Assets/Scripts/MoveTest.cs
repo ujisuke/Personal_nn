@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Unity.Mathematics;
+using Assets.Scripts.Stage;
+using UnityEditor.SceneManagement;
 
 public class MoveTest : MonoBehaviour
 {
@@ -10,17 +12,9 @@ public class MoveTest : MonoBehaviour
     [SerializeField] private GameObject destination;
     private const int _tileSide = 8;
     private const float _tileHeight = 0.25f;
-    private readonly int[,] _tileZs = new int[_tileSide, _tileSide]{
-    {1,1,1,1,1,0,1,1},
-    {1,1,4,1,1,0,1,1},
-    {1,1,4,4,1,0,1,1},
-    {1,1,4,4,1,0,1,1},
-    {1,1,4,4,1,0,1,1},
-    {1,1,4,3,1,1,1,1},
-    {1,1,4,2,1,3,2,1},
-    {1,1,1,1,1,1,1,1},};
+    private readonly int[,] _tileZs = StageCreator.TileZs;
+
     private readonly float _moveSpeed = 2f;
-    private readonly float _gridOffsetY = -0.5f - _tileHeight;
     private readonly float _jumpHeight = 2.5f;
     private readonly float _jumpTime = 0.6f;
     private bool isJumping = false;
@@ -158,7 +152,7 @@ public class MoveTest : MonoBehaviour
     private Vector3 ConvertToPos_Im_3(Vector3 pos_Re_3)
     {
         Vector2 newPos_Re_2 = new Vector2(pos_Re_3.x, pos_Re_3.y - (pos_Re_3.z - 1) * _tileHeight);
-        Vector3 newPos_Im_3 = new Vector3(newPos_Re_2.x - 2f * (newPos_Re_2.y - _gridOffsetY), newPos_Re_2.x + 2f * (newPos_Re_2.y - _gridOffsetY), pos_Re_3.z);
+        Vector3 newPos_Im_3 = new Vector3(newPos_Re_2.x - 2f * (newPos_Re_2.y + _tileHeight), newPos_Re_2.x + 2f * (newPos_Re_2.y + _tileHeight), pos_Re_3.z);
         newPos_Im_3.x = Mathf.Clamp(newPos_Im_3.x, -_tileSide / 2f + 0.01f, _tileSide / 2f - 0.01f);
         newPos_Im_3.y = Mathf.Clamp(newPos_Im_3.y, -_tileSide / 2f + 0.01f, _tileSide / 2f - 0.01f);
         return newPos_Im_3;
@@ -166,7 +160,7 @@ public class MoveTest : MonoBehaviour
 
     private Vector3 ConvertToPos_Re_3(Vector3 pos_Im_3)
     {
-        Vector2 newPos_Re_2 = new Vector2((pos_Im_3.x + pos_Im_3.y) * 0.5f, (pos_Im_3.y - pos_Im_3.x) * 0.25f + _gridOffsetY);
+        Vector2 newPos_Re_2 = new Vector2((pos_Im_3.x + pos_Im_3.y) * 0.5f, (pos_Im_3.y - pos_Im_3.x) * 0.25f - _tileHeight);
         return new Vector3(newPos_Re_2.x, newPos_Re_2.y + (pos_Im_3.z - 1) * _tileHeight, pos_Im_3.z);
     }
 }
