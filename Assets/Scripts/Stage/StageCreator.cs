@@ -8,8 +8,9 @@ namespace Assets.Scripts.Stage
 {
     public class StageCreator : MonoBehaviour
     {
-        private const int _stageSide = 8;
+        public const int _stageSide = 8;
         public const int _stageHeight = _stageSide * 2;
+        public const float _tileHeight = 0.25f;
         public static int[,] TileZs{ get; private set; } = new int[_stageSide, _stageSide];
         [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_stageSide * 2 - 1];
         [SerializeField] private ScriptableObjects.TileData TileData;
