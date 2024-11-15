@@ -4,12 +4,13 @@ using System.Collections;
 
 namespace Assets.Scripts.Enemies
 {
-    public class Enemy1Move : MonoBehaviour
+    public class Enemy2Move : MonoBehaviour
     {
         ObjectMove objectMove;
         private Vector3 targetPos3 = new();
         private Vector3 initialtargetPos3 = new(-1, -1, -1);
-        private readonly float stopDistance = 0.4f;
+        private readonly float stopDistance = 0.2f;
+        [SerializeField] private GameObject target;
 
         private void Start()
         {
@@ -22,8 +23,9 @@ namespace Assets.Scripts.Enemies
         {
             while(!ObjectFacade.IsPlayerDead())
             {
-                yield return new WaitForSeconds(0.2f);
-                targetPos3 = ObjectFacade.GetPlayerPos3();
+                yield return new WaitForSeconds(2f);
+                targetPos3 = objectMove.DrawRePos3AroundRePos3(transform.position);
+                target.transform.position = targetPos3;
             }
         }
     

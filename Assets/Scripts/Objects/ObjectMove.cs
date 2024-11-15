@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using Assets.Scripts.Stage;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace Assets.Scripts.Objects
@@ -10,7 +12,7 @@ namespace Assets.Scripts.Objects
         [SerializeField] private GameObject shadow;
         private readonly int[,] _tileZs = StageCreator.TileZs;
 
-        private readonly float _moveSpeed = 2f;
+        public static readonly float _MoveSpeed = 2f;
         private readonly float _jumpHeight = 2.5f;
         private readonly float _jumpTime = 0.6f;
         private bool isJumping = false;
@@ -33,13 +35,13 @@ namespace Assets.Scripts.Objects
 
         private void FixedUpdate()
         {
-            Vector3 objectImPos3 = ConvertToImPos3(transform.position);
-            (int i, int j) objectTileNumber = ConvertToTileNumber(objectImPos3);
+            Vector3 objectImPos3 = ConvertToImPos3FromRePos3(transform.position);
+            (int i, int j) objectTileNumber = ConvertToTileNumberFromImPos3(objectImPos3);
             
             Vector3 destinationRePos3 = GetDestinationRePos3();
             
-            Vector3 destinationImPos3 = ConvertToImPos3(destinationRePos3);
-            (int i, int j) destinationTileNumber = ConvertToTileNumber(destinationImPos3);
+            Vector3 destinationImPos3 = ConvertToImPos3FromRePos3(destinationRePos3);
+            (int i, int j) destinationTileNumber = ConvertToTileNumberFromImPos3(destinationImPos3);
 
             int objectTileZ = _tileZs[objectTileNumber.i, objectTileNumber.j];
             int destinationJTileZ = _tileZs[objectTileNumber.i, destinationTileNumber.j];
@@ -66,7 +68,7 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
             }
 
-            objectTileNumber = ConvertToTileNumber(objectImPos3);
+            objectTileNumber = ConvertToTileNumberFromImPos3(objectImPos3);
             objectTileZ = _tileZs[objectTileNumber.i, objectTileNumber.j];
 
             int destinationITileZ = _tileZs[destinationTileNumber.i, objectTileNumber.j];
@@ -93,21 +95,21 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
             }
             
-            objectTileNumber = ConvertToTileNumber(objectImPos3);
+            objectTileNumber = ConvertToTileNumberFromImPos3(objectImPos3);
             objectTileZ = _tileZs[objectTileNumber.i, objectTileNumber.j];
             destinationTileZ = _tileZs[destinationTileNumber.i, destinationTileNumber.j];
 
-            transform.position = ConvertToRePos3(objectImPos3);
+            transform.position = ConvertToRePos3FromImPos3(objectImPos3);
             objectSpriteRenderer.sortingOrder = objectTileNumber.i + objectTileNumber.j;
             Vector3 shadowImPos3 = new(objectImPos3.x, objectImPos3.y, objectTileZ + 1f);
-            shadow.transform.position = ConvertToRePos3(shadowImPos3);
+            shadow.transform.position = ConvertToRePos3FromImPos3(shadowImPos3);
             shadowSpriteRenderer.sortingOrder = objectTileNumber.i + objectTileNumber.j;
         }
 
         private Vector3 GetDestinationRePos3()
         {
             Vector3 newPos3 = new(transform.position.x, transform.position.y, transform.position.z);
-            float weight = _moveSpeed * Time.deltaTime;
+            float weight = _MoveSpeed * Time.deltaTime;
             if(isHeadingToW) newPos3.y += weight;
             if(isHeadingToS) newPos3.y -= weight;
             if(isHeadingToA) newPos3.x -= weight * 2;
@@ -129,7 +131,9 @@ namespace Assets.Scripts.Objects
             return newPos3;
         }
 
-        private static Vector3 ConvertToImPos3(Vector3 rePos3)
+
+
+        private static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
         {
             Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageCreator._tileHeight);
             Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageCreator._tileHeight), newRePos2.x + 2f * (newRePos2.y + StageCreator._tileHeight), rePos3.z);
@@ -138,15 +142,58 @@ namespace Assets.Scripts.Objects
             return newImPos3;
         }
 
-        static private (int i, int j) ConvertToTileNumber(Vector3 imPos3)
+        private static (int i, int j) ConvertToTileNumberFromImPos3(Vector3 imPos3)
         {
             return (StageCreator._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._stageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
-        private static Vector3 ConvertToRePos3(Vector3 imPos3)
+        private static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
         {
             Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageCreator._tileHeight);
             return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageCreator._tileHeight, imPos3.z);
+        }
+
+        private static (int i, int j) ConvertToTileNumberFromRePos3(Vector3 rePos3)
+        {
+            Vector3 newImPos3 = ConvertToImPos3FromRePos3(rePos3);
+            return ConvertToTileNumberFromImPos3(newImPos3);
+        }
+
+        private static Vector3 ConvertToRePos3FromTileNumber((int i, int j) tileNumber)
+        {
+            Vector3 newImPos3 = new(-StageCreator._stageSide / 2 + tileNumber.j + 0.5f, StageCreator._stageSide / 2 - tileNumber.i - 0.5f, StageCreator.TileZs[tileNumber.i, tileNumber.j] + 1f);
+            return ConvertToRePos3FromImPos3(newImPos3);
+        }
+
+        public static Vector3 CalclateImDirection3BetWeenTwoRePos3(Vector3 startRe3, Vector3 endRe3)
+        {
+            Vector3 startIm3 = ConvertToImPos3FromRePos3(startRe3);
+            Vector3 endIm3 = ConvertToImPos3FromRePos3(endRe3);
+            return endIm3 - startIm3;
+        }
+
+        public Vector3 DrawRePos3AroundRePos3(Vector3 rePos3)
+        {
+            List<Vector3> candidateTargetPos3List = new();
+            (int I, int J) enemyTileNumber = ConvertToTileNumberFromRePos3(rePos3);
+            for(int i = enemyTileNumber.I - 1; i < enemyTileNumber.I + 2; i++)
+                for(int j = enemyTileNumber.J - 1; j < enemyTileNumber.J + 2; j++)
+                {
+                    if(i < 0 || StageCreator._stageSide <= i || j < 0 || StageCreator._stageSide <= j) continue;
+                    if(i == enemyTileNumber.I && j == enemyTileNumber.J) continue;
+                    Vector3 candidateTargetPos3 = ConvertToRePos3FromTileNumber((i, j));
+                    if(IsReachable(candidateTargetPos3, rePos3)) candidateTargetPos3List.Add(candidateTargetPos3);
+                }
+            if(candidateTargetPos3List.Count == 0) return rePos3;
+            candidateTargetPos3List = candidateTargetPos3List.OrderBy(a => Guid.NewGuid()).ToList();
+            return candidateTargetPos3List[0];
+        }
+
+
+
+        public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
+        {
+            return targetRePos3.z < objectRePos3.z + _jumpHeight;
         }
     
         public void HeadToA(bool isHeading)
@@ -174,9 +221,9 @@ namespace Assets.Scripts.Objects
             isTryingToJump = isTrying;
         }
 
-        public bool IsDestinationTileZMoreThanOrEqual(float z)
+        public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
-            return destinationTileZ >= z;
+            return destinationTileZ < objectRePos3.z - 1f + _jumpHeight && objectRePos3.z - 1f < destinationTileZ;
         }
     }   
 }
