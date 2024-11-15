@@ -7,12 +7,11 @@ namespace Assets.Scripts.Player
     public class PlayerMove : MonoBehaviour
     {
         ObjectMove objectMove;
-        [SerializeField] private ObjectData objectData;
 
         private void Start()
         {
             objectMove = GetComponent<ObjectMove>();
-            objectMove.Initialize(objectData, transform.position);
+            objectMove.Initialize(transform.position);
             ObjectFacade.SetPlayer(gameObject);
         }
 

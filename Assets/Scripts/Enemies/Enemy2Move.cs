@@ -1,33 +1,22 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
-using System.Collections;
-using Assets.ScriptableObjects;
+using Unity.Mathematics;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy2Move : MonoBehaviour
     {
-        ObjectMove objectMove;
+        private ObjectMove objectMove;
         private Vector3 targetPos3 = new();
         private Vector3 initialtargetPos3 = new(-1, -1, -1);
         private readonly float stopDistance = 0.2f;
-        [SerializeField] private ObjectData objectData;
 
-        private void Start()
+        private void OnEnable()
         {
             objectMove = GetComponent<ObjectMove>();
-            objectMove.Initialize(objectData, transform.position);
+            objectMove.Initialize(transform.position);
             targetPos3 = initialtargetPos3;
-            StartCoroutine(UpdateTargetPos3());
-        }
-
-        private IEnumerator UpdateTargetPos3()
-        {
-            while(!ObjectFacade.IsPlayerDead())
-            {
-                yield return new WaitForSeconds(2f);
-                targetPos3 = objectMove.DrawRePos3AroundRePos3(transform.position);
-            }
+            targetPos3 = objectMove.DrawRePos3AroundRePos3(transform.position);
         }
     
         private void FixedUpdate()
@@ -39,6 +28,12 @@ namespace Assets.Scripts.Enemies
             objectMove.HeadToS(moveDirectionIm3.y < -stopDistance / 2f);
 
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position));
+        }
+
+        public bool CanAttack()
+        {
+            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetPos3);
+            return math.abs(moveDirectionIm3.x) <= stopDistance && math.abs(moveDirectionIm3.y) <= stopDistance / 2f;
         }
     }
 }

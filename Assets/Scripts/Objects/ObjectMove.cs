@@ -11,9 +11,10 @@ namespace Assets.Scripts.Objects
     public class ObjectMove : MonoBehaviour
     {
         [SerializeField] private GameObject shadow;
-        private ObjectData objectData;
+        [SerializeField] private ObjectData objectData;
         private readonly int[,] _tileZs = StageCreator.TileZs;
         private bool isJumping = false;
+        public bool IsJumping => isJumping;
         private float prevZ = 0;
         private SpriteRenderer objectSpriteRenderer;
         private SpriteRenderer shadowSpriteRenderer;
@@ -24,9 +25,8 @@ namespace Assets.Scripts.Objects
         private bool isTryingToJump = false;
         private int destinationTileZ = 0; 
 
-        public void Initialize(ObjectData objectData, Vector3 objectRePos3)
+        public void Initialize(Vector3 objectRePos3)
         {
-            this.objectData = objectData;
             prevZ = objectRePos3.z;
             objectSpriteRenderer = GetComponent<SpriteRenderer>();
             shadowSpriteRenderer = shadow.GetComponent<SpriteRenderer>();
@@ -129,8 +129,6 @@ namespace Assets.Scripts.Objects
             }
             return newPos3;
         }
-
-
 
         private static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
         {

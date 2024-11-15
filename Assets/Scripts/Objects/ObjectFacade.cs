@@ -14,6 +14,7 @@ namespace Assets.Scripts.Objects
 
         public static Vector3 GetPlayerPos3()
         {
+            if(player == null) return Vector3.zero;
             return player.transform.position;
         }
 

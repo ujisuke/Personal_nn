@@ -1,23 +1,21 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using System.Collections;
-using Assets.ScriptableObjects;
+using Unity.Mathematics;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy1Move : MonoBehaviour
     {
-        ObjectMove objectMove;
-        private Vector3 targetPos3 = new();
-        private Vector3 initialtargetPos3 = new(-1, -1, -1);
-        private readonly float stopDistance = 0.4f;
-        [SerializeField] private ObjectData objectData;
+        private ObjectMove objectMove;
+        private Vector3 targetPos3 = new(-1, -1, -1);
+        private static readonly float stopDistance = 0.4f;
 
-        private void Start()
+        private void OnEnable()
         {
             objectMove = GetComponent<ObjectMove>();
-            objectMove.Initialize(objectData, transform.position);
-            targetPos3 = initialtargetPos3;
+            objectMove.Initialize(transform.position);
+            targetPos3 = ObjectFacade.GetPlayerPos3();
             StartCoroutine(UpdateTargetPos3());
         }
 
@@ -37,8 +35,19 @@ namespace Assets.Scripts.Enemies
             objectMove.HeadToA(moveDirectionIm3.x < -stopDistance);
             objectMove.HeadToW(moveDirectionIm3.y >= stopDistance / 2f);
             objectMove.HeadToS(moveDirectionIm3.y < -stopDistance / 2f);
+            objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position)
+            || IsNearPlayer());
+        }
 
-            objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position));
+        private bool IsNearPlayer()
+        {
+            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetPos3);
+            return math.abs(moveDirectionIm3.x) <= stopDistance && math.abs(moveDirectionIm3.y) <= stopDistance / 2f;
+        }
+
+        public bool CanAttack()
+        {
+            return IsNearPlayer() && objectMove.IsJumping;
         }
     }
 }
