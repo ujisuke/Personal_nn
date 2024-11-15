@@ -1,6 +1,7 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using System.Collections;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
@@ -10,11 +11,12 @@ namespace Assets.Scripts.Enemies
         private Vector3 targetPos3 = new();
         private Vector3 initialtargetPos3 = new(-1, -1, -1);
         private readonly float stopDistance = 0.2f;
-        [SerializeField] private GameObject target;
+        [SerializeField] private ObjectData objectData;
 
         private void Start()
         {
             objectMove = GetComponent<ObjectMove>();
+            objectMove.Initialize(objectData, transform.position);
             targetPos3 = initialtargetPos3;
             StartCoroutine(UpdateTargetPos3());
         }
@@ -25,7 +27,6 @@ namespace Assets.Scripts.Enemies
             {
                 yield return new WaitForSeconds(2f);
                 targetPos3 = objectMove.DrawRePos3AroundRePos3(transform.position);
-                target.transform.position = targetPos3;
             }
         }
     

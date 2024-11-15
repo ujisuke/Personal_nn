@@ -3,6 +3,7 @@ using System;
 using Assets.Scripts.Stage;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.ScriptableObjects;
 
 
 namespace Assets.Scripts.Objects
@@ -10,11 +11,8 @@ namespace Assets.Scripts.Objects
     public class ObjectMove : MonoBehaviour
     {
         [SerializeField] private GameObject shadow;
+        private ObjectData objectData;
         private readonly int[,] _tileZs = StageCreator.TileZs;
-
-        public static readonly float _MoveSpeed = 2f;
-        private readonly float _jumpHeight = 2.5f;
-        private readonly float _jumpTime = 0.6f;
         private bool isJumping = false;
         private float prevZ = 0;
         private SpriteRenderer objectSpriteRenderer;
@@ -26,9 +24,10 @@ namespace Assets.Scripts.Objects
         private bool isTryingToJump = false;
         private int destinationTileZ = 0; 
 
-        private void Start()
+        public void Initialize(ObjectData objectData, Vector3 objectRePos3)
         {
-            prevZ = transform.position.z;
+            this.objectData = objectData;
+            prevZ = objectRePos3.z;
             objectSpriteRenderer = GetComponent<SpriteRenderer>();
             shadowSpriteRenderer = shadow.GetComponent<SpriteRenderer>();
         }
@@ -109,7 +108,7 @@ namespace Assets.Scripts.Objects
         private Vector3 GetDestinationRePos3()
         {
             Vector3 newPos3 = new(transform.position.x, transform.position.y, transform.position.z);
-            float weight = _MoveSpeed * Time.deltaTime;
+            float weight = objectData.MoveSpeed * Time.deltaTime;
             if(isHeadingToW) newPos3.y += weight;
             if(isHeadingToS) newPos3.y -= weight;
             if(isHeadingToA) newPos3.x -= weight * 2;
@@ -119,13 +118,13 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
                 prevZ = newPos3.z;
                 newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
-                * (4f * _jumpHeight / _jumpTime * Time.deltaTime - 4f * _jumpHeight / (_jumpTime * _jumpTime) * (Time.deltaTime * Time.deltaTime));
+                * (4f * objectData.JumpHeight / objectData.JumpTime * Time.deltaTime - 4f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
             }
             else
             {
                 float tmpPrevZ = newPos3.z;
                 newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
-                * (newPos3.z - prevZ - 8f * _jumpHeight / (_jumpTime * _jumpTime) * (Time.deltaTime * Time.deltaTime));
+                * (newPos3.z - prevZ - 8f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
                 prevZ = tmpPrevZ;
             }
             return newPos3;
@@ -193,7 +192,7 @@ namespace Assets.Scripts.Objects
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
         {
-            return targetRePos3.z < objectRePos3.z + _jumpHeight;
+            return targetRePos3.z < objectRePos3.z + objectData.JumpHeight;
         }
     
         public void HeadToA(bool isHeading)
@@ -223,7 +222,7 @@ namespace Assets.Scripts.Objects
 
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
-            return destinationTileZ < objectRePos3.z - 1f + _jumpHeight && objectRePos3.z - 1f < destinationTileZ;
+            return destinationTileZ < objectRePos3.z - 1f + objectData.JumpHeight && objectRePos3.z - 1f < destinationTileZ;
         }
     }   
 }

@@ -1,15 +1,18 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerMove : MonoBehaviour
     {
         ObjectMove objectMove;
+        [SerializeField] private ObjectData objectData;
 
         private void Start()
         {
             objectMove = GetComponent<ObjectMove>();
+            objectMove.Initialize(objectData, transform.position);
             ObjectFacade.SetPlayer(gameObject);
         }
 
