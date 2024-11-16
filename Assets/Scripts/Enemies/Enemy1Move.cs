@@ -10,6 +10,7 @@ namespace Assets.Scripts.Enemies
         private ObjectMove objectMove;
         private Vector3 targetPos3 = new(-1, -1, -1);
         private static readonly float stopDistance = 0.4f;
+        private static readonly float attackDistance = 1f;
 
         private void OnEnable()
         {
@@ -31,10 +32,10 @@ namespace Assets.Scripts.Enemies
         private void FixedUpdate()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetPos3);
-            objectMove.HeadToD(moveDirectionIm3.x >= stopDistance);
-            objectMove.HeadToA(moveDirectionIm3.x < -stopDistance);
-            objectMove.HeadToW(moveDirectionIm3.y >= stopDistance / 2f);
-            objectMove.HeadToS(moveDirectionIm3.y < -stopDistance / 2f);
+            objectMove.HeadToD(moveDirectionIm3.x >= stopDistance || moveDirectionIm3.y >= stopDistance);
+            objectMove.HeadToA(moveDirectionIm3.x < -stopDistance || moveDirectionIm3.y < -stopDistance);
+            objectMove.HeadToW(moveDirectionIm3.x < -stopDistance || moveDirectionIm3.y >= stopDistance);
+            objectMove.HeadToS(moveDirectionIm3.x >= stopDistance || moveDirectionIm3.y < -stopDistance);
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position)
             || IsNearPlayer());
         }
@@ -42,7 +43,7 @@ namespace Assets.Scripts.Enemies
         private bool IsNearPlayer()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetPos3);
-            return math.abs(moveDirectionIm3.x) <= stopDistance && math.abs(moveDirectionIm3.y) <= stopDistance / 2f;
+            return math.abs(moveDirectionIm3.x) <= attackDistance && math.abs(moveDirectionIm3.y) <= attackDistance;
         }
 
         public bool CanAttack()

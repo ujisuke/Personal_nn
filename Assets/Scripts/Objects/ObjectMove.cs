@@ -15,6 +15,8 @@ namespace Assets.Scripts.Objects
         private readonly int[,] _tileZs = StageCreator.TileZs;
         private bool isJumping = false;
         public bool IsJumping => isJumping;
+        private bool isFalling = false;
+        public bool IsFalling => isFalling;
         private float prevZ = 0;
         private SpriteRenderer objectSpriteRenderer;
         private SpriteRenderer shadowSpriteRenderer;
@@ -87,6 +89,7 @@ namespace Assets.Scripts.Objects
             {
                 objectImPos3.z = objectTileZ + 1f;
                 isJumping = false;
+                isFalling = false;
             }
             else
             {
@@ -116,6 +119,7 @@ namespace Assets.Scripts.Objects
             if(isTryingToJump && !isJumping)
             {
                 isJumping = true;
+                isFalling = false;
                 prevZ = newPos3.z;
                 newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
                 * (4f * objectData.JumpHeight / objectData.JumpTime * Time.deltaTime - 4f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
@@ -126,6 +130,7 @@ namespace Assets.Scripts.Objects
                 newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
                 * (newPos3.z - prevZ - 8f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
                 prevZ = tmpPrevZ;
+                isFalling = newPos3.z < prevZ;
             }
             return newPos3;
         }
