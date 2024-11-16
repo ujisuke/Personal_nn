@@ -135,7 +135,7 @@ namespace Assets.Scripts.Objects
             return newPos3;
         }
 
-        private static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
+        public static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
         {
             Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageCreator._tileHeight);
             Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageCreator._tileHeight), newRePos2.x + 2f * (newRePos2.y + StageCreator._tileHeight), rePos3.z);
@@ -190,8 +190,6 @@ namespace Assets.Scripts.Objects
             candidateTargetPos3List = candidateTargetPos3List.OrderBy(a => Guid.NewGuid()).ToList();
             return candidateTargetPos3List[0];
         }
-
-
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
         {

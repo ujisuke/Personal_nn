@@ -4,24 +4,22 @@ using Assets.Scripts.Stage;
 
 namespace Assets.Scripts.Enemies
 {
-    public class Enemy1 : MonoBehaviour, IObject
+    public class Enemy2 : MonoBehaviour, IObject
     {
-        private Enemy1Attack enemy1Attack;
 
         private void Awake()
         {
-            enemy1Attack = GetComponent<Enemy1Attack>();
             ObjectFacade.AddEnemy(this);
         }
 
         public bool IsDamaging()
         {
-            return enemy1Attack.IsDamaging;
+            return false;
         }
 
         public void DamagedBy(IObject obj)
         {
-
+            
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()

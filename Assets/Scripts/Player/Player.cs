@@ -1,27 +1,25 @@
-using UnityEngine;
 using Assets.Scripts.Objects;
+using UnityEngine;
 using Assets.Scripts.Stage;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.Player
 {
-    public class Enemy1 : MonoBehaviour, IObject
+    public class Player : MonoBehaviour, IObject
     {
-        private Enemy1Attack enemy1Attack;
 
         private void Awake()
         {
-            enemy1Attack = GetComponent<Enemy1Attack>();
-            ObjectFacade.AddEnemy(this);
+            ObjectFacade.SetPlayer(this);
         }
 
         public bool IsDamaging()
         {
-            return enemy1Attack.IsDamaging;
+            return false;
         }
 
         public void DamagedBy(IObject obj)
         {
-
+            Debug.Log("Damaged");
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
