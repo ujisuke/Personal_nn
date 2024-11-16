@@ -14,6 +14,8 @@ namespace Assets.Scripts.Objects
                 currentState = new Enemy1MoveState();
             else if(initialState == ObjectStateList.Enemy2Move)
                 currentState = new Enemy2MoveState();
+            else if(initialState == ObjectStateList.Enemy3Move)
+                currentState = new Enemy3MoveState();
             currentState.Enter(this);
         }
 
@@ -33,6 +35,7 @@ namespace Assets.Scripts.Objects
     public enum ObjectStateList
     {
         Enemy1Move,
-        Enemy2Move
+        Enemy2Move,
+        Enemy3Move,
     }
 }

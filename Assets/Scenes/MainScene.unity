@@ -2934,6 +2934,9 @@ GameObject:
   - component: {fileID: 1918326129}
   - component: {fileID: 1918326131}
   - component: {fileID: 1918326132}
+  - component: {fileID: 1918326135}
+  - component: {fileID: 1918326134}
+  - component: {fileID: 1918326133}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -3061,7 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce7fc33304c56a49a0e19c1aa2ad56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: 1
+  initialState: 2
 --- !u!114 &1918326129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3069,7 +3072,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918326120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48be64504f20e55418085fbb364a72a8, type: 3}
   m_Name: 
@@ -3106,9 +3109,46 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918326120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30f4d25895496b445a41bf8d38aad1f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1918326133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918326120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5a13f965850b642a0badef873c7f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1918326134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918326120}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e53a2b5f9cc72a4caff94c1f49b98a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageObjectPrefab: {fileID: 5202028710676642513, guid: 3a0790cb8f4f5f244b017f3cfe6476d8, type: 3}
+--- !u!114 &1918326135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918326120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bfaacf692ab5b8488468ad38d2ac2fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1939029817

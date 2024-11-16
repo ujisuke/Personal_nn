@@ -200,6 +200,13 @@ namespace Assets.Scripts.Objects
             return StageCreator.TileZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
         }
 
+        public static bool IsHitStage(Vector3 imPos3)
+        {
+            return imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
+            || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z;
+        }
+
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
         {
             return targetRePos3.z < objectRePos3.z + objectData.JumpHeight;
