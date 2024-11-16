@@ -11,9 +11,12 @@ namespace Assets.Scripts.Objects
     public class ObjectMove : MonoBehaviour
     {
         [SerializeField] private GameObject shadow;
-        private ObjectData objectData;
+        [SerializeField] private ObjectData objectData;
         private readonly int[,] _tileZs = StageCreator.TileZs;
         private bool isJumping = false;
+        public bool IsJumping => isJumping;
+        private bool isFalling = false;
+        public bool IsFalling => isFalling;
         private float prevZ = 0;
         private SpriteRenderer objectSpriteRenderer;
         private SpriteRenderer shadowSpriteRenderer;
@@ -24,9 +27,8 @@ namespace Assets.Scripts.Objects
         private bool isTryingToJump = false;
         private int destinationTileZ = 0; 
 
-        public void Initialize(ObjectData objectData, Vector3 objectRePos3)
+        public void Initialize(Vector3 objectRePos3)
         {
-            this.objectData = objectData;
             prevZ = objectRePos3.z;
             objectSpriteRenderer = GetComponent<SpriteRenderer>();
             shadowSpriteRenderer = shadow.GetComponent<SpriteRenderer>();
@@ -87,6 +89,7 @@ namespace Assets.Scripts.Objects
             {
                 objectImPos3.z = objectTileZ + 1f;
                 isJumping = false;
+                isFalling = false;
             }
             else
             {
@@ -116,6 +119,7 @@ namespace Assets.Scripts.Objects
             if(isTryingToJump && !isJumping)
             {
                 isJumping = true;
+                isFalling = false;
                 prevZ = newPos3.z;
                 newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
                 * (4f * objectData.JumpHeight / objectData.JumpTime * Time.deltaTime - 4f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
@@ -126,13 +130,12 @@ namespace Assets.Scripts.Objects
                 newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
                 * (newPos3.z - prevZ - 8f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
                 prevZ = tmpPrevZ;
+                isFalling = newPos3.z < prevZ;
             }
             return newPos3;
         }
 
-
-
-        private static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
+        public static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
         {
             Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageCreator._tileHeight);
             Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageCreator._tileHeight), newRePos2.x + 2f * (newRePos2.y + StageCreator._tileHeight), rePos3.z);
@@ -146,7 +149,7 @@ namespace Assets.Scripts.Objects
             return (StageCreator._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._stageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
-        private static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
+        public static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
         {
             Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageCreator._tileHeight);
             return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageCreator._tileHeight, imPos3.z);
@@ -188,7 +191,21 @@ namespace Assets.Scripts.Objects
             return candidateTargetPos3List[0];
         }
 
+        public static bool IsHitWall(Vector3 imPos3)
+        {
+            if(imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
+            || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z) return true;
+            (int i, int j) tileNumber = ConvertToTileNumberFromImPos3(imPos3);
+            return StageCreator.TileZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
+        }
 
+        public static bool IsHitStage(Vector3 imPos3)
+        {
+            return imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
+            || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z;
+        }
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
         {
