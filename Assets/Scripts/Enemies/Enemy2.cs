@@ -6,7 +6,6 @@ namespace Assets.Scripts.Enemies
 {
     public class Enemy2 : MonoBehaviour, IObject
     {
-
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);

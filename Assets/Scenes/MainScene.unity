@@ -2933,6 +2933,7 @@ GameObject:
   - component: {fileID: 1918326130}
   - component: {fileID: 1918326129}
   - component: {fileID: 1918326131}
+  - component: {fileID: 1918326132}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -2953,7 +2954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadow: {fileID: 2041368932}
-  objectData: {fileID: 11400000, guid: 6559ccce7a799d14db5b3b9394384366, type: 2}
+  objectData: {fileID: 11400000, guid: 4996e97865c1059479d5bc0976fc8750, type: 2}
 --- !u!212 &1918326123
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3031,7 +3032,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918326120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6ca4fbadd411734dbecf67f8dd2d248, type: 3}
   m_Name: 
@@ -3060,7 +3061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce7fc33304c56a49a0e19c1aa2ad56a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: 0
+  initialState: 1
 --- !u!114 &1918326129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3068,7 +3069,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918326120}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48be64504f20e55418085fbb364a72a8, type: 3}
   m_Name: 
@@ -3085,7 +3086,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95123872ebbfea45a45ab7b1c646a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageObjectPrefab: {fileID: 5202028710676642513, guid: c880e7fc777ea174bbc5dcf6e0219984, type: 3}
 --- !u!114 &1918326131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918326120}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c8990493825034288ed08e6df83f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1918326132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3094,7 +3108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1918326120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c8990493825034288ed08e6df83f5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 30f4d25895496b445a41bf8d38aad1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1939029817

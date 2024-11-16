@@ -149,7 +149,7 @@ namespace Assets.Scripts.Objects
             return (StageCreator._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._stageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
-        private static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
+        public static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
         {
             Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageCreator._tileHeight);
             return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageCreator._tileHeight, imPos3.z);
@@ -189,6 +189,15 @@ namespace Assets.Scripts.Objects
             if(candidateTargetPos3List.Count == 0) return rePos3;
             candidateTargetPos3List = candidateTargetPos3List.OrderBy(a => Guid.NewGuid()).ToList();
             return candidateTargetPos3List[0];
+        }
+
+        public static bool IsHitWall(Vector3 imPos3)
+        {
+            if(imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
+            || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z) return true;
+            (int i, int j) tileNumber = ConvertToTileNumberFromImPos3(imPos3);
+            return StageCreator.TileZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
         }
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)

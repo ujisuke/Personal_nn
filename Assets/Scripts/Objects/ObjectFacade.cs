@@ -18,6 +18,11 @@ namespace Assets.Scripts.Objects
             enemyList.Add(newEnemy);
         }
 
+        public static void RemoveEnemy(IObject obj)
+        {
+            enemyList.Remove(obj);
+        }
+
         public static Vector3 GetPlayerRePos3()
         {
             if(player == null) return Vector3.zero;
