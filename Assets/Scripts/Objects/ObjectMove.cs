@@ -37,15 +37,15 @@ namespace Assets.Scripts.Objects
         private void FixedUpdate()
         {
             Vector3 objectImPos3 = ConvertToImPos3FromRePos3(transform.position);
-            (int i, int j) objectTileNumber = ConvertToTileNumberFromImPos3(objectImPos3);
+            (int i, int j) objectTileIndex = ConvertToTileIndexFromImPos3(objectImPos3);
             
             Vector3 destinationRePos3 = GetDestinationRePos3();
             
             Vector3 destinationImPos3 = ConvertToImPos3FromRePos3(destinationRePos3);
-            (int i, int j) destinationTileNumber = ConvertToTileNumberFromImPos3(destinationImPos3);
+            (int i, int j) destinationTileIndex = ConvertToTileIndexFromImPos3(destinationImPos3);
 
-            int objectTileZ = _tileZs[objectTileNumber.i, objectTileNumber.j];
-            int destinationJTileZ = _tileZs[objectTileNumber.i, destinationTileNumber.j];
+            int objectTileZ = _tileZs[objectTileIndex.i, objectTileIndex.j];
+            int destinationJTileZ = _tileZs[objectTileIndex.i, destinationTileIndex.j];
             if(destinationJTileZ <= destinationImPos3.z - 1f)
             {
                 objectImPos3.x = destinationImPos3.x;
@@ -69,10 +69,10 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
             }
 
-            objectTileNumber = ConvertToTileNumberFromImPos3(objectImPos3);
-            objectTileZ = _tileZs[objectTileNumber.i, objectTileNumber.j];
+            objectTileIndex = ConvertToTileIndexFromImPos3(objectImPos3);
+            objectTileZ = _tileZs[objectTileIndex.i, objectTileIndex.j];
 
-            int destinationITileZ = _tileZs[destinationTileNumber.i, objectTileNumber.j];
+            int destinationITileZ = _tileZs[destinationTileIndex.i, objectTileIndex.j];
             if(destinationITileZ <= destinationImPos3.z - 1f)
             {
                 objectImPos3.y = destinationImPos3.y;
@@ -97,15 +97,15 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
             }
             
-            objectTileNumber = ConvertToTileNumberFromImPos3(objectImPos3);
-            objectTileZ = _tileZs[objectTileNumber.i, objectTileNumber.j];
-            destinationTileZ = _tileZs[destinationTileNumber.i, destinationTileNumber.j];
+            objectTileIndex = ConvertToTileIndexFromImPos3(objectImPos3);
+            objectTileZ = _tileZs[objectTileIndex.i, objectTileIndex.j];
+            destinationTileZ = _tileZs[destinationTileIndex.i, destinationTileIndex.j];
 
             transform.position = ConvertToRePos3FromImPos3(objectImPos3);
-            objectSpriteRenderer.sortingOrder = objectTileNumber.i + objectTileNumber.j;
+            objectSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
             Vector3 shadowImPos3 = new(objectImPos3.x, objectImPos3.y, objectTileZ + 1f);
             shadow.transform.position = ConvertToRePos3FromImPos3(shadowImPos3);
-            shadowSpriteRenderer.sortingOrder = objectTileNumber.i + objectTileNumber.j;
+            shadowSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
         }
 
         private Vector3 GetDestinationRePos3()
@@ -144,7 +144,7 @@ namespace Assets.Scripts.Objects
             return newImPos3;
         }
 
-        private static (int i, int j) ConvertToTileNumberFromImPos3(Vector3 imPos3)
+        private static (int i, int j) ConvertToTileIndexFromImPos3(Vector3 imPos3)
         {
             return (StageCreator._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._stageSide / 2 + (int)Math.Floor(imPos3.x));
         }
@@ -155,13 +155,13 @@ namespace Assets.Scripts.Objects
             return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageCreator._tileHeight, imPos3.z);
         }
 
-        private static (int i, int j) ConvertToTileNumberFromRePos3(Vector3 rePos3)
+        private static (int i, int j) ConvertToTileIndexFromRePos3(Vector3 rePos3)
         {
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(rePos3);
-            return ConvertToTileNumberFromImPos3(newImPos3);
+            return ConvertToTileIndexFromImPos3(newImPos3);
         }
 
-        private static Vector3 ConvertToRePos3FromTileNumber((int i, int j) tileNumber)
+        private static Vector3 ConvertToRePos3FromTileIndex((int i, int j) tileNumber)
         {
             Vector3 newImPos3 = new(-StageCreator._stageSide / 2 + tileNumber.j + 0.5f, StageCreator._stageSide / 2 - tileNumber.i - 0.5f, StageCreator.TileZs[tileNumber.i, tileNumber.j] + 1f);
             return ConvertToRePos3FromImPos3(newImPos3);
@@ -174,16 +174,35 @@ namespace Assets.Scripts.Objects
             return endIm3 - startIm3;
         }
 
+        public static List<Vector3> DrawSomeRePos3AtRandom(int PosNumber, (int i, int j) pivotTileNumber, int minimumRadius)
+        {
+            List<(int i, int j)> tileNumberList = new();
+            for(int i = 0; i < StageCreator._stageSide; i++)
+                for(int j = 0; j < StageCreator._stageSide; j++)
+                {
+                    if(Math.Abs(i - pivotTileNumber.i) < minimumRadius && Math.Abs(j - pivotTileNumber.j) < minimumRadius) continue;
+                    tileNumberList.Add((i, j));
+                }
+            tileNumberList = tileNumberList.OrderBy(a => Guid.NewGuid()).ToList();
+            List<Vector3> rePos3List = new();
+            for(int i = 0; i < PosNumber; i++)
+            {
+                Vector3 rePos3 = ConvertToRePos3FromTileIndex(tileNumberList[i]);
+                rePos3List.Add(rePos3);
+            }
+            return rePos3List;
+        }
+
         public Vector3 DrawRePos3AroundRePos3(Vector3 rePos3)
         {
             List<Vector3> candidateTargetPos3List = new();
-            (int I, int J) enemyTileNumber = ConvertToTileNumberFromRePos3(rePos3);
+            (int I, int J) enemyTileNumber = ConvertToTileIndexFromRePos3(rePos3);
             for(int i = enemyTileNumber.I - 1; i < enemyTileNumber.I + 2; i++)
                 for(int j = enemyTileNumber.J - 1; j < enemyTileNumber.J + 2; j++)
                 {
                     if(i < 0 || StageCreator._stageSide <= i || j < 0 || StageCreator._stageSide <= j) continue;
                     if(i == enemyTileNumber.I && j == enemyTileNumber.J) continue;
-                    Vector3 candidateTargetPos3 = ConvertToRePos3FromTileNumber((i, j));
+                    Vector3 candidateTargetPos3 = ConvertToRePos3FromTileIndex((i, j));
                     if(IsReachable(candidateTargetPos3, rePos3)) candidateTargetPos3List.Add(candidateTargetPos3);
                 }
             if(candidateTargetPos3List.Count == 0) return rePos3;
@@ -196,7 +215,7 @@ namespace Assets.Scripts.Objects
             if(imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
             || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
             || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z) return true;
-            (int i, int j) tileNumber = ConvertToTileNumberFromImPos3(imPos3);
+            (int i, int j) tileNumber = ConvertToTileIndexFromImPos3(imPos3);
             return StageCreator.TileZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
         }
 

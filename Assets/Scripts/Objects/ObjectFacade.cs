@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 namespace Assets.Scripts.Objects
@@ -21,6 +22,17 @@ namespace Assets.Scripts.Objects
         public static void RemoveEnemy(IObject obj)
         {
             enemyList.Remove(obj);
+        }
+
+        public static void RemoveAllEnemies()
+        {
+            int enemyListCount = enemyList.Count;
+            for(int i = 0; i < enemyListCount; i++)
+            {
+                var enemy = enemyList[0];
+                enemyList.RemoveAt(0);
+                enemy.Destroy();
+            }
         }
 
         public static Vector3 GetPlayerRePos3()
