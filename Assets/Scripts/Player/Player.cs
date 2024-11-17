@@ -33,5 +33,10 @@ namespace Assets.Scripts.Player
         {
             return transform.position;
         }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

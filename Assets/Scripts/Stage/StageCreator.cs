@@ -3,6 +3,7 @@ using UnityEngine.Tilemaps;
 using Assets.ScriptableObjects;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.Stage
 {
@@ -24,6 +25,7 @@ namespace Assets.Scripts.Stage
         {
             SetStageMatrix();
             SetAllTiles();
+            GetComponent<ObjectCreator>().CreateNewObjects(3);
         }
 
         private static void SetStageMatrix()

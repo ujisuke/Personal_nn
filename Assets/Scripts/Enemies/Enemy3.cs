@@ -32,5 +32,10 @@ namespace Assets.Scripts.Enemies
         {
             return transform.position;
         }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }
