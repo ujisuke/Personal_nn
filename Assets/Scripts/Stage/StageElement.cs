@@ -5,71 +5,40 @@ namespace Assets.Scripts.Stage
 {
     public static class StageElement
     {
-        private static readonly List<int[,]> _StageElement2Zs = new()
+        private static readonly List<int[,]> _StageElementZs = new()
         {
             new int[3,3]{
-                {2, 2, 2},
-                {2, 2, 1},
-                {2, 2, 1}
+                {4, 4, 3},
+                {4, 4, 2},
+                {4, 4, 1}
             },
             new int[3,3]{
-                {2, 2, 1},
+                {4, 3, 2},
                 {1, 1, 1},
                 {1, 1, 1}
             },
             new int[3,3]{
-                {2, 2, 2},
-                {2, 2, 1},
-                {1, 1, 1}
+                {4, 2, 2},
+                {3, 2, 1},
+                {3, 3, 1}
             },
             new int[3,3]{
-                {2, 1, 2},
-                {1, 1, 2},
-                {2, 1, 2}
+                {3, 1, 2},
+                {3, 1, 2},
+                {3, 1, 2}
             },
             new int[3,3]{
+                {3, 3, 3},
                 {2, 2, 2},
-                {2, 1, 2},
                 {1, 1, 1}
             }
         }; 
 
-        private static readonly List<int[,]> _StageElement3Zs = new()
-        {
-            new int[3,3]{
-                {3, 3, 3},
-                {3, 3, 2},
-                {3, 3, 1}
-            },
-            new int[3,3]{
-                {3, 2, 1},
-                {1, 1, 1},
-                {1, 1, 1}
-            },
-            new int[3,3]{
-                {3, 3, 3},
-                {3, 3, 1},
-                {1, 1, 1}
-            },
-            new int[3,3]{
-                {3, 1, 2},
-                {1, 1, 2},
-                {2, 1, 2}
-            },
-            new int[3,3]{
-                {3, 3, 3},
-                {3, 1, 2},
-                {1, 1, 1}
-            }
-        };
-
         public static void AssignStageElementZs(int[,] area)
         {
             Random.InitState(System.DateTime.Now.Millisecond);
-            int[,] selectedElementZs = _StageElement3Zs[Random.Range(0, _StageElement3Zs.Count)];
+            int[,] selectedElementZs = _StageElementZs[Random.Range(0, _StageElementZs.Count)];
             if(Random.Range(0, 2) == 1) FlipElementMatrix(selectedElementZs);
-            if(area.GetLength(0) == 2 || area.GetLength(1) == 2)
-                selectedElementZs = _StageElement2Zs[Random.Range(0, _StageElement2Zs.Count)];
             
             int areaH = area.GetLength(0);
             int areaW = area.GetLength(1);
