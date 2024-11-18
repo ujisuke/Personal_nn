@@ -12,7 +12,7 @@ public class MoveTest : MonoBehaviour
     [SerializeField] private GameObject destination;
     private const int _tileSide = 8;
     private const float _tileHeight = 0.25f;
-    private readonly int[,] _tileZs = StageCreator.TileZs;
+    private readonly int[,] _tileZs = StageFacade.TileZs;
 
     private readonly float _moveSpeed = 2f;
     private readonly float _jumpHeight = 2.5f;

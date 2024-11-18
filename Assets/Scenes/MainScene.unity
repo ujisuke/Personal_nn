@@ -539,6 +539,141 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &429188285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 429188288}
+  - component: {fileID: 429188287}
+  - component: {fileID: 429188286}
+  m_Layer: 0
+  m_Name: ObjectFacade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &429188286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429188285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d45a374256f8874ba4ed0ee3e485fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 6028222375032962928, guid: b5acf0d91d856954887d3eb6b9de537b, type: 3}
+  enemyPrefabLists:
+  - {fileID: 835981607064012740, guid: 1e2e0af54bb4b244cab54211730ce91e, type: 3}
+  - {fileID: 835981607064012740, guid: 443dc8f3e98993f4b88836fd44885fd9, type: 3}
+--- !u!114 &429188287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429188285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27183a672ee56348a04a319d51cdc4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &429188288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429188285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9603394, y: 0.54109615, z: 922.8522}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &477856906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 477856909}
+  - component: {fileID: 477856908}
+  - component: {fileID: 477856907}
+  m_Layer: 0
+  m_Name: StageFacade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &477856907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477856906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4317ad38644839c46b740b26d808025e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageTilemapList:
+  - {fileID: 1051304012}
+  - {fileID: 544697953}
+  - {fileID: 51841055}
+  - {fileID: 1854080474}
+  - {fileID: 1424976982}
+  - {fileID: 1529814424}
+  - {fileID: 2117232997}
+  - {fileID: 1090475311}
+  - {fileID: 400758153}
+  - {fileID: 522671093}
+  - {fileID: 1699440393}
+  - {fileID: 1547788626}
+  - {fileID: 776261900}
+  - {fileID: 1394943590}
+  - {fileID: 998262402}
+  TileData: {fileID: 11400000, guid: 63c79b1a37ab9be4aa2c1ce2853ea174, type: 2}
+--- !u!114 &477856908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477856906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc7acc03beb7eb42b55ce707c081254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &477856909
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477856906}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9603394, y: 0.54109615, z: 922.8522}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,9 +685,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420033}
-  - component: {fileID: 519420034}
-  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -634,63 +766,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &519420033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4317ad38644839c46b740b26d808025e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageTilemapList:
-  - {fileID: 1051304012}
-  - {fileID: 544697953}
-  - {fileID: 51841055}
-  - {fileID: 1854080474}
-  - {fileID: 1424976982}
-  - {fileID: 1529814424}
-  - {fileID: 2117232997}
-  - {fileID: 1090475311}
-  - {fileID: 400758153}
-  - {fileID: 522671093}
-  - {fileID: 1699440393}
-  - {fileID: 1547788626}
-  - {fileID: 776261900}
-  - {fileID: 1394943590}
-  - {fileID: 998262402}
-  TileData: {fileID: 11400000, guid: 63c79b1a37ab9be4aa2c1ce2853ea174, type: 2}
---- !u!114 &519420034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27183a672ee56348a04a319d51cdc4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &519420035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d45a374256f8874ba4ed0ee3e485fc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 6028222375032962928, guid: b5acf0d91d856954887d3eb6b9de537b, type: 3}
-  enemyPrefabLists:
-  - {fileID: 835981607064012740, guid: 1e2e0af54bb4b244cab54211730ce91e, type: 3}
-  - {fileID: 835981607064012740, guid: 443dc8f3e98993f4b88836fd44885fd9, type: 3}
 --- !u!1 &522671090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,6 +2562,50 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1652296232
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652296233}
+  - component: {fileID: 1652296234}
+  m_Layer: 0
+  m_Name: BattleFacade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1652296233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652296232}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9603394, y: 0.54109615, z: 922.8522}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1652296234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652296232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c98ddabb2de6944ada1941a1d0b66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1699440390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,9 +3007,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 519420033}
-        m_TargetAssemblyTypeName: Assets.Scripts.Stage.StageCreator, Assembly-CSharp
-        m_MethodName: CreateNewStage
+      - m_Target: {fileID: 1652296234}
+        m_TargetAssemblyTypeName: Assets.Scripts.Battle.BattleFacade, Assembly-CSharp
+        m_MethodName: ResetBattle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3105,3 +3224,6 @@ SceneRoots:
   - {fileID: 1129569703}
   - {fileID: 280045253}
   - {fileID: 590049452}
+  - {fileID: 429188288}
+  - {fileID: 477856909}
+  - {fileID: 1652296233}
