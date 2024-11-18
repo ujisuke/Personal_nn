@@ -16,37 +16,23 @@ namespace Assets.Scripts.Player
         {
             objectMove = GetComponent<ObjectMove>();
             isAttacking = true;
-            isDamaging = false;
+            isDamaging = true;
             StartCoroutine(Attack());
         }
 
         private void FixedUpdate()
         {
-            objectMove.HeadToPlusX(false);
-            objectMove.HeadToMinusX(false);
-            objectMove.HeadToPlusY(false);
-            objectMove.HeadToMinusY(false);
-            objectMove.TryToJump(false);
+            objectMove.HeadToMinusX(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W));
+            objectMove.HeadToPlusY(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D));
+            objectMove.HeadToMinusY(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A));
+            objectMove.HeadToPlusX(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S));
+            objectMove.TryToJump(Input.GetKey(KeyCode.Space));
         }
 
         private IEnumerator Attack()
         {
-            objectMove.ResetPrevZ();
-            for(int i = 0; i < 10; i++)
-            {
-                if(!objectMove.IsJumping)
-                {
-                    isAttacking = false;
-                    yield break;
-                }
-                yield return new WaitForSeconds(0.01f);
-            }
-            isDamaging = true;
-            while(objectMove.IsJumping)
-                yield return null;
             yield return new WaitForSeconds(0.1f);
             isDamaging = false;
-            yield return new WaitForSeconds(0.2f);
             isAttacking = false;
         }
     }

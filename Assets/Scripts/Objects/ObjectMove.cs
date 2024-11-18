@@ -259,11 +259,6 @@ namespace Assets.Scripts.Objects
         {
             return destinationTileZ < objectRePos3.z - 1f + objectData.JumpHeight && objectRePos3.z - 1f < destinationTileZ;
         }
-
-        public void ResetPrevZ()
-        {
-            prevZ = transform.position.z;
-        }
     }   
 }
 
