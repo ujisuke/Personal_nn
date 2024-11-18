@@ -20,10 +20,10 @@ namespace Assets.Scripts.Enemies
 
         private void FixedUpdate()
         {
-            objectMove.HeadToD(false);
-            objectMove.HeadToA(false);
-            objectMove.HeadToW(false);
-            objectMove.HeadToS(false);
+            objectMove.HeadToPlusX(false);
+            objectMove.HeadToMinusX(false);
+            objectMove.HeadToPlusY(false);
+            objectMove.HeadToMinusY(false);
             objectMove.TryToJump(false);
         }
 

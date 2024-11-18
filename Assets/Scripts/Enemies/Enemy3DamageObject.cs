@@ -2,11 +2,14 @@ using Assets.Scripts.Objects;
 using UnityEngine;
 using Assets.Scripts.Stage;
 using System.Collections;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy3DamageObject : MonoBehaviour, IObject
     {
+        [SerializeField] private ObjectParameter objectParameter;
+
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);
@@ -16,8 +19,7 @@ namespace Assets.Scripts.Enemies
         private IEnumerator Suicide()
         {
             yield return new WaitForSeconds(0.5f);
-            ObjectFacade.RemoveEnemy(this);
-            Destroy(gameObject);
+            DestroyObject();
         }
 
         public bool IsDamaging()
@@ -25,9 +27,14 @@ namespace Assets.Scripts.Enemies
             return true;
         }
 
-        public void DamagedBy(IObject obj)
+        public void DamageTo(IObject obj)
         {
+            obj.TakeDamage(objectParameter.AttackPower);
+        }
 
+        public void TakeDamage(float damage)
+        {
+            
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
@@ -42,8 +49,9 @@ namespace Assets.Scripts.Enemies
             return transform.position;
         }
 
-        public void Destroy()
+        public void DestroyObject()
         {
+            ObjectFacade.RemoveEnemy(this);
             Destroy(gameObject);
         }
     }

@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Objects;
 
-namespace Assets.Scripts.Enemies
+namespace Assets.Scripts.Player
 {
-    public class Enemy1Attack : MonoBehaviour
+    public class PlayerAttack : MonoBehaviour
     {
         private ObjectMove objectMove;
         private bool isAttacking = true;
@@ -14,9 +14,9 @@ namespace Assets.Scripts.Enemies
 
         private void OnEnable()
         {
+            objectMove = GetComponent<ObjectMove>();
             isAttacking = true;
             isDamaging = false;
-            objectMove = GetComponent<ObjectMove>();
             StartCoroutine(Attack());
         }
 
@@ -31,6 +31,7 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Attack()
         {
+            objectMove.ResetPrevZ();
             for(int i = 0; i < 10; i++)
             {
                 if(!objectMove.IsJumping)
@@ -45,7 +46,7 @@ namespace Assets.Scripts.Enemies
                 yield return null;
             yield return new WaitForSeconds(0.1f);
             isDamaging = false;
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.2f);
             isAttacking = false;
         }
     }

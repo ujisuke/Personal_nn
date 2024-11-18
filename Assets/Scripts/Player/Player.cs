@@ -1,25 +1,41 @@
 using Assets.Scripts.Objects;
 using UnityEngine;
 using Assets.Scripts.Stage;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Player
 {
     public class Player : MonoBehaviour, IObject
     {
+        [SerializeField] private ObjectParameter objectParameter;
+        private HP hP;
+        private PlayerAttack playerAttack;
 
         private void Awake()
         {
-            ObjectFacade.SetPlayer(this);
+            ObjectFacade.AddPlayer(this);
+            hP = HP.Initialize(objectParameter.MaxHP);
+            playerAttack = GetComponent<PlayerAttack>();
+        }
+
+        public bool IsDead()
+        {
+            return hP.IsZero();
         }
 
         public bool IsDamaging()
         {
-            return false;
+            return playerAttack.IsDamaging;
         }
 
-        public void DamagedBy(IObject obj)
+        public void DamageTo(IObject obj)
         {
-            Debug.Log("Damaged");
+            obj.TakeDamage(objectParameter.AttackPower);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            hP = hP.TakeDamage(damage);
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
@@ -34,8 +50,9 @@ namespace Assets.Scripts.Player
             return transform.position;
         }
 
-        public void Destroy()
+        public void DestroyObject()
         {
+            ObjectFacade.RemovePlayer();
             Destroy(gameObject);
         }
     }

@@ -6,16 +6,20 @@ namespace Assets.Scripts.Enemies
     {
         private ObjectStateMachine objectStateMachine;
         private Enemy3Attack enemy3Attack;
+        private Enemy3 enemy3;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             enemy3Attack = objectStateMachine.GetComponent<Enemy3Attack>();
+            enemy3 = objectStateMachine.GetComponent<Enemy3>();
             enemy3Attack.enabled = true;
         }
 
         public void FixedUpdate()
         {
+            if(enemy3.IsDead())
+                objectStateMachine.TransitionTo(new Enemy3DeadState());
             if(!enemy3Attack.IsAttacking)
                 objectStateMachine.TransitionTo(new Enemy3MoveState());
         }

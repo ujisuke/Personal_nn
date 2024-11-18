@@ -2,8 +2,7 @@ using UnityEngine;
 using Assets.Scripts.Objects;
 using System.Collections;
 using Unity.Mathematics;
-using Assets.Scripts.Stage;
-using Unity.VisualScripting;
+
 
 namespace Assets.Scripts.Enemies
 {
@@ -34,10 +33,10 @@ namespace Assets.Scripts.Enemies
         private void FixedUpdate()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
-            objectMove.HeadToD(moveDirectionIm3.x >= stopDistance || moveDirectionIm3.y >= stopDistance);
-            objectMove.HeadToA(moveDirectionIm3.x < -stopDistance || moveDirectionIm3.y < -stopDistance);
-            objectMove.HeadToW(moveDirectionIm3.x < -stopDistance || moveDirectionIm3.y >= stopDistance);
-            objectMove.HeadToS(moveDirectionIm3.x >= stopDistance || moveDirectionIm3.y < -stopDistance);
+            objectMove.HeadToPlusX(moveDirectionIm3.x >= stopDistance);
+            objectMove.HeadToMinusX(moveDirectionIm3.x < -stopDistance);
+            objectMove.HeadToPlusY(moveDirectionIm3.y >= stopDistance);
+            objectMove.HeadToMinusY(moveDirectionIm3.y < -stopDistance);
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position)
             || math.abs(moveDirectionIm3.x) <= attackDistance && math.abs(moveDirectionIm3.y) <= attackDistance);
         }

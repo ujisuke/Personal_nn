@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 namespace Assets.Scripts.Objects
@@ -9,9 +8,14 @@ namespace Assets.Scripts.Objects
         private static IObject player;
         private static List<IObject> enemyList = new();
         
-        public static void SetPlayer(IObject newPlayer)
+        public static void AddPlayer(IObject newPlayer)
         {
             player = newPlayer;
+        }
+
+        public static void RemovePlayer()
+        {
+            player = null;
         }
 
         public static void AddEnemy(IObject newEnemy)
@@ -28,11 +32,7 @@ namespace Assets.Scripts.Objects
         {
             int enemyListCount = enemyList.Count;
             for(int i = 0; i < enemyListCount; i++)
-            {
-                var enemy = enemyList[0];
-                enemyList.RemoveAt(0);
-                enemy.Destroy();
-            }
+                enemyList[0].DestroyObject();
         }
 
         public static Vector3 GetPlayerRePos3()
@@ -58,7 +58,16 @@ namespace Assets.Scripts.Objects
                 if(playerMaxImPos3.x < enemyMinImPos3.x || playerMinImPos3.x > enemyMaxImPos3.x) continue;
                 if(playerMaxImPos3.y < enemyMinImPos3.y || playerMinImPos3.y > enemyMaxImPos3.y) continue;
                 if(playerMaxImPos3.z < enemyMinImPos3.z || playerMinImPos3.z > enemyMaxImPos3.z) continue;
-                player.DamagedBy(enemy);
+                enemy.DamageTo(player);
+            }
+            if(!player.IsDamaging()) return;
+            foreach(IObject enemy in enemyList)
+            {
+                (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemy.GetImPos3s();
+                if(enemyMaxImPos3.x < playerMinImPos3.x || enemyMinImPos3.x > playerMaxImPos3.x) continue;
+                if(enemyMaxImPos3.y < playerMinImPos3.y || enemyMinImPos3.y > playerMaxImPos3.y) continue;
+                if(enemyMaxImPos3.z < playerMinImPos3.z || enemyMinImPos3.z > playerMaxImPos3.z) continue;
+                player.DamageTo(enemy);
             }
         }
     }
