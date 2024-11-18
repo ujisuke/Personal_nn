@@ -160,7 +160,7 @@ namespace Assets.Scripts.Objects
             return ConvertToTileIndexFromImPos3(newImPos3);
         }
 
-        private static Vector3 ConvertToRePos3FromTileIndex((int i, int j) tileNumber)
+        public static Vector3 ConvertToRePos3FromTileIndex((int i, int j) tileNumber)
         {
             Vector3 newImPos3 = new(-StageCreator._stageSide / 2 + tileNumber.j + 0.5f, StageCreator._stageSide / 2 - tileNumber.i - 0.5f, StageCreator.TileZs[tileNumber.i, tileNumber.j] + 1f);
             return ConvertToRePos3FromImPos3(newImPos3);

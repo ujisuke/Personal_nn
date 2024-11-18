@@ -11,7 +11,7 @@ namespace Assets.Scripts.Objects
 
         private void Awake()
         {
-            if(initialState == ObjectStateList.Player)
+            if(initialState == ObjectStateList.PlayerMove)
                 currentState = new PlayerMoveState();
             else if(initialState == ObjectStateList.Enemy1Move)
                 currentState = new Enemy1MoveState();
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Objects
 
     public enum ObjectStateList
     {
-        Player,
+        PlayerMove,
         Enemy1Move,
         Enemy2Move,
         Enemy3Move,
