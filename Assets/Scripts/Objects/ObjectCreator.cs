@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Stage;
 using UnityEngine;
+using System.Collections;
 
 namespace Assets.Scripts.Objects
 {
@@ -25,6 +26,14 @@ namespace Assets.Scripts.Objects
                 GameObject objectPrefab = enemyPrefabLists[randomIndex];
                 Instantiate(objectPrefab, enemyRePos3List[i], Quaternion.identity);
             }
+
+            StartCoroutine(SetReady());
+        }
+
+        private static IEnumerator SetReady()
+        {
+            yield return new WaitForSeconds(0.5f);
+            ObjectFacade.SetAllObjectsReady();
         }
     }
 }

@@ -9,11 +9,19 @@ namespace Assets.Scripts.Enemies
     {
         [SerializeField] private ObjectParameter objectParameter;
         private HP hP;
+        private bool isReady = false;
+        public bool IsReady => isReady;
 
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);
             hP = HP.Initialize(objectParameter.MaxHP);
+            GetComponent<ObjectMove>().Initialize(transform.position);
+        }
+
+        public void SetReady()
+        {
+            isReady = true;
         }
 
         public bool IsDead()

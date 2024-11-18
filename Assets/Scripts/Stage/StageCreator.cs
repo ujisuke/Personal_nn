@@ -112,5 +112,11 @@ namespace Assets.Scripts.Stage
                     TileData.SetTile(tileHeight, tilePosition, stageTilemapList[i]);
                 }
         }
+
+        private void FixedUpdate()
+        {
+            if(!ObjectFacade.IsEnemyLiving())
+                CreateNewStage();
+        }
     }
 }

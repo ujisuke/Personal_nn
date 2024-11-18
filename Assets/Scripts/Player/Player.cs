@@ -10,12 +10,20 @@ namespace Assets.Scripts.Player
         [SerializeField] private ObjectParameter objectParameter;
         private HP hP;
         private PlayerAttack playerAttack;
+        private bool isReady = false;
+        public bool IsReady => isReady;
 
         private void Awake()
         {
             ObjectFacade.AddPlayer(this);
             hP = HP.Initialize(objectParameter.MaxHP);
             playerAttack = GetComponent<PlayerAttack>();
+            GetComponent<ObjectMove>().Initialize(transform.position);
+        }
+
+        public void SetReady()
+        {
+            isReady = true;
         }
 
         public bool IsDead()

@@ -10,14 +10,22 @@ namespace Assets.Scripts.Enemies
         [SerializeField] private ObjectParameter objectParameter;
         private HP hP;
         private Enemy1Attack enemy1Attack;
+        private bool isReady = false;
+        public bool IsReady => isReady;
 
         private void Awake()
         {
             enemy1Attack = GetComponent<Enemy1Attack>();
             ObjectFacade.AddEnemy(this);
             hP = HP.Initialize(objectParameter.MaxHP);
+            GetComponent<ObjectMove>().Initialize(transform.position);
         }
 
+        public void SetReady()
+        {
+            isReady = true;
+        }
+        
         public bool IsDead()
         {
             return hP.IsZero();

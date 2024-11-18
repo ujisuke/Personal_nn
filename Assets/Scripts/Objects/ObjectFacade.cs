@@ -41,6 +41,14 @@ namespace Assets.Scripts.Objects
                 enemyList[0].DestroyObject();
         }
 
+        public static void SetAllObjectsReady()
+        {
+            if(player == null) return;
+            player.SetReady();
+            foreach(IObject enemy in enemyList)
+                enemy.SetReady();
+        }
+
         public static Vector3 GetPlayerRePos3()
         {
             if(player == null) return Vector3.zero;
@@ -50,6 +58,11 @@ namespace Assets.Scripts.Objects
         public static bool IsPlayerDead()
         {
             return false;
+        }
+
+        public static bool IsEnemyLiving()
+        {
+            return enemyList.Count > 0;
         }
 
         //当たり判定の計算専用クラスで行う予定

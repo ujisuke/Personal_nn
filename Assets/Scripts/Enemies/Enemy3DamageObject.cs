@@ -16,6 +16,11 @@ namespace Assets.Scripts.Enemies
             StartCoroutine(Suicide());
         }
 
+        public void SetReady()
+        {
+
+        }
+
         private IEnumerator Suicide()
         {
             yield return new WaitForSeconds(0.5f);

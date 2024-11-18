@@ -12,7 +12,6 @@ namespace Assets.Scripts.Player
         private void OnEnable()
         {
             objectMove = GetComponent<ObjectMove>();
-            objectMove.Initialize(transform.position);
             isAfterAttack = true;
         }
 

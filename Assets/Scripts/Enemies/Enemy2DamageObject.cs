@@ -16,6 +16,11 @@ namespace Assets.Scripts.Enemies
             StartCoroutine(Suicide());
         }
 
+        public void SetReady()
+        {
+
+        }
+
         private IEnumerator Suicide()
         {
             yield return new WaitForSeconds(0.1f);
@@ -39,7 +44,7 @@ namespace Assets.Scripts.Enemies
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
-            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2, 0f);
+            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, 0f);
             Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, transform.localScale.y / StageCreator._tileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
