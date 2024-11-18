@@ -11,6 +11,7 @@ namespace Assets.Scripts.Enemies
         public bool IsAttacking => isAttacking;
         private bool isDamaging = false;
         public bool IsDamaging => isDamaging;
+        [SerializeField] GameObject damageObject;
 
         private void OnEnable()
         {
@@ -43,6 +44,7 @@ namespace Assets.Scripts.Enemies
             isDamaging = true;
             while(objectMove.IsJumping)
                 yield return null;
+            Instantiate(damageObject, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
             isDamaging = false;
             yield return new WaitForSeconds(0.4f);
