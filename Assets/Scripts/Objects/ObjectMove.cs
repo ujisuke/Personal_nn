@@ -11,7 +11,7 @@ namespace Assets.Scripts.Objects
     public class ObjectMove : MonoBehaviour
     {
         [SerializeField] private GameObject shadow;
-        [SerializeField] private ObjectData objectData;
+        [SerializeField] private ObjectParameter objectData;
         private readonly int[,] _tileZs = StageCreator.TileZs;
         private bool isJumping = false;
         public bool IsJumping => isJumping;
@@ -20,10 +20,10 @@ namespace Assets.Scripts.Objects
         private float prevZ = 0;
         private SpriteRenderer objectSpriteRenderer;
         private SpriteRenderer shadowSpriteRenderer;
-        private bool isHeadingToA = false;
-        private bool isHeadingToW = false;
-        private bool isHeadingToS = false;
-        private bool isHeadingToD = false;
+        private bool isHeadingToMinusX = false;
+        private bool isHeadingToPlusY = false;
+        private bool isHeadingToMinusY = false;
+        private bool isHeadingToPlusX = false;
         private bool isTryingToJump = false;
         private int destinationTileZ = 0; 
 
@@ -39,9 +39,7 @@ namespace Assets.Scripts.Objects
             Vector3 objectImPos3 = ConvertToImPos3FromRePos3(transform.position);
             (int i, int j) objectTileIndex = ConvertToTileIndexFromImPos3(objectImPos3);
             
-            Vector3 destinationRePos3 = GetDestinationRePos3();
-            
-            Vector3 destinationImPos3 = ConvertToImPos3FromRePos3(destinationRePos3);
+            Vector3 destinationImPos3 = GetDestinationImPos3();
             (int i, int j) destinationTileIndex = ConvertToTileIndexFromImPos3(destinationImPos3);
 
             int objectTileZ = _tileZs[objectTileIndex.i, objectTileIndex.j];
@@ -108,31 +106,30 @@ namespace Assets.Scripts.Objects
             shadowSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
         }
 
-        private Vector3 GetDestinationRePos3()
+        private Vector3 GetDestinationImPos3()
         {
-            Vector3 newPos3 = new(transform.position.x, transform.position.y, transform.position.z);
+            Vector3 newImPos3 = ConvertToImPos3FromRePos3(transform.position);
+            
             float weight = objectData.MoveSpeed * Time.deltaTime;
-            if(isHeadingToW) newPos3.y += weight;
-            if(isHeadingToS) newPos3.y -= weight;
-            if(isHeadingToA) newPos3.x -= weight * 2;
-            if(isHeadingToD) newPos3.x += weight * 2;
+            if(isHeadingToPlusY) newImPos3.y += weight;
+            if(isHeadingToMinusY) newImPos3.y -= weight;
+            if(isHeadingToMinusX) newImPos3.x -= weight;
+            if(isHeadingToPlusX) newImPos3.x += weight;
             if(isTryingToJump && !isJumping)
             {
                 isJumping = true;
                 isFalling = false;
-                prevZ = newPos3.z;
-                newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
-                * (4f * objectData.JumpHeight / objectData.JumpTime * Time.deltaTime - 4f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
+                prevZ = newImPos3.z;
+                newImPos3.z += 4f * objectData.JumpHeight / objectData.JumpTime * Time.deltaTime - 4f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime);
             }
             else
             {
-                float tmpPrevZ = newPos3.z;
-                newPos3 += new Vector3(0, StageCreator._tileHeight, 1f)
-                * (newPos3.z - prevZ - 8f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime));
+                float tmpPrevZ = newImPos3.z;
+                newImPos3.z += newImPos3.z - prevZ - 8f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime);
                 prevZ = tmpPrevZ;
-                isFalling = newPos3.z < prevZ;
+                isFalling = newImPos3.z < prevZ && newImPos3.z > _tileZs[ConvertToTileIndexFromImPos3(newImPos3).i, ConvertToTileIndexFromImPos3(newImPos3).j] + 1f;
             }
-            return newPos3;
+            return newImPos3;
         }
 
         public static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
@@ -146,6 +143,8 @@ namespace Assets.Scripts.Objects
 
         private static (int i, int j) ConvertToTileIndexFromImPos3(Vector3 imPos3)
         {
+            imPos3.x = Mathf.Clamp(imPos3.x, -StageCreator._stageSide / 2f + 0.01f, StageCreator._stageSide / 2f - 0.01f);
+            imPos3.y = Mathf.Clamp(imPos3.y, -StageCreator._stageSide / 2f + 0.01f, StageCreator._stageSide / 2f - 0.01f);
             return (StageCreator._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._stageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
@@ -231,24 +230,24 @@ namespace Assets.Scripts.Objects
             return targetRePos3.z < objectRePos3.z + objectData.JumpHeight;
         }
     
-        public void HeadToA(bool isHeading)
+        public void HeadToMinusX(bool isHeading)
         {
-            isHeadingToA = isHeading;
+            isHeadingToMinusX = isHeading;
         }    
 
-        public void HeadToW(bool isHeading)
+        public void HeadToPlusY(bool isHeading)
         {
-            isHeadingToW = isHeading;
+            isHeadingToPlusY = isHeading;
         }
 
-        public void HeadToS(bool isHeading)
+        public void HeadToMinusY(bool isHeading)
         {
-            isHeadingToS = isHeading;
+            isHeadingToMinusY = isHeading;
         }
 
-        public void HeadToD(bool isHeading)
+        public void HeadToPlusX(bool isHeading)
         {
-            isHeadingToD = isHeading;
+            isHeadingToPlusX = isHeading;
         }
 
         public void TryToJump(bool isTrying)

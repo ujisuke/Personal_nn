@@ -1,5 +1,6 @@
 using UnityEngine;
 using Assets.Scripts.Enemies;
+using Assets.Scripts.Player;
 
 namespace Assets.Scripts.Objects
 {
@@ -10,7 +11,9 @@ namespace Assets.Scripts.Objects
 
         private void Awake()
         {
-            if(initialState == ObjectStateList.Enemy1Move)
+            if(initialState == ObjectStateList.Player)
+                currentState = new PlayerMoveState();
+            else if(initialState == ObjectStateList.Enemy1Move)
                 currentState = new Enemy1MoveState();
             else if(initialState == ObjectStateList.Enemy2Move)
                 currentState = new Enemy2MoveState();
@@ -34,6 +37,7 @@ namespace Assets.Scripts.Objects
 
     public enum ObjectStateList
     {
+        Player,
         Enemy1Move,
         Enemy2Move,
         Enemy3Move,

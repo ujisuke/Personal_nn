@@ -15,22 +15,32 @@ namespace Assets.Scripts.Enemies
         private void OnEnable()
         {
             isAttacking = true;
-            isDamaging = true;
+            isDamaging = false;
             objectMove = GetComponent<ObjectMove>();
             StartCoroutine(Attack());
         }
 
         private void FixedUpdate()
         {
-            objectMove.HeadToD(false);
-            objectMove.HeadToA(false);
-            objectMove.HeadToW(false);
-            objectMove.HeadToS(false);
+            objectMove.HeadToPlusX(false);
+            objectMove.HeadToMinusX(false);
+            objectMove.HeadToPlusY(false);
+            objectMove.HeadToMinusY(false);
             objectMove.TryToJump(false);
         }
 
         private IEnumerator Attack()
         {
+            for(int i = 0; i < 10; i++)
+            {
+                if(!objectMove.IsJumping)
+                {
+                    isAttacking = false;
+                    yield break;
+                }
+                yield return new WaitForSeconds(0.01f);
+            }
+            isDamaging = true;
             while(objectMove.IsJumping)
                 yield return null;
             yield return new WaitForSeconds(0.1f);
