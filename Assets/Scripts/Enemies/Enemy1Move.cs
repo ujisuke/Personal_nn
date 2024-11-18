@@ -11,7 +11,7 @@ namespace Assets.Scripts.Enemies
         private ObjectMove objectMove;
         private Vector3 targetRePos3 = new(-1, -1, -1);
         private static readonly float stopDistance = 0.4f;
-        private static readonly float attackDistance = 1f;
+        private static readonly float attackDistance = 1.5f;
 
         private void OnEnable()
         {
