@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Stage
 {
-    public class StageElement : MonoBehaviour
+    public static class StageElement
     {
         private static readonly List<int[,]> _StageElement2Zs = new()
         {

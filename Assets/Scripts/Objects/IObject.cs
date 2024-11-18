@@ -5,6 +5,7 @@ namespace Assets.Scripts.Objects
 {
     public interface IObject
     {
+        public void SetReady();
         public bool IsDamaging();
         public void DamageTo(IObject obj);
         public void TakeDamage(float damage);

@@ -11,14 +11,14 @@ namespace Assets.Scripts.Objects
 
         private void Awake()
         {
-            if(initialState == ObjectStateList.Player)
-                currentState = new PlayerMoveState();
+            if(initialState == ObjectStateList.PlayerMove)
+                currentState = new PlayerNotReadyState();
             else if(initialState == ObjectStateList.Enemy1Move)
-                currentState = new Enemy1MoveState();
+                currentState = new Enemy1NotReadyState();
             else if(initialState == ObjectStateList.Enemy2Move)
-                currentState = new Enemy2MoveState();
+                currentState = new Enemy2NotReadyState();
             else if(initialState == ObjectStateList.Enemy3Move)
-                currentState = new Enemy3MoveState();
+                currentState = new Enemy3NotReadyState();
             currentState.Enter(this);
         }
 
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Objects
 
     public enum ObjectStateList
     {
-        Player,
+        PlayerMove,
         Enemy1Move,
         Enemy2Move,
         Enemy3Move,

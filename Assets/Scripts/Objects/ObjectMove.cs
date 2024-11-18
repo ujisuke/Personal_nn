@@ -12,7 +12,7 @@ namespace Assets.Scripts.Objects
     {
         [SerializeField] private GameObject shadow;
         [SerializeField] private ObjectParameter objectData;
-        private readonly int[,] _tileZs = StageCreator.TileZs;
+        private readonly int[,] _tileZs = StageFacade.TileZs;
         private bool isJumping = false;
         public bool IsJumping => isJumping;
         private bool isFalling = false;
@@ -134,24 +134,24 @@ namespace Assets.Scripts.Objects
 
         public static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
         {
-            Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageCreator._tileHeight);
-            Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageCreator._tileHeight), newRePos2.x + 2f * (newRePos2.y + StageCreator._tileHeight), rePos3.z);
-            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageCreator._stageSide / 2f + 0.01f, StageCreator._stageSide / 2f - 0.01f);
-            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageCreator._stageSide / 2f + 0.01f, StageCreator._stageSide / 2f - 0.01f);
+            Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageFacade._tileHeight);
+            Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageFacade._tileHeight), newRePos2.x + 2f * (newRePos2.y + StageFacade._tileHeight), rePos3.z);
+            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
+            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
             return newImPos3;
         }
 
         private static (int i, int j) ConvertToTileIndexFromImPos3(Vector3 imPos3)
         {
-            imPos3.x = Mathf.Clamp(imPos3.x, -StageCreator._stageSide / 2f + 0.01f, StageCreator._stageSide / 2f - 0.01f);
-            imPos3.y = Mathf.Clamp(imPos3.y, -StageCreator._stageSide / 2f + 0.01f, StageCreator._stageSide / 2f - 0.01f);
-            return (StageCreator._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._stageSide / 2 + (int)Math.Floor(imPos3.x));
+            imPos3.x = Mathf.Clamp(imPos3.x, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
+            imPos3.y = Mathf.Clamp(imPos3.y, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
+            return (StageFacade._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageFacade._stageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
         public static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
         {
-            Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageCreator._tileHeight);
-            return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageCreator._tileHeight, imPos3.z);
+            Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageFacade._tileHeight);
+            return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageFacade._tileHeight, imPos3.z);
         }
 
         private static (int i, int j) ConvertToTileIndexFromRePos3(Vector3 rePos3)
@@ -160,9 +160,9 @@ namespace Assets.Scripts.Objects
             return ConvertToTileIndexFromImPos3(newImPos3);
         }
 
-        private static Vector3 ConvertToRePos3FromTileIndex((int i, int j) tileNumber)
+        public static Vector3 ConvertToRePos3FromTileIndex((int i, int j) tileNumber)
         {
-            Vector3 newImPos3 = new(-StageCreator._stageSide / 2 + tileNumber.j + 0.5f, StageCreator._stageSide / 2 - tileNumber.i - 0.5f, StageCreator.TileZs[tileNumber.i, tileNumber.j] + 1f);
+            Vector3 newImPos3 = new(-StageFacade._stageSide / 2 + tileNumber.j + 0.5f, StageFacade._stageSide / 2 - tileNumber.i - 0.5f, StageFacade.TileZs[tileNumber.i, tileNumber.j] + 1f);
             return ConvertToRePos3FromImPos3(newImPos3);
         }
 
@@ -176,8 +176,8 @@ namespace Assets.Scripts.Objects
         public static List<Vector3> DrawSomeRePos3AtRandom(int PosNumber, (int i, int j) pivotTileNumber, int minimumRadius)
         {
             List<(int i, int j)> tileNumberList = new();
-            for(int i = 0; i < StageCreator._stageSide; i++)
-                for(int j = 0; j < StageCreator._stageSide; j++)
+            for(int i = 0; i < StageFacade._stageSide; i++)
+                for(int j = 0; j < StageFacade._stageSide; j++)
                 {
                     if(Math.Abs(i - pivotTileNumber.i) < minimumRadius && Math.Abs(j - pivotTileNumber.j) < minimumRadius) continue;
                     tileNumberList.Add((i, j));
@@ -199,7 +199,7 @@ namespace Assets.Scripts.Objects
             for(int i = enemyTileNumber.I - 1; i < enemyTileNumber.I + 2; i++)
                 for(int j = enemyTileNumber.J - 1; j < enemyTileNumber.J + 2; j++)
                 {
-                    if(i < 0 || StageCreator._stageSide <= i || j < 0 || StageCreator._stageSide <= j) continue;
+                    if(i < 0 || StageFacade._stageSide <= i || j < 0 || StageFacade._stageSide <= j) continue;
                     if(i == enemyTileNumber.I && j == enemyTileNumber.J) continue;
                     Vector3 candidateTargetPos3 = ConvertToRePos3FromTileIndex((i, j));
                     if(IsReachable(candidateTargetPos3, rePos3)) candidateTargetPos3List.Add(candidateTargetPos3);
@@ -211,18 +211,18 @@ namespace Assets.Scripts.Objects
 
         public static bool IsHitWall(Vector3 imPos3)
         {
-            if(imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
-            || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
-            || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z) return true;
+            if(imPos3.x < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.x
+            || imPos3.y < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageFacade._stageHeight < imPos3.z) return true;
             (int i, int j) tileNumber = ConvertToTileIndexFromImPos3(imPos3);
-            return StageCreator.TileZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
+            return StageFacade.TileZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
         }
 
         public static bool IsHitStage(Vector3 imPos3)
         {
-            return imPos3.x < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.x
-            || imPos3.y < -StageCreator._stageSide / 2f || StageCreator._stageSide / 2f < imPos3.y
-            || imPos3.z < 0f || StageCreator._stageHeight < imPos3.z;
+            return imPos3.x < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.x
+            || imPos3.y < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageFacade._stageHeight < imPos3.z;
         }
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)

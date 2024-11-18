@@ -7,6 +7,7 @@ namespace Assets.Scripts.Objects
     {
         private static IObject player;
         private static List<IObject> enemyList = new();
+        private static ObjectCreator singletonObjectCreator;
         
         public static void AddPlayer(IObject newPlayer)
         {
@@ -16,6 +17,12 @@ namespace Assets.Scripts.Objects
         public static void RemovePlayer()
         {
             player = null;
+        }
+
+        public static void RemoveAndDestroyPlayer()
+        {
+            if(player == null) return;
+            player.DestroyObject();
         }
 
         public static void AddEnemy(IObject newEnemy)
@@ -28,11 +35,19 @@ namespace Assets.Scripts.Objects
             enemyList.Remove(obj);
         }
 
-        public static void RemoveAllEnemies()
+        public static void RemoveAndDestroyAllEnemies()
         {
             int enemyListCount = enemyList.Count;
             for(int i = 0; i < enemyListCount; i++)
                 enemyList[0].DestroyObject();
+        }
+
+        public static void SetAllObjectsReady()
+        {
+            if(player == null) return;
+            player.SetReady();
+            foreach(IObject enemy in enemyList)
+                enemy.SetReady();
         }
 
         public static Vector3 GetPlayerRePos3()
@@ -46,29 +61,29 @@ namespace Assets.Scripts.Objects
             return false;
         }
 
-        //当たり判定の計算専用クラスで行う予定
+        public static bool IsEnemyLiving()
+        {
+            return enemyList.Count > 0;
+        }
+
+        private void Awake()
+        {
+            singletonObjectCreator = GetComponent<ObjectCreator>();
+        }
+
         private void FixedUpdate()
         {
-            if(player == null) return;
-            (Vector3 playerMinImPos3, Vector3 playerMaxImPos3) = player.GetImPos3s();
-            foreach(IObject enemy in enemyList)
-            {
-                if(!enemy.IsDamaging()) continue;
-                (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemy.GetImPos3s();
-                if(playerMaxImPos3.x < enemyMinImPos3.x || playerMinImPos3.x > enemyMaxImPos3.x) continue;
-                if(playerMaxImPos3.y < enemyMinImPos3.y || playerMinImPos3.y > enemyMaxImPos3.y) continue;
-                if(playerMaxImPos3.z < enemyMinImPos3.z || playerMinImPos3.z > enemyMaxImPos3.z) continue;
-                enemy.DamageTo(player);
-            }
-            if(!player.IsDamaging()) return;
-            foreach(IObject enemy in enemyList)
-            {
-                (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemy.GetImPos3s();
-                if(enemyMaxImPos3.x < playerMinImPos3.x || enemyMinImPos3.x > playerMaxImPos3.x) continue;
-                if(enemyMaxImPos3.y < playerMinImPos3.y || enemyMinImPos3.y > playerMaxImPos3.y) continue;
-                if(enemyMaxImPos3.z < playerMinImPos3.z || enemyMinImPos3.z > playerMaxImPos3.z) continue;
-                player.DamageTo(enemy);
-            }
+            ExecuteObjectAttack();
+        }
+
+        private static void ExecuteObjectAttack()
+        {
+            ObjectHittingCalculator.CalculateHitting(player, enemyList);
+        }
+
+        public static void CreateNewObjects()
+        {
+            singletonObjectCreator.CreateNewObjects();
         }
     }
 }
