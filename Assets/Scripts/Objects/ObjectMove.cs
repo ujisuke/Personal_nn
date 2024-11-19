@@ -4,6 +4,7 @@ using Assets.Scripts.Stage;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.ScriptableObjects;
+using Unity.Mathematics;
 
 
 namespace Assets.Scripts.Objects
@@ -154,7 +155,7 @@ namespace Assets.Scripts.Objects
             return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageFacade._tileHeight, imPos3.z);
         }
 
-        private static (int i, int j) ConvertToTileIndexFromRePos3(Vector3 rePos3)
+        public static (int i, int j) ConvertToTileIndexFromRePos3(Vector3 rePos3)
         {
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(rePos3);
             return ConvertToTileIndexFromImPos3(newImPos3);
@@ -173,18 +174,19 @@ namespace Assets.Scripts.Objects
             return endIm3 - startIm3;
         }
 
-        public static List<Vector3> DrawSomeRePos3AtRandom(int PosNumber, (int i, int j) pivotTileNumber, int minimumRadius)
+        public static List<Vector3> DrawSomeRePos3AtRandom(int PosNumber, (int i, int j) pivotTileNumber, int minimumRadius, int maximumRadius)
         {
             List<(int i, int j)> tileNumberList = new();
             for(int i = 0; i < StageFacade._stageSide; i++)
                 for(int j = 0; j < StageFacade._stageSide; j++)
                 {
                     if(Math.Abs(i - pivotTileNumber.i) < minimumRadius && Math.Abs(j - pivotTileNumber.j) < minimumRadius) continue;
+                    if(Math.Abs(i - pivotTileNumber.i) > maximumRadius || Math.Abs(j - pivotTileNumber.j) > maximumRadius) continue;
                     tileNumberList.Add((i, j));
                 }
             tileNumberList = tileNumberList.OrderBy(a => Guid.NewGuid()).ToList();
             List<Vector3> rePos3List = new();
-            for(int i = 0; i < PosNumber; i++)
+            for(int i = 0; i < math.min(PosNumber, tileNumberList.Count); i++)
             {
                 Vector3 rePos3 = ConvertToRePos3FromTileIndex(tileNumberList[i]);
                 rePos3List.Add(rePos3);

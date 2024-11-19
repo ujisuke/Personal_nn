@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Objects;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Enemies
 {
@@ -27,27 +28,17 @@ namespace Assets.Scripts.Enemies
             objectMove.HeadToMinusX(false);
             objectMove.HeadToPlusY(false);
             objectMove.HeadToMinusY(false);
-            objectMove.TryToJump(false);
         }
 
         private IEnumerator Attack()
         {
-            for(int i = 0; i < 10; i++)
-            {
-                if(!objectMove.IsJumping)
-                {
-                    isAttacking = false;
-                    yield break;
-                }
-                yield return new WaitForSeconds(0.01f);
-            }
-            isDamaging = true;
-            while(objectMove.IsJumping)
-                yield return null;
-            Instantiate(damageObject, transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(0.1f);
-            isDamaging = false;
-            yield return new WaitForSeconds(0.4f);
+            objectMove.TryToJump(true);            
+            yield return new WaitUntil(() => objectMove.IsJumping);
+            List<Vector3> damageObjectRePos3List = ObjectMove.DrawSomeRePos3AtRandom(6, ObjectMove.ConvertToTileIndexFromRePos3(transform.position), 1, 1);
+            for(int i = 0; i < damageObjectRePos3List.Count; i++)
+                Instantiate(damageObject, damageObjectRePos3List[i], Quaternion.identity);
+            yield return new WaitUntil(() => !objectMove.IsJumping);
+            objectMove.TryToJump(false);
             isAttacking = false;
         }
     }

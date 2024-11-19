@@ -29,7 +29,7 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Attack()
         {   
-            for(int i = 0; i < 3; i++)
+            for(int i = 0; i < 1; i++)
             {
                 yield return new WaitForSeconds(0.3f);
                 Vector3 fireRePos3 = transform.position + new Vector3(0f, 0f, 1f);
