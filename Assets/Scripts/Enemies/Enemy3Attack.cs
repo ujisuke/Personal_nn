@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Objects;
+using Assets.Scripts.Stage;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Enemies
 {
@@ -29,27 +31,14 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Attack()
         {
-            Vector3 fireRePos3 = transform.position + new Vector3(0f, 0f, 1f);
-            Vector3 imDirection3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(fireRePos3, ObjectFacade.GetPlayerRePos3()).normalized / 10f;
-            Vector3 enemy3ImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3);
-            Vector3 targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3);
-            Vector3 playerImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3());
-            while(true)
+            List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
+            for(int i = 0; i < objectRePos3ListList.Count; i++)
             {
-                targetImPos3 += imDirection3;
-                if(ObjectMove.IsHitStage(targetImPos3))
-                    break;
+                List<Vector3> objectRePos3List = objectRePos3ListList[i];
+                for(int j = 0; j < objectRePos3List.Count; j++)
+                    Instantiate(damageObjectPrefab, objectRePos3List[j], Quaternion.identity);
+                yield return new WaitForSeconds(0.2f);
             }
-            yield return new WaitForSeconds(0.5f);
-            targetImPos3 = enemy3ImPos3;
-            while(true)
-            {
-                targetImPos3 += imDirection3;
-                Instantiate(damageObjectPrefab, ObjectMove.ConvertToRePos3FromImPos3(targetImPos3), Quaternion.identity);
-                if(ObjectMove.IsHitStage(targetImPos3))
-                    break;
-            }
-            yield return new WaitForSeconds(0.5f);
             isAttacking = false;
         }
     }

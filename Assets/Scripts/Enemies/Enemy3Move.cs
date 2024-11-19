@@ -8,8 +8,6 @@ namespace Assets.Scripts.Enemies
     public class Enemy3Move : MonoBehaviour
     {
         private ObjectMove objectMove;
-        private Vector3 targetImPos3 = new();
-        private Vector3 initialtargetPos3 = new(-1, -1, -1);
         private bool canAttack = false;
         public bool CanAttack => canAttack;
 
@@ -17,17 +15,12 @@ namespace Assets.Scripts.Enemies
         {
             objectMove = GetComponent<ObjectMove>();
             objectMove.Initialize(transform.position);
-            targetImPos3 = initialtargetPos3;
             StartCoroutine(TrackPlayer());
         }
 
         private IEnumerator TrackPlayer()
-        {
-            for(int i = 0; i < 10; i++)
-            {
-                targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3());
-                yield return new WaitForSeconds(0.2f);
-            }
+        { 
+            yield return new WaitForSeconds(1f);
             canAttack = true;
         }
     
