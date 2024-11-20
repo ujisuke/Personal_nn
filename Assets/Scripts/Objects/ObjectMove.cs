@@ -168,6 +168,12 @@ namespace Assets.Scripts.Objects
             return ConvertToRePos3FromImPos3(newImPos3);
         }
 
+        public static Vector3 ConvertToTileRePos3FromImPos3(Vector3 imPos3)
+        {
+            (int i, int j) tileIndex = ConvertToTileIndexFromImPos3(imPos3);
+            return ConvertToRePos3FromTileIndex(tileIndex);
+        }
+
         public static Vector3 CalclateImDirection3BetWeenTwoRePos3(Vector3 startRe3, Vector3 endRe3)
         {
             Vector3 startIm3 = ConvertToImPos3FromRePos3(startRe3);

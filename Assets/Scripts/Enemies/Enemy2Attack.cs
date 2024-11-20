@@ -29,30 +29,23 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Attack()
         {   
-            for(int i = 0; i < 1; i++)
+            Vector3 fireRePos3 = transform.position;
+            Vector3 imDirection3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(fireRePos3, ObjectFacade.GetPlayerRePos3()).normalized * 0.2f;
+            Vector3 targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3)  + new Vector3(0f, 0f, 1f);
+            Vector3 playerImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3()) + new Vector3(0f, 0f, 1f);
+            while(true)
             {
-                yield return new WaitForSeconds(0.3f);
-                Vector3 fireRePos3 = transform.position + new Vector3(0f, 0f, 1f);
-                Vector3 imDirection3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(fireRePos3, ObjectFacade.GetPlayerRePos3()).normalized * 0.2f;
-                Vector3 enemy2ImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3);
-                Vector3 targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3);
-                Vector3 playerImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3());
-                while(true)
+                targetImPos3 += imDirection3;
+                if((targetImPos3 - playerImPos3).magnitude <= 0.1f)
+                    break;
+                if(ObjectMove.IsHitWall(targetImPos3))
                 {
-                    targetImPos3 += imDirection3;
-                    if((targetImPos3 - playerImPos3).magnitude <= 0.1f || ObjectMove.IsHitWall(targetImPos3))
-                        break;
+                    yield return new WaitForSeconds(1f);
+                    isAttacking = false;
+                    yield break;
                 }
-                yield return new WaitForSeconds(0.1f);
-                targetImPos3 = enemy2ImPos3;
-                while(true)
-                {
-                    targetImPos3 += imDirection3;
-                    if((targetImPos3 - playerImPos3).magnitude <= 0.1f || ObjectMove.IsHitWall(targetImPos3))
-                        break;
-                }           
-                Instantiate(damageObjectPrefab, ObjectMove.ConvertToRePos3FromImPos3(targetImPos3), Quaternion.identity);
-            }
+            }     
+            Instantiate(damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(playerImPos3), Quaternion.identity);
             isAttacking = false;
         }
     }
