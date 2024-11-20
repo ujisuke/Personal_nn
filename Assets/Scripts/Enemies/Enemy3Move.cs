@@ -15,10 +15,11 @@ namespace Assets.Scripts.Enemies
         {
             objectMove = GetComponent<ObjectMove>();
             objectMove.Initialize(transform.position);
-            StartCoroutine(TrackPlayer());
+            canAttack = false;
+            StartCoroutine(CoolDown());
         }
 
-        private IEnumerator TrackPlayer()
+        private IEnumerator CoolDown()
         { 
             yield return new WaitForSeconds(1f);
             canAttack = true;

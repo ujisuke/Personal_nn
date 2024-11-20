@@ -28,17 +28,15 @@ namespace Assets.Scripts.Enemies
             objectMove.HeadToMinusX(false);
             objectMove.HeadToPlusY(false);
             objectMove.HeadToMinusY(false);
+            objectMove.TryToJump(false);
         }
 
         private IEnumerator Attack()
-        {
-            objectMove.TryToJump(true);            
-            yield return new WaitUntil(() => objectMove.IsJumping);
+        {          
             List<Vector3> damageObjectRePos3List = ObjectMove.DrawSomeRePos3AtRandom(6, ObjectMove.ConvertToTileIndexFromRePos3(transform.position), 1, 1);
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
                 Instantiate(damageObject, damageObjectRePos3List[i], Quaternion.identity);
-            yield return new WaitUntil(() => !objectMove.IsJumping);
-            objectMove.TryToJump(false);
+            yield return new WaitForSeconds(1f);
             isAttacking = false;
         }
     }

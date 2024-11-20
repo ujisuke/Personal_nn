@@ -9,10 +9,12 @@ namespace Assets.Scripts.Enemies
     public class Enemy2DamageObject : MonoBehaviour, IObject
     {
         [SerializeField] private ObjectParameter objectParameter;
+        private bool isDamaging = false;
 
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);
+            isDamaging = false;
             StartCoroutine(Suicide());
         }
 
@@ -23,13 +25,15 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Suicide()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.6f);
+            isDamaging = true;
+            yield return new WaitForSeconds(0.3f);
             DestroyObject();
         }
 
         public bool IsDamaging()
         {
-            return true;
+            return isDamaging;
         }
 
         public void DamageTo(IObject obj)

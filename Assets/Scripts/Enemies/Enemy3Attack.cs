@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enemies
         private void OnEnable()
         {
             isAttacking = true;
-            objectMove = GetComponent<ObjectMove>();;
+            objectMove = GetComponent<ObjectMove>();
             StartCoroutine(Attack());
         }
 
