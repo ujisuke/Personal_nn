@@ -38,10 +38,10 @@ namespace Assets.Scripts.Enemies
         private void FixedUpdate()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
-            objectMove.HeadToPlusX(moveDirectionIm3.x >= enemy1Parameter.StopMoveImDistanceFromPlayer);
-            objectMove.HeadToMinusX(moveDirectionIm3.x < -enemy1Parameter.StopMoveImDistanceFromPlayer);
-            objectMove.HeadToPlusY(moveDirectionIm3.y >= enemy1Parameter.StopMoveImDistanceFromPlayer);
-            objectMove.HeadToMinusY(moveDirectionIm3.y < -enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToPlusImX(moveDirectionIm3.x >= enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToMinusImX(moveDirectionIm3.x < -enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToPlusImY(moveDirectionIm3.y >= enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToMinusImY(moveDirectionIm3.y < -enemy1Parameter.StopMoveImDistanceFromPlayer);
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position));
         }
 

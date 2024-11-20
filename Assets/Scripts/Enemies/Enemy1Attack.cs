@@ -31,10 +31,10 @@ namespace Assets.Scripts.Enemies
 
         private void FixedUpdate()
         {
-            objectMove.HeadToPlusX(false);
-            objectMove.HeadToMinusX(false);
-            objectMove.HeadToPlusY(false);
-            objectMove.HeadToMinusY(false);
+            objectMove.HeadToPlusImX(false);
+            objectMove.HeadToMinusImX(false);
+            objectMove.HeadToPlusImY(false);
+            objectMove.HeadToMinusImY(false);
             objectMove.TryToJump(false);
         }
 

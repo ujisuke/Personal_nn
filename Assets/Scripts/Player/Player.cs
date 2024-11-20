@@ -7,7 +7,7 @@ namespace Assets.Scripts.Player
 {
     public class Player : MonoBehaviour, IObject
     {
-        [SerializeField] private ObjectParameter objectParameter;
+        [SerializeField] private PlayerParameter playerParameter;
         private HP hP;
         private PlayerAttack playerAttack;
         private bool isReady = false;
@@ -16,9 +16,12 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             ObjectFacade.AddPlayer(this);
-            hP = HP.Initialize(objectParameter.MaxHP);
+            hP = HP.Initialize(playerParameter.MaxHP);
             playerAttack = GetComponent<PlayerAttack>();
-            GetComponent<ObjectMove>().Initialize(objectParameter, transform.position);
+            GetComponent<ObjectMove>().Initialize(playerParameter, transform.position);
+            GetComponent<PlayerMove>().Initialize();
+            playerAttack.Initialize(playerParameter);
+            GetComponent<PlayerDash>().Initialize(playerParameter);
         }
 
         public void SetReady()
@@ -38,7 +41,7 @@ namespace Assets.Scripts.Player
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(objectParameter.AttackPower);
+            obj.TakeDamage(playerParameter.AttackPower);
         }
 
         public void TakeDamage(float damage)
