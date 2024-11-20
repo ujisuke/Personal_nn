@@ -28,6 +28,5 @@ namespace Assets.Scripts.Objects
         {
             return _currentHP <= 0f;
         }
-
     }
 }

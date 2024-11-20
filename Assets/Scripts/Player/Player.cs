@@ -2,13 +2,15 @@ using Assets.Scripts.Objects;
 using UnityEngine;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
+using System.Collections;
 
 namespace Assets.Scripts.Player
 {
     public class Player : MonoBehaviour, IObject
     {
-        [SerializeField] private ObjectParameter objectParameter;
+        [SerializeField] private PlayerParameter playerParameter;
         private HP hP;
+        private Energy energy;
         private PlayerAttack playerAttack;
         private bool isReady = false;
         public bool IsReady => isReady;
@@ -16,9 +18,24 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             ObjectFacade.AddPlayer(this);
-            hP = HP.Initialize(objectParameter.MaxHP);
+            hP = HP.Initialize(playerParameter.MaxHP);
+            energy = Energy.Initialize(playerParameter.MaxEnergy);
             playerAttack = GetComponent<PlayerAttack>();
-            GetComponent<ObjectMove>().Initialize(objectParameter, transform.position);
+            GetComponent<ObjectMove>().Initialize(playerParameter, transform.position);
+            GetComponent<PlayerMove>().Initialize(playerParameter);
+            playerAttack.Initialize(playerParameter);
+            GetComponent<PlayerDash>().Initialize(playerParameter);
+            StartCoroutine(ChargeEnergy());
+        }
+
+        private IEnumerator ChargeEnergy()
+        {
+            while(!IsDead())
+            {
+                yield return new WaitUntil(() => !energy.IsFull());
+                yield return new WaitForSeconds(playerParameter.ChargingEnergyTime);
+                energy = energy.Charge(1);
+            }
         }
 
         public void SetReady()
@@ -31,6 +48,11 @@ namespace Assets.Scripts.Player
             return hP.IsZero();
         }
 
+        public bool CanUseEnergy(int consumption)
+        {
+            return energy.CanUse(consumption);
+        }
+
         public bool IsDamaging()
         {
             return playerAttack.IsDamaging;
@@ -38,12 +60,17 @@ namespace Assets.Scripts.Player
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(objectParameter.AttackPower);
+            obj.TakeDamage(playerParameter.AttackPower);
         }
 
         public void TakeDamage(float damage)
         {
             hP = hP.TakeDamage(damage);
+        }
+
+        public void ConsumeEnergy(int consumption)
+        {
+            energy = energy.Consume(consumption);
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()

@@ -21,7 +21,7 @@ namespace Assets.Scripts.Stage
         private static void SetStageMatrix()
         {
             //行列の初期化
-            InitializeMatrix(StageFacade.TileZs);
+            InitializeMatrix(StageFacade.TileImZs);
             //高さを設定
             SetAllZs();
         }
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Stage
             StageElement.AssignStageElementZs(_stageArea);
             for(int i = 0; i < StageFacade._stageSide; i++)
                 for(int j = 0; j < StageFacade._stageSide; j++)
-                    StageFacade.TileZs[i, j] = _stageArea[i, j];
+                    StageFacade.TileImZs[i, j] = _stageArea[i, j];
         }
 
         private static void SetAllZsWhenDifficultyIs2()
@@ -82,12 +82,12 @@ namespace Assets.Scripts.Stage
                 StageElement.AssignStageElementZs(_stageArea);
                 for(int I = 0; I < h; I++)
                     for(int J = 0; J < w; J++)
-                        StageFacade.TileZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
+                        StageFacade.TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
                 
                 if(clossPointList.Count < i + 1) break;
                 for(int I = clossPointList[i].startI; I < clossPointList[i].endI + 1; I++)
                     for(int J = clossPointList[i].startJ; J < clossPointList[i].endJ + 1; J++)
-                        StageFacade.TileZs[I, J] = _stageArea[0, 0] + offsetZ;
+                        StageFacade.TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
                 offsetZ += _stageArea[0, 0] - 1;
             }
         }
@@ -141,12 +141,12 @@ namespace Assets.Scripts.Stage
                 StageElement.AssignStageElementZs(_stageArea);
                 for(int I = 0; I < h; I++)
                     for(int J = 0; J < w; J++)
-                        StageFacade.TileZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
+                        StageFacade.TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
                 
                 if(clossPointList.Count < i + 1) break;
                 for(int I = clossPointList[i].startI; I < clossPointList[i].endI + 1; I++)
                     for(int J = clossPointList[i].startJ; J < clossPointList[i].endJ + 1; J++)
-                        StageFacade.TileZs[I, J] = _stageArea[0, 0] + offsetZ;
+                        StageFacade.TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
                 offsetZ += _stageArea[0, 0] - 1;
             }
         }
@@ -157,7 +157,7 @@ namespace Assets.Scripts.Stage
                 for(int j = 0; j < StageFacade._stageSide * 2 - 1; j++)
                 {
                     if(i - j >= StageFacade._stageSide || i - j < 0 || j >= StageFacade._stageSide) continue;
-                    int tileHeight = StageFacade.TileZs[i - j, j];
+                    int tileHeight = StageFacade.TileImZs[i - j, j];
                     Vector3Int tilePosition = new((StageFacade._stageSide - 1) / 2 - i + j, (StageFacade._stageSide - 1) / 2 - j, 0);
                     TileData.SetTile(tileHeight, tilePosition, stageTilemapList[i]);
                 }

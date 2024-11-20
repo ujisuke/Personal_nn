@@ -2,33 +2,31 @@ using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMoveState : IObjectState
+    public class PlayerDashState : IObjectState
     {
         private ObjectStateMachine objectStateMachine;
-        private PlayerMove playerMove;
+        private PlayerDash playerDash;
         private Player player;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
-            playerMove = objectStateMachine.GetComponent<PlayerMove>();
+            playerDash = objectStateMachine.GetComponent<PlayerDash>();
             player = objectStateMachine.GetComponent<Player>();
-            playerMove.enabled = true;
+            playerDash.enabled = true;
         }
 
         public void FixedUpdate()
         {
             if(player.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
-            if(playerMove.CanDash())
-                objectStateMachine.TransitionTo(new PlayerDashState());
-            if(playerMove.CanAttack())
-                objectStateMachine.TransitionTo(new PlayerAttackState());
+            if(!playerDash.IsDashing)
+                objectStateMachine.TransitionTo(new PlayerMoveState());
         }
 
         public void Exit()
         {
-            playerMove.enabled = false;
+            playerDash.enabled = false;
         }
     }
 }
