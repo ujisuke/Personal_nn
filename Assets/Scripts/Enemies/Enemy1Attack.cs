@@ -1,22 +1,31 @@
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Objects;
+using System.Collections.Generic;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy1Attack : MonoBehaviour
     {
         private ObjectMove objectMove;
+        private Enemy1Parameter enemy1Parameter;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         private bool isDamaging = false;
         public bool IsDamaging => isDamaging;
+        [SerializeField] GameObject damageObject;
+
+        public void Initialize(Enemy1Parameter enemy1Parameter)
+        {
+            objectMove = GetComponent<ObjectMove>();
+            this.enemy1Parameter = enemy1Parameter;
+        }
 
         private void OnEnable()
         {
             isAttacking = true;
             isDamaging = false;
-            objectMove = GetComponent<ObjectMove>();
             StartCoroutine(Attack());
         }
 
@@ -30,22 +39,12 @@ namespace Assets.Scripts.Enemies
         }
 
         private IEnumerator Attack()
-        {
-            for(int i = 0; i < 10; i++)
-            {
-                if(!objectMove.IsJumping)
-                {
-                    isAttacking = false;
-                    yield break;
-                }
-                yield return new WaitForSeconds(0.01f);
-            }
-            isDamaging = true;
-            while(objectMove.IsJumping)
-                yield return null;
-            yield return new WaitForSeconds(0.1f);
-            isDamaging = false;
-            yield return new WaitForSeconds(0.4f);
+        {          
+            List<Vector3> damageObjectRePos3List = ObjectMove.DrawSomeRePos3AtRandom(enemy1Parameter.AttackPanelCount, ObjectMove.ConvertToTileIndexFromRePos3(transform.position),
+            enemy1Parameter.AttackPanelMinImRadius, enemy1Parameter.AttackPanelMaxImRadius);
+            for(int i = 0; i < damageObjectRePos3List.Count; i++)
+                Instantiate(damageObject, damageObjectRePos3List[i], Quaternion.identity);
+            yield return new WaitForSeconds(enemy1Parameter.AttackCoolDownTime);
             isAttacking = false;
         }
     }

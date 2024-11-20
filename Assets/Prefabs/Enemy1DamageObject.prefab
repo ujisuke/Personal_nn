@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5247440597978605339}
   - component: {fileID: 3313383287755890431}
-  - component: {fileID: 5817036348637782799}
+  - component: {fileID: 6336938696369954640}
   m_Layer: 0
-  m_Name: Enemy2DamageObject
+  m_Name: Enemy1DamageObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_Sprite: {fileID: -4772128218627784326, guid: 5995793e2a9b54e408fb74cb76e409c7, type: 3}
-  m_Color: {r: 0.9709896, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.81566143, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5817036348637782799
+--- !u!114 &6336938696369954640
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,4 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7180ea27637784db35354286985fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageObjectParameter: {fileID: 11400000, guid: 74fba564a96be0848bae665acb2d4bb6, type: 2}
+  damageObjectParameter: {fileID: 11400000, guid: 24366faabe12db145922d48476be7286, type: 2}

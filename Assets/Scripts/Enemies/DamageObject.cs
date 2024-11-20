@@ -6,9 +6,9 @@ using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
-    public class Enemy3DamageObject : MonoBehaviour, IObject
+    public class DamageObject : MonoBehaviour, IObject
     {
-        [SerializeField] private ObjectParameter objectParameter;
+        [SerializeField] private DamageObjectParameter damageObjectParameter;
         private bool isDamaging = false;
 
         private void Awake()
@@ -25,9 +25,9 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Suicide()
         {
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(damageObjectParameter.ReadyTime);
             isDamaging = true;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(damageObjectParameter.DamagingTime);
             DestroyObject();
         }
 
@@ -38,18 +38,18 @@ namespace Assets.Scripts.Enemies
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(objectParameter.AttackPower);
+            obj.TakeDamage(damageObjectParameter.AttackPower);
         }
 
         public void TakeDamage(float damage)
         {
-            
+
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
-            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, transform.localScale.y / StageFacade._tileHeight);
+            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 2f, 0f, 0f);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, StageFacade._tileHeight, transform.localScale.y / StageFacade._tileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 

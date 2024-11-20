@@ -20,7 +20,7 @@ namespace Assets.Scripts.Objects
 
             int objectNumber = BattleFacade.Difficulty;
             ObjectFacade.RemoveAndDestroyAllEnemies();
-            List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectNumber, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy);
+            List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectNumber, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade._stageSide);
 
             for (int i = 0; i < objectNumber; i++)
             {

@@ -7,18 +7,18 @@ namespace Assets.Scripts.Enemies
 {
     public class Enemy1 : MonoBehaviour, IObject
     {
-        [SerializeField] private ObjectParameter objectParameter;
+        [SerializeField] private Enemy1Parameter enemy1Parameter;
         private HP hP;
-        private Enemy1Attack enemy1Attack;
         private bool isReady = false;
         public bool IsReady => isReady;
 
         private void Awake()
         {
-            enemy1Attack = GetComponent<Enemy1Attack>();
             ObjectFacade.AddEnemy(this);
-            hP = HP.Initialize(objectParameter.MaxHP);
-            GetComponent<ObjectMove>().Initialize(transform.position);
+            hP = HP.Initialize(enemy1Parameter.MaxHP);
+            GetComponent<ObjectMove>().Initialize(enemy1Parameter, transform.position);
+            GetComponent<Enemy1Attack>().Initialize(enemy1Parameter);
+            GetComponent<Enemy1Move>().Initialize(enemy1Parameter);
         }
 
         public void SetReady()
@@ -33,12 +33,12 @@ namespace Assets.Scripts.Enemies
 
         public bool IsDamaging()
         {
-            return enemy1Attack.IsDamaging;
+            return false;
         }
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(objectParameter.AttackPower);
+            obj.TakeDamage(enemy1Parameter.AttackPower);
         }
 
         public void TakeDamage(float damage)

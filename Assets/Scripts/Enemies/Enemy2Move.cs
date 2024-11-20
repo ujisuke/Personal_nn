@@ -1,20 +1,25 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using Unity.Mathematics;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy2Move : MonoBehaviour
     {
+        private Enemy2Parameter enemy2Parameter;
         private ObjectMove objectMove;
         private Vector3 targetRePos3 = new();
         private Vector3 initialtargetRePos3 = new(-1, -1, -1);
-        private readonly float stopDistance = 0.2f;
+
+        public void Initialize(Enemy2Parameter enemy2Parameter)
+        {
+            this.enemy2Parameter = enemy2Parameter;
+            objectMove = GetComponent<ObjectMove>();
+        }
 
         private void OnEnable()
         {
-            objectMove = GetComponent<ObjectMove>();
-            objectMove.Initialize(transform.position);
             targetRePos3 = initialtargetRePos3;
             targetRePos3 = objectMove.DrawRePos3AroundRePos3(transform.position);
         }
@@ -22,10 +27,10 @@ namespace Assets.Scripts.Enemies
         private void FixedUpdate()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
-            objectMove.HeadToPlusX(moveDirectionIm3.x >= stopDistance);
-            objectMove.HeadToMinusX(moveDirectionIm3.x < -stopDistance);
-            objectMove.HeadToPlusY(moveDirectionIm3.y >= stopDistance);
-            objectMove.HeadToMinusY(moveDirectionIm3.y < -stopDistance);
+            objectMove.HeadToPlusX(moveDirectionIm3.x >= enemy2Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToMinusX(moveDirectionIm3.x < -enemy2Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToPlusY(moveDirectionIm3.y >= enemy2Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToMinusY(moveDirectionIm3.y < -enemy2Parameter.StopMoveImDistanceFromPlayer);
 
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position));
         }
@@ -33,7 +38,7 @@ namespace Assets.Scripts.Enemies
         public bool CanAttack()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
-            return math.abs(moveDirectionIm3.x) <= stopDistance && math.abs(moveDirectionIm3.y) <= stopDistance;
+            return math.abs(moveDirectionIm3.x) <= enemy2Parameter.StopMoveImDistanceFromPlayer && math.abs(moveDirectionIm3.y) <= enemy2Parameter.StopMoveImDistanceFromPlayer;
         }
     }
 }

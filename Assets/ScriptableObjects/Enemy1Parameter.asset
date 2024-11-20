@@ -9,11 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b2f7e1ded2bcc647b9d1d3e67b48ae0, type: 3}
-  m_Name: Enemy2
+  m_Script: {fileID: 11500000, guid: 4abb59ed12f1a8e41ac635398fef735c, type: 3}
+  m_Name: Enemy1Parameter
   m_EditorClassIdentifier: 
-  _moveSpeed: 2
-  _jumpHeight: 2.5
+  _moveSpeed: 3
+  _jumpHeight: 6
   _jumpTime: 0.6
   _attackPower: 0
   maxHP: 1
+  _stopMoveImDistanceFromPlayer: 0.5
+  _attackImDistanceFromPlayer: 1.5
+  _attackPanelCount: 6
+  _attackPanelMinImRadius: 1
+  _attackPanelMaxImRadius: 1
+  _attackCoolDownTime: 1
