@@ -1,17 +1,22 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerMove : MonoBehaviour
     {
+        private PlayerParameter playerParameter;
+        private Player player;
         private ObjectMove objectMove;
         private bool isAfterAttack = true;
         private bool isAfterDash = true;
 
-        public void Initialize()
+        public void Initialize(PlayerParameter playerParameter)
         {
+            this.playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
+            player = GetComponent<Player>();
         }
 
         private void OnEnable()
@@ -34,12 +39,12 @@ namespace Assets.Scripts.Player
 
         public bool CanAttack()
         {
-            return Input.GetMouseButton(0) && !isAfterAttack;
+            return Input.GetMouseButton(0) && !isAfterAttack && player.CanUseEnergy(playerParameter.AttackEnergyConsumption);
         }
 
         public bool CanDash()
         {
-            return Input.GetKey(KeyCode.LeftShift) && !isAfterDash;
+            return Input.GetKey(KeyCode.LeftShift) && !isAfterDash && player.CanUseEnergy(playerParameter.DashEnergyConsumption);
         }
     }
 }
