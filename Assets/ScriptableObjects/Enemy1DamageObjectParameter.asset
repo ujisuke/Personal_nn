@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b2f7e1ded2bcc647b9d1d3e67b48ae0, type: 3}
-  m_Name: Enemy3DamageObject
+  m_Script: {fileID: 11500000, guid: 697762647438007409a4fac443c1acf2, type: 3}
+  m_Name: Enemy1DamageObjectParameter
   m_EditorClassIdentifier: 
-  _moveSpeed: 0
-  _jumpHeight: 0
-  _jumpTime: 0
   _attackPower: 5
-  maxHP: 1
+  _readyTime: 0.6
+  _damagingTime: 0.3

@@ -107,7 +107,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadow: {fileID: 4502411192134155000}
-  objectData: {fileID: 11400000, guid: 6559ccce7a799d14db5b3b9394384366, type: 2}
 --- !u!114 &5559750665094269716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c8990493825034288ed08e6df83f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectParameter: {fileID: 11400000, guid: 6559ccce7a799d14db5b3b9394384366, type: 2}
+  enemy1Parameter: {fileID: 11400000, guid: 878efc1bf439f2444a2b045529545a45, type: 2}
 --- !u!114 &5729658282830314359
 MonoBehaviour:
   m_ObjectHideFlags: 0

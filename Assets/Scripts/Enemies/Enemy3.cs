@@ -7,7 +7,7 @@ namespace Assets.Scripts.Enemies
 {
     public class Enemy3 : MonoBehaviour, IObject
     {
-        [SerializeField] private ObjectParameter objectParameter;
+        [SerializeField] private Enemy3Parameter enemy3Parameter;
         private HP hP;
         private bool isReady = false;
         public bool IsReady => isReady;
@@ -15,8 +15,10 @@ namespace Assets.Scripts.Enemies
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);
-            hP = HP.Initialize(objectParameter.MaxHP);
-            GetComponent<ObjectMove>().Initialize(transform.position);
+            hP = HP.Initialize(enemy3Parameter.MaxHP);
+            GetComponent<ObjectMove>().Initialize(enemy3Parameter, transform.position);
+            GetComponent<Enemy3Move>().Initialize(enemy3Parameter);
+            GetComponent<Enemy3Attack>().Initialize(enemy3Parameter);
         }
 
         public void SetReady()
@@ -36,7 +38,7 @@ namespace Assets.Scripts.Enemies
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(objectParameter.AttackPower);
+            obj.TakeDamage(enemy3Parameter.AttackPower);
         }
 
         public void TakeDamage(float damage)

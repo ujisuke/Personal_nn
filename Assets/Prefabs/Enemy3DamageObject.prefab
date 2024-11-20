@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5247440597978605339}
   - component: {fileID: 3313383287755890431}
-  - component: {fileID: -3885689867307109438}
+  - component: {fileID: 6745746208466488418}
   m_Layer: 0
   m_Name: Enemy3DamageObject
   m_TagString: Untagged
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3885689867307109438
+--- !u!114 &6745746208466488418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5202028710676642513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed0c564057409d44395b1c0b84734e82, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b7180ea27637784db35354286985fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectParameter: {fileID: 11400000, guid: 8618627a7b86c374f96e8683e2483fe2, type: 2}
+  damageObjectParameter: {fileID: 11400000, guid: d12f4b3a4761ec84abed5dd0001f0267, type: 2}

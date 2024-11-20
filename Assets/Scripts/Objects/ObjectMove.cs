@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.ScriptableObjects;
 using Unity.Mathematics;
-using System.Runtime.CompilerServices;
+using UnityEngine.Rendering;
 
 
 namespace Assets.Scripts.Objects
@@ -13,7 +13,7 @@ namespace Assets.Scripts.Objects
     public class ObjectMove : MonoBehaviour
     {
         [SerializeField] private GameObject shadow;
-        [SerializeField] private ObjectParameter objectData;
+        private ObjectParameter objectParameter;
         private readonly int[,] _tileZs = StageFacade.TileZs;
         private bool isJumping = false;
         public bool IsJumping => isJumping;
@@ -29,8 +29,9 @@ namespace Assets.Scripts.Objects
         private bool isTryingToJump = false;
         private int destinationTileZ = 0; 
 
-        public void Initialize(Vector3 objectRePos3)
+        public void Initialize(ObjectParameter objectParameter, Vector3 objectRePos3)
         {
+            this.objectParameter = objectParameter;
             prevZ = objectRePos3.z;
             objectSpriteRenderer = GetComponent<SpriteRenderer>();
             shadowSpriteRenderer = shadow.GetComponent<SpriteRenderer>();
@@ -112,7 +113,7 @@ namespace Assets.Scripts.Objects
         {
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(transform.position);
             
-            float weight = objectData.MoveSpeed * Time.deltaTime;
+            float weight = objectParameter.MoveSpeed * Time.deltaTime;
             if(isHeadingToPlusY) newImPos3.y += weight;
             if(isHeadingToMinusY) newImPos3.y -= weight;
             if(isHeadingToMinusX) newImPos3.x -= weight;
@@ -122,12 +123,12 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
                 isFalling = false;
                 prevZ = newImPos3.z;
-                newImPos3.z += 4f * objectData.JumpHeight / objectData.JumpTime * Time.deltaTime - 4f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime);
+                newImPos3.z += 4f * objectParameter.JumpHeight / objectParameter.JumpTime * Time.deltaTime - 4f * objectParameter.JumpHeight / (objectParameter.JumpTime * objectParameter.JumpTime) * (Time.deltaTime * Time.deltaTime);
             }
             else
             {
                 float tmpPrevZ = newImPos3.z;
-                newImPos3.z += newImPos3.z - prevZ - 8f * objectData.JumpHeight / (objectData.JumpTime * objectData.JumpTime) * (Time.deltaTime * Time.deltaTime);
+                newImPos3.z += newImPos3.z - prevZ - 8f * objectParameter.JumpHeight / (objectParameter.JumpTime * objectParameter.JumpTime) * (Time.deltaTime * Time.deltaTime);
                 prevZ = tmpPrevZ;
                 isFalling = newImPos3.z < prevZ && newImPos3.z > _tileZs[ConvertToTileIndexFromImPos3(newImPos3).i, ConvertToTileIndexFromImPos3(newImPos3).j] + 1f;
             }
@@ -294,7 +295,7 @@ namespace Assets.Scripts.Objects
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
         {
-            return targetRePos3.z < objectRePos3.z + objectData.JumpHeight;
+            return targetRePos3.z < objectRePos3.z + objectParameter.JumpHeight;
         }
     
         public void HeadToMinusX(bool isHeading)
@@ -324,7 +325,7 @@ namespace Assets.Scripts.Objects
 
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
-            return destinationTileZ < objectRePos3.z - 1f + objectData.JumpHeight && objectRePos3.z - 1f < destinationTileZ;
+            return destinationTileZ < objectRePos3.z - 1f + objectParameter.JumpHeight && objectRePos3.z - 1f < destinationTileZ;
         }
     }   
 }

@@ -3,13 +3,12 @@ using UnityEngine;
 using Assets.Scripts.Stage;
 using System.Collections;
 using Assets.ScriptableObjects;
-using Unity.VisualScripting;
 
 namespace Assets.Scripts.Enemies
 {
-    public class Enemy1DamageObject : MonoBehaviour, IObject
+    public class DamageObject : MonoBehaviour, IObject
     {
-        [SerializeField] private ObjectParameter objectParameter;
+        [SerializeField] private DamageObjectParameter damageObjectParameter;
         private bool isDamaging = false;
 
         private void Awake()
@@ -26,9 +25,9 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Suicide()
         {
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(damageObjectParameter.ReadyTime);
             isDamaging = true;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(damageObjectParameter.DamagingTime);
             DestroyObject();
         }
 
@@ -39,7 +38,7 @@ namespace Assets.Scripts.Enemies
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(objectParameter.AttackPower);
+            obj.TakeDamage(damageObjectParameter.AttackPower);
         }
 
         public void TakeDamage(float damage)

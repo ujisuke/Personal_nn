@@ -18,7 +18,7 @@ namespace Assets.Scripts.Player
             ObjectFacade.AddPlayer(this);
             hP = HP.Initialize(objectParameter.MaxHP);
             playerAttack = GetComponent<PlayerAttack>();
-            GetComponent<ObjectMove>().Initialize(transform.position);
+            GetComponent<ObjectMove>().Initialize(objectParameter, transform.position);
         }
 
         public void SetReady()

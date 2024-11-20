@@ -100,4 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7180ea27637784db35354286985fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectParameter: {fileID: 11400000, guid: 862e16e30d712144d95b9265fa1d29af, type: 2}
+  damageObjectParameter: {fileID: 11400000, guid: 24366faabe12db145922d48476be7286, type: 2}

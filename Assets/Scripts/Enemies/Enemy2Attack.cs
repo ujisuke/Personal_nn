@@ -1,20 +1,27 @@
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Objects;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy2Attack : MonoBehaviour
     {
+        private Enemy2Parameter enemy2Parameter;
         [SerializeField] private GameObject damageObjectPrefab;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         
+        public void Initialize(Enemy2Parameter enemy2Parameter)
+        {
+            this.enemy2Parameter = enemy2Parameter;
+            objectMove = GetComponent<ObjectMove>();
+        }
+
         private void OnEnable()
         {
             isAttacking = true;
-            objectMove = GetComponent<ObjectMove>();
             StartCoroutine(Attack());
         }
 
@@ -31,8 +38,8 @@ namespace Assets.Scripts.Enemies
         {   
             Vector3 fireRePos3 = transform.position;
             Vector3 imDirection3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(fireRePos3, ObjectFacade.GetPlayerRePos3()).normalized * 0.2f;
-            Vector3 targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3)  + new Vector3(0f, 0f, 1f);
-            Vector3 playerImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3()) + new Vector3(0f, 0f, 1f);
+            Vector3 targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3)  + new Vector3(0f, 0f, enemy2Parameter.SearchEnemy2Z);
+            Vector3 playerImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ);
             while(true)
             {
                 targetImPos3 += imDirection3;
@@ -40,7 +47,7 @@ namespace Assets.Scripts.Enemies
                     break;
                 if(ObjectMove.IsHitWall(targetImPos3))
                 {
-                    yield return new WaitForSeconds(1f);
+                    yield return new WaitForSeconds(enemy2Parameter.AttackCoolDownTime);
                     isAttacking = false;
                     yield break;
                 }
