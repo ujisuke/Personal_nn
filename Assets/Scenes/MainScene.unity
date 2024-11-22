@@ -571,6 +571,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6028222375032962928, guid: b5acf0d91d856954887d3eb6b9de537b, type: 3}
   enemyPrefabLists:
+  - {fileID: 835981607064012740, guid: 1e2e0af54bb4b244cab54211730ce91e, type: 3}
+  - {fileID: 835981607064012740, guid: 443dc8f3e98993f4b88836fd44885fd9, type: 3}
   - {fileID: 835981607064012740, guid: 971330c56c3c1a9458efec6720dbfe65, type: 3}
 --- !u!114 &429188287
 MonoBehaviour:
@@ -709,7 +711,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

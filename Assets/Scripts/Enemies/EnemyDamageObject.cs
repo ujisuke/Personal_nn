@@ -6,15 +6,17 @@ using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
-    public class DamageObject : MonoBehaviour, IObject
+    public class EnemyDamageObject : MonoBehaviour, IObject
     {
-        [SerializeField] private DamageObjectParameter damageObjectParameter;
+        private DamageObjectParameter _damageObjectParameter;
         private bool isDamaging = false;
 
-        private void Awake()
+        public void Initialize(DamageObjectParameter _damageObjectParameter)
         {
+            this._damageObjectParameter = _damageObjectParameter;
             ObjectFacade.AddEnemy(this);
             isDamaging = false;
+            GetComponent<DamageObjectAnimation>().Initialize(_damageObjectParameter);
             StartCoroutine(Suicide());
         }
 
@@ -25,9 +27,9 @@ namespace Assets.Scripts.Enemies
 
         private IEnumerator Suicide()
         {
-            yield return new WaitForSeconds(damageObjectParameter.ReadyTime);
+            yield return new WaitForSeconds(_damageObjectParameter.ReadyTime);
             isDamaging = true;
-            yield return new WaitForSeconds(damageObjectParameter.DamagingTime);
+            yield return new WaitForSeconds(_damageObjectParameter.DamagingTime);
             DestroyObject();
         }
 
@@ -38,7 +40,7 @@ namespace Assets.Scripts.Enemies
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(damageObjectParameter.AttackPower);
+            obj.TakeDamage(_damageObjectParameter.AttackPower);
         }
 
         public void TakeDamage(float damage)

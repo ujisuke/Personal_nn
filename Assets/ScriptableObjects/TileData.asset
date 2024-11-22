@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd881a0c63f7b3449cfd9a8b1f9ed6b, type: 3}
   m_Name: TileData
   m_EditorClassIdentifier: 
-  _stageTiles:
-  - {fileID: 11400000, guid: 1e9a9127dcd691c43b11017081c1e301, type: 2}
-  - {fileID: 11400000, guid: d0a9020e54ff0634b80a68272b919fb7, type: 2}
-  - {fileID: 11400000, guid: b2d65901c4fedef42b59e3e8f982bee3, type: 2}
-  - {fileID: 11400000, guid: 6e54871d631561c47826353cdab729c9, type: 2}
+  _stageNormalTiles:
+  - {fileID: 11400000, guid: 903d8dab468232f43b27a16be7c36d35, type: 2}
+  - {fileID: 11400000, guid: 05ef3a99b397b5a46a7d7b6b247526fa, type: 2}
+  _stageTopTile: {fileID: 11400000, guid: 10024dab5ade4294d8f3bc5ee498b011, type: 2}

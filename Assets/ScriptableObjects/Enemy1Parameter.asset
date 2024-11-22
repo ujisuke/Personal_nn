@@ -17,6 +17,7 @@ MonoBehaviour:
   _jumpTime: 0.6
   _attackPower: 0
   maxHP: 1
+  _damageObjectParameter: {fileID: 11400000, guid: 24366faabe12db145922d48476be7286, type: 2}
   _stopMoveImDistanceFromPlayer: 0.5
   _attackImDistanceFromPlayer: 1.5
   _attackPanelCount: 6

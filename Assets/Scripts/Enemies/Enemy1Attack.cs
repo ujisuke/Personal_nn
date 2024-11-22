@@ -43,7 +43,7 @@ namespace Assets.Scripts.Enemies
             List<Vector3> damageObjectRePos3List = ObjectMove.DrawSomeRePos3AtRandom(enemy1Parameter.AttackPanelCount, ObjectMove.ConvertToTileIndexFromRePos3(transform.position),
             enemy1Parameter.AttackPanelMinImRadius, enemy1Parameter.AttackPanelMaxImRadius);
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
-                Instantiate(damageObject, damageObjectRePos3List[i], Quaternion.identity);
+                ObjectCreator.InstantiateDamageObject(damageObject, damageObjectRePos3List[i], enemy1Parameter.DamageObjectParameter);
             yield return new WaitForSeconds(enemy1Parameter.AttackCoolDownTime);
             isAttacking = false;
         }

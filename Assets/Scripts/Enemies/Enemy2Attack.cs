@@ -52,7 +52,7 @@ namespace Assets.Scripts.Enemies
                     yield break;
                 }
             }     
-            Instantiate(damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(playerImPos3), Quaternion.identity);
+            ObjectCreator.InstantiateDamageObject(damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(playerImPos3), enemy2Parameter.DamageObjectParameter);
             isAttacking = false;
         }
     }

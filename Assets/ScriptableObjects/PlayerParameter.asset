@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643f77478e5a2224e84dd190a7128b59, type: 3}
   m_Name: PlayerParameter
   m_EditorClassIdentifier: 
-  _moveSpeed: 0
-  _jumpHeight: 0
-  _jumpTime: 0
-  _attackPower: 0
-  maxHP: 0
-  attackingTime: 1
-  _dashSpeed: 1
-  _dashingTime: 1
+  _moveSpeed: 6
+  _jumpHeight: 2.5
+  _jumpTime: 0.6
+  _attackPower: 5
+  maxHP: 10
+  _maxEnergy: 2
+  _chargingEnergyTime: 3
+  _attackingTime: 0.1
+  _attackEnergyConsumption: 1
+  _dashSpeedRatio: 3
+  _dashingTime: 0.1
+  _dashEnergyConsumption: 2

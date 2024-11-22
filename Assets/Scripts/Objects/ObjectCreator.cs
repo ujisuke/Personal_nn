@@ -3,6 +3,8 @@ using Assets.Scripts.Stage;
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Battle;
+using Assets.Scripts.Enemies;
+using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Objects
 {
@@ -36,6 +38,13 @@ namespace Assets.Scripts.Objects
         {
             yield return new WaitForSeconds(0.5f);
             ObjectFacade.SetAllObjectsReady();
+        }
+
+        
+        public static void InstantiateDamageObject(GameObject damageObject, Vector3 rePos3, DamageObjectParameter damageObjectParameter)
+        {
+            GameObject newDamageObject = Instantiate(damageObject, rePos3, Quaternion.identity);
+            newDamageObject.GetComponent<EnemyDamageObject>().Initialize(damageObjectParameter);
         }
     }
 }

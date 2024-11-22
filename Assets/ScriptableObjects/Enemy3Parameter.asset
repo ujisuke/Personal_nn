@@ -17,5 +17,6 @@ MonoBehaviour:
   _jumpTime: 0
   _attackPower: 0
   maxHP: 1
+  _damageObjectParameter: {fileID: 11400000, guid: d12f4b3a4761ec84abed5dd0001f0267, type: 2}
   _attackCoolDownTime: 1
   _waveMoveTime: 0.2

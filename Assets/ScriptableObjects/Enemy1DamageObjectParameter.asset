@@ -15,3 +15,4 @@ MonoBehaviour:
   _attackPower: 5
   _readyTime: 0.6
   _damagingTime: 0.3
+  _animatorController: {fileID: 9100000, guid: d4e33283b79f6e74a942ddb2d6e95b75, type: 2}

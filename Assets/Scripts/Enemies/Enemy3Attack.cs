@@ -43,7 +43,7 @@ namespace Assets.Scripts.Enemies
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
-                    Instantiate(damageObjectPrefab, objectRePos3List[j], Quaternion.identity);
+                    ObjectCreator.InstantiateDamageObject(damageObjectPrefab, objectRePos3List[j], enemy3Parameter.DamageObjectParameter);
                 yield return new WaitForSeconds(enemy3Parameter.WaveMoveTime);
             }
             isAttacking = false;
