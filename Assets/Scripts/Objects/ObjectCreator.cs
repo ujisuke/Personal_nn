@@ -17,11 +17,9 @@ namespace Assets.Scripts.Objects
 
         public void CreateNewObjects()
         {
-            ObjectFacade.RemoveAndDestroyPlayer();
             Instantiate(playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
 
-            int objectNumber = BattleFacade.Difficulty;
-            ObjectFacade.RemoveAndDestroyAllEnemies();
+            int objectNumber = BattleFacade.Difficulty;            
             List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectNumber, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade._stageSide);
 
             for (int i = 0; i < objectNumber; i++)
@@ -39,7 +37,6 @@ namespace Assets.Scripts.Objects
             yield return new WaitForSeconds(0.5f);
             ObjectFacade.SetAllObjectsReady();
         }
-
         
         public static void InstantiateDamageObject(GameObject damageObject, Vector3 rePos3, DamageObjectParameter damageObjectParameter)
         {

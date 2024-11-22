@@ -4,6 +4,7 @@ using Assets.ScriptableObjects;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using Assets.Scripts.Battle;
+using System.Collections;
 
 namespace Assets.Scripts.Stage
 {
@@ -14,8 +15,9 @@ namespace Assets.Scripts.Stage
 
         public void CreateNewStage()
         {
+            StageFacade.IsCreatingStage = true;
             SetStageMatrix();
-            SetAllTiles();
+            StartCoroutine(SetAllTiles());
         }
 
         private static void SetStageMatrix()
@@ -151,16 +153,21 @@ namespace Assets.Scripts.Stage
             }
         }
 
-        private void SetAllTiles()
+        private IEnumerator SetAllTiles()
         {
-            for(int i = 0; i < StageFacade._stageSide * 2 - 1; i++)
-                for(int j = 0; j < StageFacade._stageSide * 2 - 1; j++)
+            for(int n = 0; n < StageFacade._stageSide * 2 - 1; n++)
+            {
+                for(int m = 0; m < StageFacade._stageSide; m++)
                 {
-                    if(i - j >= StageFacade._stageSide || i - j < 0 || j >= StageFacade._stageSide) continue;
-                    int tileHeight = StageFacade.TileImZs[i - j, j];
-                    Vector3Int tilePosition = new((StageFacade._stageSide - 1) / 2 - i + j, (StageFacade._stageSide - 1) / 2 - j, 0);
-                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[i]);
+                    (int i, int j) = (StageFacade._stageSide - 1 - m, StageFacade._stageSide - 1 - n + m);
+                    if(i >= StageFacade._stageSide || i < 0 || j >= StageFacade._stageSide || j < 0) continue;
+                    int tileHeight = StageFacade.TileImZs[i, j];
+                    Vector3Int tilePosition = new((StageFacade._stageSide - 1) / 2 - i, (StageFacade._stageSide - 1) / 2 - j, 0);
+                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[14 - n]);
                 }
+                yield return new WaitForSeconds(0.03f);
+            }
+            StageFacade.IsCreatingStage = false;
         }
     }
 }

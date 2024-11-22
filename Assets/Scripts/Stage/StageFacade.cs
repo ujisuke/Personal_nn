@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Assets.Scripts.Stage
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Stage
         public const float _tileHeight = 0.25f;
         public static int[,] TileImZs{ get; private set; } = new int[_stageSide, _stageSide];
         private static StageCreator singletonStageCreator;
+        public static bool IsCreatingStage = false;
 
         private void Awake()
         {
