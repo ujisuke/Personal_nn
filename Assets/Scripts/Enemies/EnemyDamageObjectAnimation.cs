@@ -3,7 +3,7 @@ using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemies
 {
-    public class DamageObjectAnimation : MonoBehaviour
+    public class EnemyDamageObjectAnimation : MonoBehaviour
     {
         private EnemyDamageObject enemyDamageObject;
         private Animator animator;
