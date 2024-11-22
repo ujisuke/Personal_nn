@@ -14,7 +14,7 @@ namespace Assets.ScriptableObjects
 
         public void SetTile(int height, Vector3Int tilePosition, Tilemap tilemap)
         {
-            for(int i = 0; i < StageFacade._stageHeight; i++)
+            for(int i = 0; i < StageFacade._StageHeight; i++)
                 tilemap.SetTile(tilePosition + new Vector3Int(0, 0, i), null);
             if(height <= 0) return;
             for(int i = 0; i < height - 1; i++)

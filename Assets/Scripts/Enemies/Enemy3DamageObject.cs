@@ -49,7 +49,7 @@ namespace Assets.Scripts.Enemies
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, transform.localScale.y / StageFacade._tileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, transform.localScale.y / StageFacade._TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
