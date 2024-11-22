@@ -37,7 +37,7 @@ namespace Assets.Scripts.Enemies
     
         private void FixedUpdate()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
             objectMove.HeadToPlusImX(moveDirectionIm3.x >= enemy1Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToMinusImX(moveDirectionIm3.x < -enemy1Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToPlusImY(moveDirectionIm3.y >= enemy1Parameter.StopMoveImDistanceFromPlayer);
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Enemies
 
         private bool IsNearPlayer()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
             return math.abs(moveDirectionIm3.x) <= enemy1Parameter.AttackImDistanceFromPlayer && math.abs(moveDirectionIm3.y) <= enemy1Parameter.AttackImDistanceFromPlayer;
         }
 

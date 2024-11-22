@@ -103,10 +103,10 @@ namespace Assets.Scripts.Objects
             destinationTileImZ = _tileImZs[destinationTileIndex.i, destinationTileIndex.j];
 
             transform.position = ConvertToRePos3FromImPos3(objectImPos3);
-            objectSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
+            objectSpriteRenderer.sortingOrder = CalculateSortingOrderFromRePos3(transform.position);
             Vector3 shadowImPos3 = new(objectImPos3.x, objectImPos3.y, objectTileZ + 1f);
             shadow.transform.position = ConvertToRePos3FromImPos3(shadowImPos3);
-            shadowSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
+            shadowSpriteRenderer.sortingOrder = CalculateSortingOrderFromRePos3(shadow.transform.position);
         }
 
         private Vector3 GetDestinationImPos3()
@@ -175,7 +175,7 @@ namespace Assets.Scripts.Objects
             return ConvertToRePos3FromTileIndex(tileIndex);
         }
 
-        public static Vector3 CalclateImDirection3BetWeenTwoRePos3(Vector3 startRe3, Vector3 endRe3)
+        public static Vector3 CalculateImDirection3BetWeenTwoRePos3(Vector3 startRe3, Vector3 endRe3)
         {
             Vector3 startIm3 = ConvertToImPos3FromRePos3(startRe3);
             Vector3 endIm3 = ConvertToImPos3FromRePos3(endRe3);
@@ -337,6 +337,12 @@ namespace Assets.Scripts.Objects
         public void StopDash()
         {
             dashSpeed = 1f;
+        }
+
+        public static int CalculateSortingOrderFromRePos3(Vector3 rePos3)
+        {
+            (int i, int j) tileIndex = ConvertToTileIndexFromRePos3(rePos3);
+            return tileIndex.i + tileIndex.j;
         }
     }   
 }

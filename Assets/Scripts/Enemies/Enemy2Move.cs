@@ -26,7 +26,7 @@ namespace Assets.Scripts.Enemies
     
         private void FixedUpdate()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
             objectMove.HeadToPlusImX(moveDirectionIm3.x >= enemy2Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToMinusImX(moveDirectionIm3.x < -enemy2Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToPlusImY(moveDirectionIm3.y >= enemy2Parameter.StopMoveImDistanceFromPlayer);
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Enemies
 
         public bool CanAttack()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
             return math.abs(moveDirectionIm3.x) <= enemy2Parameter.StopMoveImDistanceFromPlayer && math.abs(moveDirectionIm3.y) <= enemy2Parameter.StopMoveImDistanceFromPlayer;
         }
     }
