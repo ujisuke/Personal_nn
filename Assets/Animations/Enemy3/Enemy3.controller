@@ -32,8 +32,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1WalkToPlusImY
-  m_Speed: 4
+  m_Name: Enemy3StandToPlusImY
+  m_Speed: 8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9109111325797981645}
@@ -46,7 +46,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c1129374845fcb9478c65698b7a3b64b, type: 2}
+  m_Motion: {fileID: 7400000, guid: 401ec7655952c054c9ceea42e7754020, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -59,8 +59,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1WalkToMinusImX
-  m_Speed: 4
+  m_Name: Enemy3StandToMinusImX
+  m_Speed: 8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -564031473973758290}
@@ -73,7 +73,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1697b71f259ff00498926fcd90ccd848, type: 2}
+  m_Motion: {fileID: 7400000, guid: ff209371a6fca0e44bb8bba0d79a95f3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -86,7 +86,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToPlusImX
+  m_Name: Enemy3AttackToPlusImX
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -99,7 +99,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: dc3ea14205993e9419b73e2af2e17bf7, type: 2}
+  m_Motion: {fileID: 7400000, guid: 18d53d9a4fb12fc47b2c708f7a2186fd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -114,7 +114,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IsWalking
+    m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsHeadingToMinusImX
@@ -192,10 +192,10 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1
+  m_Name: Enemy3
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: IsWalking
+  - m_Name: IsStanding
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -251,7 +251,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToMinusImX
+  m_Name: Enemy3AttackToMinusImX
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -264,7 +264,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d3341650e198df44ab2cece80979671d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 05b1d62c07f99a14cbcffee270fcb5e5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -277,7 +277,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToMinusImY
+  m_Name: Enemy3AttackToMinusImY
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -290,7 +290,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6b0d5ee7ca90d604b95dac51b7f74a5d, type: 2}
+  m_Motion: {fileID: 7400000, guid: d44d859c3d603db4392c9e962181fd11, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -305,7 +305,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IsWalking
+    m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsHeadingToPlusImY
@@ -336,7 +336,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IsWalking
+    m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsHeadingToMinusImY
@@ -367,7 +367,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IsWalking
+    m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsHeadingToPlusImX
@@ -396,8 +396,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1WalkToMinusImY
-  m_Speed: 4
+  m_Name: Enemy3StandToMinusImY
+  m_Speed: 8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2432355990454157273}
@@ -410,7 +410,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 33a1fa9329fb9e34491e7875d8d31e12, type: 2}
+  m_Motion: {fileID: 7400000, guid: c92dd0b1b77626f4680515f5b85f313b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -423,7 +423,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToPlusImY
+  m_Name: Enemy3AttackToPlusImY
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -436,7 +436,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 172fceb31a0ed2c4aba4473be35362d6, type: 2}
+  m_Motion: {fileID: 7400000, guid: c6a0ab8289e333a4c94842a95456bd86, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -449,8 +449,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1WalkToPlusImX
-  m_Speed: 4
+  m_Name: Enemy3StandToPlusImX
+  m_Speed: 8
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 8946363017779261547}
@@ -463,7 +463,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4f028dec0016e994babae1df18b4fdce, type: 2}
+  m_Motion: {fileID: 7400000, guid: b58ad50ed23e3824d95b9a33e7488359, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

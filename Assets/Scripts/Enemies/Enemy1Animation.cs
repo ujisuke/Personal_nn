@@ -11,7 +11,7 @@ namespace Assets.Scripts.Enemies
             _animator = GetComponent<Animator>();
         }
 
-        public void SetHeadingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isHeadingTo)
+        public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isHeadingTo)
         {
             _animator.SetBool("IsHeadingToPlusImX", isHeadingTo.PlusImX);
             _animator.SetBool("IsHeadingToMinusImX", isHeadingTo.MinusImX);
