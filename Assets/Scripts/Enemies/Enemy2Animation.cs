@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Enemies
 {
-    public class Enemy1Animation : MonoBehaviour
+    public class Enemy2Animation : MonoBehaviour
     {
         private Animator _animator;
 
@@ -37,6 +37,16 @@ namespace Assets.Scripts.Enemies
         public void StopAttack()
         {
             _animator.SetBool("IsAttacking", false);
+        }
+
+        public void StartStand()
+        {
+            _animator.SetBool("IsStanding", true);
+        }
+
+        public void StopStand()
+        {
+            _animator.SetBool("IsStanding", false);
         }
     }
 }

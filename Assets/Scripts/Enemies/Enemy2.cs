@@ -19,6 +19,7 @@ namespace Assets.Scripts.Enemies
             GetComponent<ObjectMove>().Initialize(enemy2Parameter, transform.position);
             GetComponent<Enemy2Move>().Initialize(enemy2Parameter);
             GetComponent<Enemy2Attack>().Initialize(enemy2Parameter);
+            GetComponent<Enemy2MissingPlayer>().Initialize(enemy2Parameter);
         }
 
         public void SetReady()

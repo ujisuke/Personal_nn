@@ -13,10 +13,10 @@ namespace Assets.Scripts.Enemies
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
         {
-            _animator.SetBool("IsHeadingToPlusImX", isLooking.PlusImX);
-            _animator.SetBool("IsHeadingToMinusImX", isLooking.MinusImX);
-            _animator.SetBool("IsHeadingToPlusImY", isLooking.PlusImY);
-            _animator.SetBool("IsHeadingToMinusImY", isLooking.MinusImY);
+            _animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
+            _animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
+            _animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
+            _animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
         }
 
         public void StartStand()

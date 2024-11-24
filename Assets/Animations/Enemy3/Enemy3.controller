@@ -117,10 +117,10 @@ AnimatorStateTransition:
     m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsHeadingToMinusImX
+    m_ConditionEvent: IsLookingMinusImX
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsHeadingToPlusImY
+    m_ConditionEvent: IsLookingPlusImY
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5970571942942300553}
@@ -207,25 +207,25 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsHeadingToPlusImX
+  - m_Name: IsLookingPlusImX
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsHeadingToMinusImX
+  - m_Name: IsLookingMinusImX
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsHeadingToPlusImY
+  - m_Name: IsLookingPlusImY
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsHeadingToMinusImY
+  - m_Name: IsLookingMinusImY
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -308,10 +308,10 @@ AnimatorStateTransition:
     m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsHeadingToPlusImY
+    m_ConditionEvent: IsLookingPlusImY
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsHeadingToPlusImX
+    m_ConditionEvent: IsLookingPlusImX
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7943580412452547801}
@@ -339,10 +339,10 @@ AnimatorStateTransition:
     m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsHeadingToMinusImY
+    m_ConditionEvent: IsLookingMinusImY
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsHeadingToMinusImX
+    m_ConditionEvent: IsLookingMinusImX
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5344902408422180960}
@@ -370,10 +370,10 @@ AnimatorStateTransition:
     m_ConditionEvent: IsStanding
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsHeadingToPlusImX
+    m_ConditionEvent: IsLookingPlusImX
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsHeadingToMinusImY
+    m_ConditionEvent: IsLookingMinusImY
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8201658070300007953}
