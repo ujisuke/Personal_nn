@@ -119,9 +119,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsLookingMinusImX
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: IsLookingPlusImY
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5970571942942300553}
   m_Solo: 0
@@ -310,9 +307,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsLookingPlusImY
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: IsLookingPlusImX
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7943580412452547801}
   m_Solo: 0
@@ -341,9 +335,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: IsLookingMinusImY
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: IsLookingMinusImX
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5344902408422180960}
   m_Solo: 0
@@ -371,9 +362,6 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsLookingPlusImX
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: IsLookingMinusImY
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8201658070300007953}

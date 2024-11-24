@@ -11,12 +11,12 @@ namespace Assets.Scripts.Enemies
             _animator = GetComponent<Animator>();
         }
 
-        public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isHeadingTo)
+        public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
         {
-            _animator.SetBool("IsLookingPlusImX", isHeadingTo.PlusImX);
-            _animator.SetBool("IsLookingMinusImX", isHeadingTo.MinusImX);
-            _animator.SetBool("IsLookingPlusImY", isHeadingTo.PlusImY);
-            _animator.SetBool("IsLookingMinusImY", isHeadingTo.MinusImY);
+            _animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
+            _animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
+            _animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
+            _animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
         }
 
         public void StartWalk()

@@ -21,5 +21,6 @@ MonoBehaviour:
   _stopMoveImDistanceFromPlayer: 0.2
   _searchEnemy2Z: 1
   _searchedTargetZ: 1
+  _attackCount: 5
   _attackCoolDownTime: 0.15
-  _missingPlayerTime: 0
+  _missingPlayerTime: 0.8

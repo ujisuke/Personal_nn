@@ -318,6 +318,11 @@ namespace Assets.Scripts.Objects
             isHeadingToPlusImX = isHeading;
         }
 
+        public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
+        {
+            return (isHeadingToPlusImX, isHeadingToMinusImX, isHeadingToPlusImY, isHeadingToMinusImY);
+        }
+
         public void TryToJump(bool isTrying)
         {
             isTryingToJump = isTrying;
