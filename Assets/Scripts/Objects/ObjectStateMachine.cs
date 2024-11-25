@@ -1,5 +1,7 @@
 using UnityEngine;
-using Assets.Scripts.Enemies;
+using Assets.Scripts.Enemy1;
+using Assets.Scripts.Enemy2;
+using Assets.Scripts.Enemy3;
 using Assets.Scripts.Player;
 
 namespace Assets.Scripts.Objects
