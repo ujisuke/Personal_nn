@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 643f77478e5a2224e84dd190a7128b59, type: 3}
   m_Name: PlayerParameter
   m_EditorClassIdentifier: 
+  _readyTime: 0.3
   _moveSpeed: 6
   _jumpHeight: 2.5
   _jumpTime: 0.6
   _attackPower: 5
   maxHP: 10
+  _deadTime: 0.3
+  _damageObjectParameter: {fileID: 0}
   _maxEnergy: 2
   _chargingEnergyTime: 3
   _attackingTime: 0.1

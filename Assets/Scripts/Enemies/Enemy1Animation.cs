@@ -13,6 +13,7 @@ namespace Assets.Scripts.Enemies
             _enemy1Parameter = enemy1Parameter;
             animator = GetComponent<Animator>();
             animator.SetFloat("DeadSpeed" , 1f / _enemy1Parameter.DeadTime);
+            animator.SetFloat("ReadySpeed", 1f / _enemy1Parameter.ReadyTime);
         }
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)

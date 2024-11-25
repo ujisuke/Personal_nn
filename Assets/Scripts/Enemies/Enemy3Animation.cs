@@ -5,47 +5,48 @@ namespace Assets.Scripts.Enemies
 {
     public class Enemy3Animation : MonoBehaviour
     {
-        private Animator _animator;
+        private Animator animator;
         private Enemy3Parameter _enemy3Parameter;
 
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
             _enemy3Parameter = enemy3Parameter;
-            _animator = GetComponent<Animator>();
-            _animator.SetFloat("DeadSpeed", 1f / _enemy3Parameter.DeadTime);
+            animator = GetComponent<Animator>();
+            animator.SetFloat("DeadSpeed", 1f / _enemy3Parameter.DeadTime);
+            animator.SetFloat("ReadySpeed", 1f / _enemy3Parameter.ReadyTime);
         }
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
         {
-            _animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
-            _animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
-            _animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
-            _animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
+            animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
+            animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
+            animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
+            animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
         }
 
         public void StartStand()
         {
-            _animator.SetBool("IsStanding", true);
+            animator.SetBool("IsStanding", true);
         }
 
         public void StopStand()
         {
-            _animator.SetBool("IsStanding", false);
+            animator.SetBool("IsStanding", false);
         }
 
         public void StartAttack()
         {
-            _animator.SetBool("IsAttacking", true);
+            animator.SetBool("IsAttacking", true);
         }
 
         public void StopAttack()
         {
-            _animator.SetBool("IsAttacking", false);
+            animator.SetBool("IsAttacking", false);
         }
 
         public void StartDead()
         {
-            _animator.SetBool("IsDead", true);
+            animator.SetBool("IsDead", true);
         }
     }
 }

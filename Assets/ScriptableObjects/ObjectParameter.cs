@@ -5,6 +5,8 @@ namespace Assets.ScriptableObjects
     [CreateAssetMenu(menuName = "ScriptableObjects/ObjectParameter")]
     public class ObjectParameter : ScriptableObject
     {
+        [SerializeField] private float _readyTime;
+        public float ReadyTime => _readyTime;
         [SerializeField] private float _moveSpeed;
         public float MoveSpeed => _moveSpeed;
         [SerializeField] private float _jumpHeight;
