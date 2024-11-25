@@ -26,19 +26,54 @@ namespace Assets.Scripts.Enemies
     
         private void FixedUpdate()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
             objectMove.HeadToPlusImX(moveDirectionIm3.x >= enemy2Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToMinusImX(moveDirectionIm3.x < -enemy2Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToPlusImY(moveDirectionIm3.y >= enemy2Parameter.StopMoveImDistanceFromPlayer);
             objectMove.HeadToMinusImY(moveDirectionIm3.y < -enemy2Parameter.StopMoveImDistanceFromPlayer);
-
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position));
         }
 
         public bool CanAttack()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalclateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
             return math.abs(moveDirectionIm3.x) <= enemy2Parameter.StopMoveImDistanceFromPlayer && math.abs(moveDirectionIm3.y) <= enemy2Parameter.StopMoveImDistanceFromPlayer;
+        }
+
+        public bool IsMissingPlayer()
+        {
+            if(!CanAttack()) return false;
+            Vector3 fireRePos3 = transform.position;
+            Vector3 imDirection3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(fireRePos3, ObjectFacade.GetPlayerRePos3()).normalized * 0.2f;
+            Vector3 targetImPos3 = ObjectMove.ConvertToImPos3FromRePos3(fireRePos3)  + new Vector3(0f, 0f, enemy2Parameter.SearchEnemy2Z);
+            Vector3 playerImPos3 = ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ);
+            while(true)
+            {
+                targetImPos3 += imDirection3;
+                if((targetImPos3 - playerImPos3).magnitude <= 0.1f)
+                    return false;
+                if(ObjectMove.IsHitWall(targetImPos3))
+                    return true;
+            }
+        }
+
+        public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
+        {
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
+            if(math.abs(moveDirectionIm3.x) > math.abs(moveDirectionIm3.y))
+            {
+                if(moveDirectionIm3.x > 0)
+                    return (true, false, false, false);
+                else
+                    return (false, true, false, false);
+            }
+            else
+            {
+                if(moveDirectionIm3.y > 0)
+                    return (false, false, true, false);
+                else
+                    return (false, false, false, true);
+            }
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Assets.Scripts.Objects
             player = null;
         }
 
-        public static void RemoveAndDestroyPlayer()
+        public static void RemoveAndDestroyAlivePlayer()
         {
             if(player == null) return;
-            player.DestroyObject();
+            player.DestroyAliveObject();
         }
 
         public static void AddEnemy(IObject newEnemy)
@@ -35,11 +35,11 @@ namespace Assets.Scripts.Objects
             enemyList.Remove(obj);
         }
 
-        public static void RemoveAndDestroyAllEnemies()
+        public static void RemoveAndDestroyAllAliveEnemies()
         {
             int enemyListCount = enemyList.Count;
             for(int i = 0; i < enemyListCount; i++)
-                enemyList[0].DestroyObject();
+                enemyList[0].DestroyAliveObject();
         }
 
         public static void SetAllObjectsReady()

@@ -9,15 +9,17 @@ namespace Assets.ScriptableObjects
     [CreateAssetMenu(menuName = "ScriptableObjects/TileData")]
     public class TileData : ScriptableObject
     {
-        [SerializeField] private List<Tile> _stageTiles;
+        [SerializeField] private List<Tile> _stageNormalTiles;
+        [SerializeField] private Tile _stageTopTile;
 
         public void SetTile(int height, Vector3Int tilePosition, Tilemap tilemap)
         {
-            for(int i = 0; i < StageFacade._stageHeight; i++)
+            for(int i = 0; i < StageFacade._StageHeight; i++)
                 tilemap.SetTile(tilePosition + new Vector3Int(0, 0, i), null);
             if(height <= 0) return;
-            for(int i = 0; i < height; i++)
-                tilemap.SetTile(tilePosition + new Vector3Int(0, 0, i), _stageTiles[0]);
+            for(int i = 0; i < height - 1; i++)
+                tilemap.SetTile(tilePosition + new Vector3Int(0, 0, i), _stageNormalTiles[Random.Range(0, _stageNormalTiles.Count)]);
+            tilemap.SetTile(tilePosition + new Vector3Int(0, 0, height - 1), _stageTopTile);
         }
     }
 }

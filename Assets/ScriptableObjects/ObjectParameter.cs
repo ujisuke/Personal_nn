@@ -5,6 +5,8 @@ namespace Assets.ScriptableObjects
     [CreateAssetMenu(menuName = "ScriptableObjects/ObjectParameter")]
     public class ObjectParameter : ScriptableObject
     {
+        [SerializeField] private float _readyTime;
+        public float ReadyTime => _readyTime;
         [SerializeField] private float _moveSpeed;
         public float MoveSpeed => _moveSpeed;
         [SerializeField] private float _jumpHeight;
@@ -15,5 +17,9 @@ namespace Assets.ScriptableObjects
         public float AttackPower => _attackPower;
         [SerializeField]private float maxHP;
         public float MaxHP => maxHP;
+        [SerializeField] private float _deadTime;
+        public float DeadTime => _deadTime;
+        [SerializeField] private DamageObjectParameter _damageObjectParameter;
+        public DamageObjectParameter DamageObjectParameter => _damageObjectParameter;
     }
 }

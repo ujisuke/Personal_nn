@@ -24,16 +24,8 @@ namespace Assets.Scripts.Enemies
         private void OnEnable()
         {
             isAttacking = true;
+            objectMove.Stop();
             StartCoroutine(Attack());
-        }
-
-        private void FixedUpdate()
-        {
-            objectMove.HeadToPlusImX(false);
-            objectMove.HeadToMinusImX(false);
-            objectMove.HeadToPlusImY(false);
-            objectMove.HeadToMinusImY(false);
-            objectMove.TryToJump(false);
         }
 
         private IEnumerator Attack()
@@ -43,7 +35,7 @@ namespace Assets.Scripts.Enemies
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
-                    Instantiate(damageObjectPrefab, objectRePos3List[j], Quaternion.identity);
+                    ObjectCreator.InstantiateDamageObject(damageObjectPrefab, objectRePos3List[j], enemy3Parameter.DamageObjectParameter);
                 yield return new WaitForSeconds(enemy3Parameter.WaveMoveTime);
             }
             isAttacking = false;

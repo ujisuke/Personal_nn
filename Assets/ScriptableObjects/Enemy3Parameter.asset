@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cea2327aad8f59449cebe9012d4b221, type: 3}
   m_Name: Enemy3Parameter
   m_EditorClassIdentifier: 
+  _readyTime: 0.3
   _moveSpeed: 0
   _jumpHeight: 0
   _jumpTime: 0
   _attackPower: 0
   maxHP: 1
+  _deadTime: 0.3
+  _damageObjectParameter: {fileID: 11400000, guid: d12f4b3a4761ec84abed5dd0001f0267, type: 2}
   _attackCoolDownTime: 1
   _waveMoveTime: 0.2

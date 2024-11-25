@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428a5f0ea66fc484f867c56f385a6dee, type: 3}
   m_Name: Enemy2Parameter
   m_EditorClassIdentifier: 
+  _readyTime: 0.3
   _moveSpeed: 2
   _jumpHeight: 2.5
   _jumpTime: 0.6
   _attackPower: 0
   maxHP: 1
+  _deadTime: 0.3
+  _damageObjectParameter: {fileID: 11400000, guid: 74fba564a96be0848bae665acb2d4bb6, type: 2}
   _stopMoveImDistanceFromPlayer: 0.2
   _searchEnemy2Z: 1
   _searchedTargetZ: 1
-  _attackCoolDownTime: 1
+  _attackCount: 5
+  _attackCoolDownTime: 0.15
+  _missingPlayerTime: 0.8

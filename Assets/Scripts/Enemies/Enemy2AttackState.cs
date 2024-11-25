@@ -7,13 +7,17 @@ namespace Assets.Scripts.Enemies
         private ObjectStateMachine objectStateMachine;
         private Enemy2Attack enemy2Attack;
         private Enemy2 enemy2;
+        private Enemy2Animation enemy2Animation;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             enemy2Attack = objectStateMachine.GetComponent<Enemy2Attack>();
             enemy2 = objectStateMachine.GetComponent<Enemy2>();
+            enemy2Animation = objectStateMachine.GetComponent<Enemy2Animation>();
             enemy2Attack.enabled = true;
+            enemy2Animation.SetLookingDirection(enemy2Attack.GetLookingDirection());
+            enemy2Animation.StartAttack();
         }
 
         public void FixedUpdate()
@@ -27,6 +31,7 @@ namespace Assets.Scripts.Enemies
         public void Exit()
         {
             enemy2Attack.enabled = false;
+            enemy2Animation.StopAttack();
         }
     }
 }

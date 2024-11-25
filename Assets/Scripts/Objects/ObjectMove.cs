@@ -27,7 +27,7 @@ namespace Assets.Scripts.Objects
         private bool isHeadingToMinusImY = false;
         private bool isHeadingToPlusImX = false;
         private bool isTryingToJump = false;
-        private int destinationTileImZ = 0; 
+        private int destinationTileImZ = 0;
 
         public void Initialize(ObjectParameter objectParameter, Vector3 objectRePos3)
         {
@@ -103,10 +103,10 @@ namespace Assets.Scripts.Objects
             destinationTileImZ = _tileImZs[destinationTileIndex.i, destinationTileIndex.j];
 
             transform.position = ConvertToRePos3FromImPos3(objectImPos3);
-            objectSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
+            objectSpriteRenderer.sortingOrder = CalculateSortingOrderFromRePos3(transform.position);
             Vector3 shadowImPos3 = new(objectImPos3.x, objectImPos3.y, objectTileZ + 1f);
             shadow.transform.position = ConvertToRePos3FromImPos3(shadowImPos3);
-            shadowSpriteRenderer.sortingOrder = objectTileIndex.i + objectTileIndex.j;
+            shadowSpriteRenderer.sortingOrder = CalculateSortingOrderFromRePos3(shadow.transform.position);
         }
 
         private Vector3 GetDestinationImPos3()
@@ -137,24 +137,24 @@ namespace Assets.Scripts.Objects
 
         public static Vector3 ConvertToImPos3FromRePos3(Vector3 rePos3)
         {
-            Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageFacade._tileHeight);
-            Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageFacade._tileHeight), newRePos2.x + 2f * (newRePos2.y + StageFacade._tileHeight), rePos3.z);
-            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
-            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
+            Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1) * StageFacade._TileHeight + StageFacade._YOffset);
+            Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageFacade._TileHeight), newRePos2.x + 2f * (newRePos2.y + StageFacade._TileHeight), rePos3.z);
+            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageFacade._StageSide / 2f + 0.01f, StageFacade._StageSide / 2f - 0.01f);
+            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageFacade._StageSide / 2f + 0.01f, StageFacade._StageSide / 2f - 0.01f);
             return newImPos3;
         }
 
         private static (int i, int j) ConvertToTileIndexFromImPos3(Vector3 imPos3)
         {
-            imPos3.x = Mathf.Clamp(imPos3.x, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
-            imPos3.y = Mathf.Clamp(imPos3.y, -StageFacade._stageSide / 2f + 0.01f, StageFacade._stageSide / 2f - 0.01f);
-            return (StageFacade._stageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageFacade._stageSide / 2 + (int)Math.Floor(imPos3.x));
+            imPos3.x = Mathf.Clamp(imPos3.x, -StageFacade._StageSide / 2f + 0.01f, StageFacade._StageSide / 2f - 0.01f);
+            imPos3.y = Mathf.Clamp(imPos3.y, -StageFacade._StageSide / 2f + 0.01f, StageFacade._StageSide / 2f - 0.01f);
+            return (StageFacade._StageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageFacade._StageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
         public static Vector3 ConvertToRePos3FromImPos3(Vector3 imPos3)
         {
-            Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageFacade._tileHeight);
-            return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageFacade._tileHeight, imPos3.z);
+            Vector2 newRePos2 = new((imPos3.x + imPos3.y) * 0.5f, (imPos3.y - imPos3.x) * 0.25f - StageFacade._TileHeight);
+            return new Vector3(newRePos2.x, newRePos2.y + (imPos3.z - 1) * StageFacade._TileHeight - StageFacade._YOffset, imPos3.z);
         }
 
         public static (int i, int j) ConvertToTileIndexFromRePos3(Vector3 rePos3)
@@ -165,7 +165,7 @@ namespace Assets.Scripts.Objects
 
         public static Vector3 ConvertToRePos3FromTileIndex((int i, int j) tileIndex)
         {
-            Vector3 newImPos3 = new(-StageFacade._stageSide / 2 + tileIndex.j + 0.5f, StageFacade._stageSide / 2 - tileIndex.i - 0.5f, StageFacade.TileImZs[tileIndex.i, tileIndex.j] + 1f);
+            Vector3 newImPos3 = new(-StageFacade._StageSide / 2 + tileIndex.j + 0.5f, StageFacade._StageSide / 2 - tileIndex.i - 0.5f, StageFacade.TileImZs[tileIndex.i, tileIndex.j] + 1f);
             return ConvertToRePos3FromImPos3(newImPos3);
         }
 
@@ -175,7 +175,7 @@ namespace Assets.Scripts.Objects
             return ConvertToRePos3FromTileIndex(tileIndex);
         }
 
-        public static Vector3 CalclateImDirection3BetWeenTwoRePos3(Vector3 startRe3, Vector3 endRe3)
+        public static Vector3 CalculateImDirection3BetWeenTwoRePos3(Vector3 startRe3, Vector3 endRe3)
         {
             Vector3 startIm3 = ConvertToImPos3FromRePos3(startRe3);
             Vector3 endIm3 = ConvertToImPos3FromRePos3(endRe3);
@@ -185,8 +185,8 @@ namespace Assets.Scripts.Objects
         public static List<Vector3> DrawSomeRePos3AtRandom(int PosNumber, (int i, int j) pivotTileNumber, int minimumRadius, int maximumRadius)
         {
             List<(int i, int j)> tileIndexList = new();
-            for(int i = 0; i < StageFacade._stageSide; i++)
-                for(int j = 0; j < StageFacade._stageSide; j++)
+            for(int i = 0; i < StageFacade._StageSide; i++)
+                for(int j = 0; j < StageFacade._StageSide; j++)
                 {
                     if(Math.Abs(i - pivotTileNumber.i) < minimumRadius && Math.Abs(j - pivotTileNumber.j) < minimumRadius) continue;
                     if(Math.Abs(i - pivotTileNumber.i) > maximumRadius || Math.Abs(j - pivotTileNumber.j) > maximumRadius) continue;
@@ -209,7 +209,7 @@ namespace Assets.Scripts.Objects
             for(int i = enemyTileIndex.I - 1; i < enemyTileIndex.I + 2; i++)
                 for(int j = enemyTileIndex.J - 1; j < enemyTileIndex.J + 2; j++)
                 {
-                    if(i < 0 || StageFacade._stageSide <= i || j < 0 || StageFacade._stageSide <= j) continue;
+                    if(i < 0 || StageFacade._StageSide <= i || j < 0 || StageFacade._StageSide <= j) continue;
                     if(i == enemyTileIndex.I && j == enemyTileIndex.J) continue;
                     Vector3 candidateTargetPos3 = ConvertToRePos3FromTileIndex((i, j));
                     if(IsReachable(candidateTargetPos3, rePos3)) candidateTargetPos3List.Add(candidateTargetPos3);
@@ -264,33 +264,33 @@ namespace Assets.Scripts.Objects
 
         private static bool IsValidTile(int I, int J, (int i, int j) currentTileIndex, bool[,] isVisited)
         {
-            return I >= 0 && I < StageFacade._stageSide && J >= 0 && J < StageFacade._stageSide
+            return I >= 0 && I < StageFacade._StageSide && J >= 0 && J < StageFacade._StageSide
                 && !isVisited[I, J] && StageFacade.TileImZs[I, J] == StageFacade.TileImZs[currentTileIndex.i, currentTileIndex.j];
         }
 
         private static bool[,] InitializeVisitedMatrix()
         {
-            bool[,] isVisited = new bool[StageFacade._stageSide, StageFacade._stageSide];
-            for(int i = 0; i < StageFacade._stageSide; i++)
-                for(int j = 0; j < StageFacade._stageSide; j++)
+            bool[,] isVisited = new bool[StageFacade._StageSide, StageFacade._StageSide];
+            for(int i = 0; i < StageFacade._StageSide; i++)
+                for(int j = 0; j < StageFacade._StageSide; j++)
                     isVisited[i, j] = false;
             return isVisited;
         }
 
         public static bool IsHitWall(Vector3 imPos3)
         {
-            if(imPos3.x < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.x
-            || imPos3.y < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.y
-            || imPos3.z < 0f || StageFacade._stageHeight < imPos3.z) return true;
+            if(imPos3.x < -StageFacade._StageSide / 2f || StageFacade._StageSide / 2f < imPos3.x
+            || imPos3.y < -StageFacade._StageSide / 2f || StageFacade._StageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageFacade._StageHeight < imPos3.z) return true;
             (int i, int j) tileNumber = ConvertToTileIndexFromImPos3(imPos3);
             return StageFacade.TileImZs[tileNumber.i, tileNumber.j] > imPos3.z - 1f;
         }
 
         public static bool IsHitStage(Vector3 imPos3)
         {
-            return imPos3.x < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.x
-            || imPos3.y < -StageFacade._stageSide / 2f || StageFacade._stageSide / 2f < imPos3.y
-            || imPos3.z < 0f || StageFacade._stageHeight < imPos3.z;
+            return imPos3.x < -StageFacade._StageSide / 2f || StageFacade._StageSide / 2f < imPos3.x
+            || imPos3.y < -StageFacade._StageSide / 2f || StageFacade._StageSide / 2f < imPos3.y
+            || imPos3.z < 0f || StageFacade._StageHeight < imPos3.z;
         }
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
@@ -318,11 +318,25 @@ namespace Assets.Scripts.Objects
             isHeadingToPlusImX = isHeading;
         }
 
+        public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
+        {
+            return (isHeadingToPlusImX, isHeadingToMinusImX, isHeadingToPlusImY, isHeadingToMinusImY);
+        }
+
         public void TryToJump(bool isTrying)
         {
             isTryingToJump = isTrying;
         }
 
+        public void Stop()
+        {
+            isHeadingToMinusImX = false;
+            isHeadingToPlusImY = false;
+            isHeadingToMinusImY = false;
+            isHeadingToPlusImX = false;
+            isTryingToJump = false;
+        }
+        
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
             return destinationTileImZ < objectRePos3.z - 1f + objectParameter.JumpHeight && objectRePos3.z - 1f < destinationTileImZ;
@@ -337,6 +351,12 @@ namespace Assets.Scripts.Objects
         public void StopDash()
         {
             dashSpeed = 1f;
+        }
+
+        public static int CalculateSortingOrderFromRePos3(Vector3 rePos3)
+        {
+            (int i, int j) tileIndex = ConvertToTileIndexFromRePos3(rePos3);
+            return tileIndex.i + tileIndex.j;
         }
     }   
 }

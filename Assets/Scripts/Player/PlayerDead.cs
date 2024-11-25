@@ -7,7 +7,8 @@ namespace Assets.Scripts.Player
     {
         private void OnEnable()
         {
-            GetComponent<Player>().DestroyObject();
+            GetComponent<Player>().DestroyDeadObject();
+            GetComponent<ObjectMove>().Stop();
         }
 
     }

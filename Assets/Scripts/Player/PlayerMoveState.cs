@@ -7,17 +7,21 @@ namespace Assets.Scripts.Player
         private ObjectStateMachine objectStateMachine;
         private PlayerMove playerMove;
         private Player player;
+        private PlayerAnimation playerAnimation;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             playerMove = objectStateMachine.GetComponent<PlayerMove>();
             player = objectStateMachine.GetComponent<Player>();
+            playerAnimation = objectStateMachine.GetComponent<PlayerAnimation>();
             playerMove.enabled = true;
+            playerAnimation.StartWalk();
         }
 
         public void FixedUpdate()
         {
+            playerAnimation.SetLookingDirection(playerMove.GetLookingDirection());
             if(player.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
             if(playerMove.CanDash())
@@ -29,6 +33,7 @@ namespace Assets.Scripts.Player
         public void Exit()
         {
             playerMove.enabled = false;
+            playerAnimation.StopWalk();
         }
     }
 }

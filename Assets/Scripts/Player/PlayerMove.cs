@@ -1,6 +1,7 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
+using Unity.Mathematics;
 
 namespace Assets.Scripts.Player
 {
@@ -45,6 +46,11 @@ namespace Assets.Scripts.Player
         public bool CanDash()
         {
             return Input.GetKey(KeyCode.LeftShift) && !isAfterDash && player.CanUseEnergy(playerParameter.DashEnergyConsumption);
+        }
+
+        public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
+        {
+            return objectMove.GetLookingDirection();
         }
     }
 }

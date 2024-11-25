@@ -7,17 +7,21 @@ namespace Assets.Scripts.Enemies
         private ObjectStateMachine objectStateMachine;
         private Enemy1Move enemy1Move;
         private Enemy1 enemy1;
+        private Enemy1Animation enemy1Animation;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             enemy1Move = objectStateMachine.GetComponent<Enemy1Move>();
             enemy1 = objectStateMachine.GetComponent<Enemy1>();
+            enemy1Animation = objectStateMachine.GetComponent<Enemy1Animation>();
             enemy1Move.enabled = true;
+            enemy1Animation.StartWalk();
         }
 
         public void FixedUpdate()
         {
+            enemy1Animation.SetLookingDirection(enemy1Move.GetLookingDirection());
             if(enemy1.IsDead())
                 objectStateMachine.TransitionTo(new Enemy1DeadState());
             if(enemy1Move.CanAttack())
@@ -27,6 +31,7 @@ namespace Assets.Scripts.Enemies
         public void Exit()
         {
             enemy1Move.enabled = false;
+            enemy1Animation.StopWalk();
         }
     }
 }

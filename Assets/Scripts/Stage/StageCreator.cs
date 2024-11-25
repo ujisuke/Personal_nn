@@ -4,18 +4,20 @@ using Assets.ScriptableObjects;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using Assets.Scripts.Battle;
+using System.Collections;
 
 namespace Assets.Scripts.Stage
 {
     public class StageCreator : MonoBehaviour
     {
-        [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[StageFacade._stageSide * 2 - 1];
+        [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[StageFacade._StageSide * 2 - 1];
         [SerializeField] private ScriptableObjects.TileData TileData;
 
         public void CreateNewStage()
         {
+            StageFacade.IsCreatingStage = true;
             SetStageMatrix();
-            SetAllTiles();
+            StartCoroutine(SetAllTiles());
         }
 
         private static void SetStageMatrix()
@@ -28,8 +30,8 @@ namespace Assets.Scripts.Stage
 
         private static void InitializeMatrix(int[,] matrix)
         {
-            for(int i = 0; i < StageFacade._stageSide; i++)
-                for(int j = 0; j < StageFacade._stageSide; j++)
+            for(int i = 0; i < StageFacade._StageSide; i++)
+                for(int j = 0; j < StageFacade._StageSide; j++)
                     matrix[i, j] = -1;
         } 
         
@@ -45,10 +47,10 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs1()
         {
-            int[,] _stageArea = new int[StageFacade._stageSide, StageFacade._stageSide];
+            int[,] _stageArea = new int[StageFacade._StageSide, StageFacade._StageSide];
             StageElement.AssignStageElementZs(_stageArea);
-            for(int i = 0; i < StageFacade._stageSide; i++)
-                for(int j = 0; j < StageFacade._stageSide; j++)
+            for(int i = 0; i < StageFacade._StageSide; i++)
+                for(int j = 0; j < StageFacade._StageSide; j++)
                     StageFacade.TileImZs[i, j] = _stageArea[i, j];
         }
 
@@ -56,20 +58,20 @@ namespace Assets.Scripts.Stage
         {
             Random.InitState(System.DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
-            int clossI = Random.Range(2, StageFacade._stageSide - 2);
-            int clossJ = Random.Range(2, StageFacade._stageSide - 2);
+            int clossI = Random.Range(2, StageFacade._StageSide - 2);
+            int clossJ = Random.Range(2, StageFacade._StageSide - 2);
             List<(int startI, int startJ,  int endI, int endJ)> clossPointList = new();
             switch(Random.Range(0, 2))
             {
                 case 0:
-                    clossPointList.Add((0, clossJ, StageFacade._stageSide - 1, clossJ));
-                    stageAreaPointList.Add((0, clossJ + 1, StageFacade._stageSide - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((0, 0, StageFacade._stageSide - 1, clossJ - 1));
+                    clossPointList.Add((0, clossJ, StageFacade._StageSide - 1, clossJ));
+                    stageAreaPointList.Add((0, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((0, 0, StageFacade._StageSide - 1, clossJ - 1));
                     break;
                 case 1:
-                    clossPointList.Add((clossI, 0, clossI, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._stageSide - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((0, 0, clossI - 1, StageFacade._stageSide - 1));
+                    clossPointList.Add((clossI, 0, clossI, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, StageFacade._StageSide - 1));
                     break;
             }
             
@@ -97,38 +99,38 @@ namespace Assets.Scripts.Stage
         {
             Random.InitState(System.DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
-            int clossI = Random.Range(2, StageFacade._stageSide - 2);
-            int clossJ = Random.Range(2, StageFacade._stageSide - 2);
+            int clossI = Random.Range(2, StageFacade._StageSide - 2);
+            int clossJ = Random.Range(2, StageFacade._StageSide - 2);
             List<(int startI, int startJ,  int endI, int endJ)> clossPointList = new();
             switch(Random.Range(0, 4))
             {
                 case 0:
-                    clossPointList.Add((0, clossJ, StageFacade._stageSide - 1, clossJ));
+                    clossPointList.Add((0, clossJ, StageFacade._StageSide - 1, clossJ));
                     clossPointList.Add((clossI, 0, clossI, clossJ - 1));
-                    stageAreaPointList.Add((0, clossJ + 1, StageFacade._stageSide - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._stageSide - 1, clossJ - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, clossJ - 1));
                     stageAreaPointList.Add((0, 0, clossI - 1, clossJ - 1));
                     break;
                 case 1:
-                    clossPointList.Add((clossI, clossJ + 1, clossI, StageFacade._stageSide - 1));
-                    clossPointList.Add((0, clossJ, StageFacade._stageSide - 1, clossJ));
-                    stageAreaPointList.Add((clossI + 1, clossJ + 1, StageFacade._stageSide - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((0, 0, StageFacade._stageSide - 1, clossJ - 1));
+                    clossPointList.Add((clossI, clossJ + 1, clossI, StageFacade._StageSide - 1));
+                    clossPointList.Add((0, clossJ, StageFacade._StageSide - 1, clossJ));
+                    stageAreaPointList.Add((clossI + 1, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((0, 0, StageFacade._StageSide - 1, clossJ - 1));
                     break;
                 case 2:
-                    clossPointList.Add((clossI, 0, clossI, StageFacade._stageSide - 1));
+                    clossPointList.Add((clossI, 0, clossI, StageFacade._StageSide - 1));
                     clossPointList.Add((0, clossJ, clossI - 1, clossJ));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._stageSide - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, StageFacade._stageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, StageFacade._StageSide - 1));
                     stageAreaPointList.Add((0, 0, clossI - 1, clossJ - 1));
                     break;
                 case 3:
-                    clossPointList.Add((clossI + 1, clossJ, StageFacade._stageSide - 1, clossJ));
-                    clossPointList.Add((clossI, 0, clossI, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, clossJ + 1, StageFacade._stageSide - 1, StageFacade._stageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._stageSide - 1, clossJ - 1));
-                    stageAreaPointList.Add((0, 0, clossI - 1, StageFacade._stageSide - 1));
+                    clossPointList.Add((clossI + 1, clossJ, StageFacade._StageSide - 1, clossJ));
+                    clossPointList.Add((clossI, 0, clossI, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, clossJ - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, StageFacade._StageSide - 1));
                     break;
             }
             
@@ -151,16 +153,21 @@ namespace Assets.Scripts.Stage
             }
         }
 
-        private void SetAllTiles()
+        private IEnumerator SetAllTiles()
         {
-            for(int i = 0; i < StageFacade._stageSide * 2 - 1; i++)
-                for(int j = 0; j < StageFacade._stageSide * 2 - 1; j++)
+            for(int n = 0; n < StageFacade._StageSide * 2 - 1; n++)
+            {
+                for(int m = 0; m < StageFacade._StageSide; m++)
                 {
-                    if(i - j >= StageFacade._stageSide || i - j < 0 || j >= StageFacade._stageSide) continue;
-                    int tileHeight = StageFacade.TileImZs[i - j, j];
-                    Vector3Int tilePosition = new((StageFacade._stageSide - 1) / 2 - i + j, (StageFacade._stageSide - 1) / 2 - j, 0);
-                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[i]);
+                    (int i, int j) = (StageFacade._StageSide - 1 - m, StageFacade._StageSide - 1 - n + m);
+                    if(i >= StageFacade._StageSide || i < 0 || j >= StageFacade._StageSide || j < 0) continue;
+                    int tileHeight = StageFacade.TileImZs[i, j];
+                    Vector3Int tilePosition = new((StageFacade._StageSide - 1) / 2 - i, (StageFacade._StageSide - 1) / 2 - j, 0);
+                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[14 - n]);
                 }
+                yield return new WaitForSeconds(0.03f);
+            }
+            StageFacade.IsCreatingStage = false;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Assets.Scripts.Player
             GetComponent<PlayerMove>().Initialize(playerParameter);
             playerAttack.Initialize(playerParameter);
             GetComponent<PlayerDash>().Initialize(playerParameter);
+            GetComponent<PlayerAnimation>().Initialize(playerParameter);
             StartCoroutine(ChargeEnergy());
         }
 
@@ -76,7 +77,7 @@ namespace Assets.Scripts.Player
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._tileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
@@ -85,7 +86,19 @@ namespace Assets.Scripts.Player
             return transform.position;
         }
 
-        public void DestroyObject()
+        public void DestroyDeadObject()
+        {
+            ObjectFacade.RemovePlayer();
+            StartCoroutine(WaitAndDestroy());
+        }
+
+        private IEnumerator WaitAndDestroy()
+        {
+            yield return new WaitForSeconds(playerParameter.DeadTime);
+            Destroy(gameObject);
+        }
+
+        public void DestroyAliveObject()
         {
             ObjectFacade.RemovePlayer();
             Destroy(gameObject);

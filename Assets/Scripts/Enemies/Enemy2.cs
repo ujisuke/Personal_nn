@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
+using System.Collections;
 
 namespace Assets.Scripts.Enemies
 {
@@ -19,6 +20,8 @@ namespace Assets.Scripts.Enemies
             GetComponent<ObjectMove>().Initialize(enemy2Parameter, transform.position);
             GetComponent<Enemy2Move>().Initialize(enemy2Parameter);
             GetComponent<Enemy2Attack>().Initialize(enemy2Parameter);
+            GetComponent<Enemy2MissingPlayer>().Initialize(enemy2Parameter);
+            GetComponent<Enemy2Animation>().Initialize(enemy2Parameter);
         }
 
         public void SetReady()
@@ -49,7 +52,7 @@ namespace Assets.Scripts.Enemies
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._tileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
@@ -58,7 +61,19 @@ namespace Assets.Scripts.Enemies
             return transform.position;
         }
 
-        public void DestroyObject()
+        public void DestroyDeadObject()
+        {
+            ObjectFacade.RemoveEnemy(this);
+            StartCoroutine(WaitAndDestroy());
+        }
+    
+        private IEnumerator WaitAndDestroy()
+        {
+            yield return new WaitForSeconds(enemy2Parameter.DeadTime);
+            Destroy(gameObject);
+        }
+
+        public void DestroyAliveObject()
         {
             ObjectFacade.RemoveEnemy(this);
             Destroy(gameObject);

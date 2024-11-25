@@ -10,6 +10,7 @@ namespace Assets.Scripts.Player
         {
             playerDead = objectStateMachine.GetComponent<PlayerDead>();
             playerDead.enabled = true;
+            objectStateMachine.GetComponent<PlayerAnimation>().StartDead();
         }
 
         public void FixedUpdate()
