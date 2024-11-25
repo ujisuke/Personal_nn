@@ -3,7 +3,7 @@ using Assets.Scripts.Stage;
 using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Battle;
-using Assets.Scripts.Enemies;
+using Assets.Scripts.EnemyDamageObject;
 using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Objects
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Objects
         public static void InstantiateDamageObject(GameObject damageObject, Vector3 rePos3, DamageObjectParameter damageObjectParameter)
         {
             GameObject newDamageObject = Instantiate(damageObject, rePos3, Quaternion.identity);
-            newDamageObject.GetComponent<EnemyDamageObject>().Initialize(damageObjectParameter);
+            newDamageObject.GetComponent<EnemyDamageObjectMain>().Initialize(damageObjectParameter);
         }
     }
 }
