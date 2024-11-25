@@ -1,3 +1,4 @@
+using Assets.Scripts.Objects;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies
@@ -6,7 +7,8 @@ namespace Assets.Scripts.Enemies
     {
         private void OnEnable()
         {
-            GetComponent<Enemy2>().DestroyObject();
+            GetComponent<Enemy2>().DestroyDeadObject();
+            GetComponent<ObjectMove>().Stop();
         }
     }
 }

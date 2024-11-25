@@ -1,42 +1,51 @@
+using Assets.ScriptableObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies
 {
     public class Enemy1Animation : MonoBehaviour
     {
-        private Animator _animator;
+        private Animator animator;
+        private Enemy1Parameter _enemy1Parameter;
 
-        private void Awake()
+        public void Initialize(Enemy1Parameter enemy1Parameter)
         {
-            _animator = GetComponent<Animator>();
+            _enemy1Parameter = enemy1Parameter;
+            animator = GetComponent<Animator>();
+            animator.SetFloat("DeadSpeed" , 1f / _enemy1Parameter.DeadTime);
         }
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
         {
-            _animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
-            _animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
-            _animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
-            _animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
+            animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
+            animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
+            animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
+            animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
         }
 
         public void StartWalk()
         {
-            _animator.SetBool("IsWalking", true);
+            animator.SetBool("IsWalking", true);
         }
 
         public void StopWalk()
         {
-            _animator.SetBool("IsWalking", false);
+            animator.SetBool("IsWalking", false);
         }
 
         public void StartAttack()
         {
-            _animator.SetBool("IsAttacking", true);
+            animator.SetBool("IsAttacking", true);
         }
 
         public void StopAttack()
         {
-            _animator.SetBool("IsAttacking", false);
+            animator.SetBool("IsAttacking", false);
+        }
+
+        public void StartDead()
+        {
+            animator.SetBool("IsDead", true);
         }
     }
 }

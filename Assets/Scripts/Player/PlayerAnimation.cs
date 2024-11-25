@@ -1,3 +1,4 @@
+using Assets.ScriptableObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -5,10 +6,13 @@ namespace Assets.Scripts.Player
     public class PlayerAnimation : MonoBehaviour
     {
         private Animator _animator;
+        private PlayerParameter _playerParameter;
 
-        private void Awake()
+        public void Initialize(PlayerParameter playerParameter)
         {
+            _playerParameter = playerParameter;
             _animator = GetComponent<Animator>();
+            _animator.SetFloat("DeadSpeed", 1f / _playerParameter.DeadTime);
         }
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
@@ -48,6 +52,11 @@ namespace Assets.Scripts.Player
         public void StopAttack()
         {
             _animator.SetBool("IsAttacking", false);
+        }
+
+        public void StartDead()
+        {
+            _animator.SetBool("IsDead", true);
         }
     }
 }

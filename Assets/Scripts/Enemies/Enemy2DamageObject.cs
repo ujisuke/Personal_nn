@@ -28,7 +28,7 @@ namespace Assets.Scripts.Enemies
             yield return new WaitForSeconds(0.6f);
             isDamaging = true;
             yield return new WaitForSeconds(0.3f);
-            DestroyObject();
+            DestroyDeadObject();
         }
 
         public bool IsDamaging()
@@ -58,7 +58,13 @@ namespace Assets.Scripts.Enemies
             return transform.position;
         }
 
-        public void DestroyObject()
+        public void DestroyDeadObject()
+        {
+            ObjectFacade.RemoveEnemy(this);
+            Destroy(gameObject);
+        }
+
+        public void DestroyAliveObject()
         {
             ObjectFacade.RemoveEnemy(this);
             Destroy(gameObject);

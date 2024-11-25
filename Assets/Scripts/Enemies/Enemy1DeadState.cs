@@ -10,6 +10,7 @@ namespace Assets.Scripts.Enemies
         {
             enemy1Dead = objectStateMachine.GetComponent<Enemy1Dead>();
             enemy1Dead.enabled = true;
+            objectStateMachine.GetComponent<Enemy1Animation>().StartDead();
         }
 
         public void FixedUpdate()

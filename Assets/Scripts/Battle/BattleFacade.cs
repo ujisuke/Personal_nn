@@ -35,8 +35,8 @@ namespace Assets.Scripts.Battle
         private static IEnumerator ResetStageAndObjects()
         {
             isResettingBattle = true;
-            ObjectFacade.RemoveAndDestroyPlayer();
-            ObjectFacade.RemoveAndDestroyAllEnemies();
+            ObjectFacade.RemoveAndDestroyAlivePlayer();
+            ObjectFacade.RemoveAndDestroyAllAliveEnemies();
 
             StageFacade.CreateNewStage();
             yield return new WaitUntil(() => !StageFacade.IsCreatingStage);

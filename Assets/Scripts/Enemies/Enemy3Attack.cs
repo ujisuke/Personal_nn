@@ -24,16 +24,8 @@ namespace Assets.Scripts.Enemies
         private void OnEnable()
         {
             isAttacking = true;
+            objectMove.Stop();
             StartCoroutine(Attack());
-        }
-
-        private void FixedUpdate()
-        {
-            objectMove.HeadToPlusImX(false);
-            objectMove.HeadToMinusImX(false);
-            objectMove.HeadToPlusImY(false);
-            objectMove.HeadToMinusImY(false);
-            objectMove.TryToJump(false);
         }
 
         private IEnumerator Attack()

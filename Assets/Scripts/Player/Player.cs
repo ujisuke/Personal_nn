@@ -25,6 +25,7 @@ namespace Assets.Scripts.Player
             GetComponent<PlayerMove>().Initialize(playerParameter);
             playerAttack.Initialize(playerParameter);
             GetComponent<PlayerDash>().Initialize(playerParameter);
+            GetComponent<PlayerAnimation>().Initialize(playerParameter);
             StartCoroutine(ChargeEnergy());
         }
 
@@ -85,7 +86,19 @@ namespace Assets.Scripts.Player
             return transform.position;
         }
 
-        public void DestroyObject()
+        public void DestroyDeadObject()
+        {
+            ObjectFacade.RemovePlayer();
+            StartCoroutine(WaitAndDestroy());
+        }
+
+        private IEnumerator WaitAndDestroy()
+        {
+            yield return new WaitForSeconds(playerParameter.DeadTime);
+            Destroy(gameObject);
+        }
+
+        public void DestroyAliveObject()
         {
             ObjectFacade.RemovePlayer();
             Destroy(gameObject);

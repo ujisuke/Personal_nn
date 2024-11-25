@@ -154,7 +154,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToPlusImX
+  m_Name: PlayerAttackToPlusImX
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -167,7 +167,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: dc3ea14205993e9419b73e2af2e17bf7, type: 2}
+  m_Motion: {fileID: 7400000, guid: e0be7bcb6f707b648bd68032280c9381, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -222,8 +222,8 @@ AnimatorStateTransition:
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0
-  m_TransitionOffset: 0.0018811243
-  m_ExitTime: 1.0013034
+  m_TransitionOffset: 0
+  m_ExitTime: 1
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -247,8 +247,8 @@ AnimatorStateTransition:
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0
-  m_TransitionOffset: 0.0036147272
-  m_ExitTime: 0.99942213
+  m_TransitionOffset: 0
+  m_ExitTime: 1
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -319,7 +319,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToMinusImX
+  m_Name: PlayerAttackToMinusImX
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -332,7 +332,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d3341650e198df44ab2cece80979671d, type: 2}
+  m_Motion: {fileID: 7400000, guid: b200605d9e919044c833bbe53541e16c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -345,7 +345,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToMinusImY
+  m_Name: PlayerAttackToMinusImY
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -358,7 +358,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6b0d5ee7ca90d604b95dac51b7f74a5d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 438d6fbe1b26ad748849d50875771505, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -525,7 +525,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy1AttackToPlusImY
+  m_Name: PlayerAttackToPlusImY
   m_Speed: 8
   m_CycleOffset: 0
   m_Transitions: []
@@ -538,7 +538,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 172fceb31a0ed2c4aba4473be35362d6, type: 2}
+  m_Motion: {fileID: 7400000, guid: 792929b6c05ec61449561286ce78e919, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

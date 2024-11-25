@@ -22,6 +22,7 @@ namespace Assets.Scripts.Enemies
         private void OnEnable()
         {
             canAttack = false;
+            objectMove.Stop();
             StartCoroutine(CoolDown());
         }
 
@@ -29,15 +30,6 @@ namespace Assets.Scripts.Enemies
         { 
             yield return new WaitForSeconds(enemy3Parameter.AttackCoolDownTime);
             canAttack = true;
-        }
-    
-        private void FixedUpdate()
-        {
-            objectMove.HeadToPlusImX(false);
-            objectMove.HeadToMinusImX(false);
-            objectMove.HeadToPlusImY(false);
-            objectMove.HeadToMinusImY(false);
-            objectMove.TryToJump(false);
         }
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()

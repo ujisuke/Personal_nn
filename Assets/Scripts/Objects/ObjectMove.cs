@@ -328,6 +328,15 @@ namespace Assets.Scripts.Objects
             isTryingToJump = isTrying;
         }
 
+        public void Stop()
+        {
+            isHeadingToMinusImX = false;
+            isHeadingToPlusImY = false;
+            isHeadingToMinusImY = false;
+            isHeadingToPlusImX = false;
+            isTryingToJump = false;
+        }
+        
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
             return destinationTileImZ < objectRePos3.z - 1f + objectParameter.JumpHeight && objectRePos3.z - 1f < destinationTileImZ;

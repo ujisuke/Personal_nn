@@ -11,6 +11,7 @@ namespace Assets.Scripts.Objects
         public void TakeDamage(float damage);
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s(); 
         public Vector3 GetRePos3();
-        public void DestroyObject();
+        public void DestroyDeadObject();
+        public void DestroyAliveObject();
     }
 }

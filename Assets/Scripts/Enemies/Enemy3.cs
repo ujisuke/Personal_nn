@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
+using System.Collections;
 
 namespace Assets.Scripts.Enemies
 {
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Enemies
             GetComponent<ObjectMove>().Initialize(enemy3Parameter, transform.position);
             GetComponent<Enemy3Move>().Initialize(enemy3Parameter);
             GetComponent<Enemy3Attack>().Initialize(enemy3Parameter);
+            GetComponent<Enemy3Animation>().Initialize(enemy3Parameter);
         }
 
         public void SetReady()
@@ -58,7 +60,19 @@ namespace Assets.Scripts.Enemies
             return transform.position;
         }
 
-        public void DestroyObject()
+        public void DestroyDeadObject()
+        {
+            ObjectFacade.RemoveEnemy(this);
+            StartCoroutine(WaitAndDestroy());
+        }
+
+        private IEnumerator WaitAndDestroy()
+        {
+            yield return new WaitForSeconds(enemy3Parameter.DeadTime);
+            Destroy(gameObject);
+        }
+
+        public void DestroyAliveObject()
         {
             ObjectFacade.RemoveEnemy(this);
             Destroy(gameObject);

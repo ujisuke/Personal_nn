@@ -1,3 +1,4 @@
+using Assets.ScriptableObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemies
@@ -5,10 +6,13 @@ namespace Assets.Scripts.Enemies
     public class Enemy2Animation : MonoBehaviour
     {
         private Animator _animator;
+        private Enemy2Parameter _enemy2Parameter;
 
-        private void Awake()
+        public void Initialize(Enemy2Parameter enemy2Parameter)
         {
+            _enemy2Parameter = enemy2Parameter;
             _animator = GetComponent<Animator>();
+            _animator.SetFloat("DeadSpeed", 1f / _enemy2Parameter.DeadTime);
         }
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
@@ -47,6 +51,11 @@ namespace Assets.Scripts.Enemies
         public void StopStand()
         {
             _animator.SetBool("IsStanding", false);
+        }
+
+        public void StartDead()
+        {
+            _animator.SetBool("IsDead", true);
         }
     }
 }

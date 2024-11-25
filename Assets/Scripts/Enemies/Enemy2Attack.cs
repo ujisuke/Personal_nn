@@ -23,11 +23,7 @@ namespace Assets.Scripts.Enemies
         private void OnEnable()
         {
             isAttacking = true;
-            objectMove.HeadToPlusImX(false);
-            objectMove.HeadToMinusImX(false);
-            objectMove.HeadToPlusImY(false);
-            objectMove.HeadToMinusImY(false);
-            objectMove.TryToJump(false);
+            objectMove.Stop();
             StartCoroutine(Attack());
         }
 
