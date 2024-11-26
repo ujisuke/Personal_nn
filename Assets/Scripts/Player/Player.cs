@@ -3,6 +3,7 @@ using UnityEngine;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
 using System.Collections;
+using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.Player
 {
@@ -89,6 +90,7 @@ namespace Assets.Scripts.Player
         public void DestroyDeadObject()
         {
             ObjectFacade.RemovePlayer();
+            BattleFacade.DeathCount++;
             StartCoroutine(WaitAndDestroy());
         }
 
