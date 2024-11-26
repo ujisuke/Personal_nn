@@ -17,7 +17,7 @@ namespace Assets.Scripts.UI
 
         private void FixedUpdate()
         {
-            text.text = $"<size={textFontSize}>ステージ</size> <size={countFontSize}>{BattleFacade.StageCount}</size> <size={textFontSize}>デス</size> <size={countFontSize}>{BattleFacade.DeathCount}</size>";
+            text.text = $"<size={textFontSize}>ステージ</size><size={countFontSize}>{BattleFacade.StageCount}</size><size={textFontSize}> デス</size><size={countFontSize}>{BattleFacade.DeathCount}</size>";
         }
     }
 }
