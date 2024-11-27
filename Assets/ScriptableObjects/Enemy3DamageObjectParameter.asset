@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697762647438007409a4fac443c1acf2, type: 3}
   m_Name: Enemy3DamageObjectParameter
   m_EditorClassIdentifier: 
-  _attackPower: 5
+  _attackPower: 2
   _readyTime: 0.6
   _damagingTime: 0.3
   _animatorController: {fileID: 9100000, guid: 290a4eeb2f250524988173a60a83a903, type: 2}

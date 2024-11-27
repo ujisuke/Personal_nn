@@ -13,10 +13,10 @@ namespace Assets.ScriptableObjects
         public float JumpHeight => _jumpHeight;
         [SerializeField] private float _jumpTime;
         public float JumpTime => _jumpTime;
-        [SerializeField] private float _attackPower;
-        public float AttackPower => _attackPower;
-        [SerializeField]private float maxHP;
-        public float MaxHP => maxHP;
+        [SerializeField] private int _attackPower;
+        public int AttackPower => _attackPower;
+        [SerializeField] private int _maxHP;
+        public int MaxHP => _maxHP;
         [SerializeField] private float _deadTime;
         public float DeadTime => _deadTime;
         [SerializeField] private DamageObjectParameter _damageObjectParameter;

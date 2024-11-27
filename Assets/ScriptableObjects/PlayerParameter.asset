@@ -17,7 +17,7 @@ MonoBehaviour:
   _jumpHeight: 2.5
   _jumpTime: 0.6
   _attackPower: 5
-  maxHP: 10
+  _maxHP: 5
   _deadTime: 0.3
   _damageObjectParameter: {fileID: 0}
   _maxEnergy: 2

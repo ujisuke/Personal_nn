@@ -8,7 +8,7 @@ namespace Assets.Scripts.Player
     public class PlayerAttack : MonoBehaviour
     {
         private PlayerParameter playerParameter;
-        private Player player;
+        private PlayerMain playerMain;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
@@ -19,14 +19,14 @@ namespace Assets.Scripts.Player
         {
             this.playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
-            player = GetComponent<Player>();
+            playerMain = GetComponent<PlayerMain>();
         }
 
         private void OnEnable()
         {
             isAttacking = true;
             isDamaging = true;
-            player.ConsumeEnergy(playerParameter.AttackEnergyConsumption);
+            playerMain.ConsumeEnergy(playerParameter.AttackEnergyConsumption);
             StartCoroutine(Attack());
         }
 

@@ -6,19 +6,19 @@ namespace Assets.Scripts.Player
     {
         private ObjectStateMachine objectStateMachine;
         private PlayerDash playerDash;
-        private Player player;
+        private PlayerMain playerMain;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             playerDash = objectStateMachine.GetComponent<PlayerDash>();
-            player = objectStateMachine.GetComponent<Player>();
+            playerMain = objectStateMachine.GetComponent<PlayerMain>();
             playerDash.enabled = true;
         }
 
         public void FixedUpdate()
         {
-            if(player.IsDead())
+            if(playerMain.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
             if(!playerDash.IsDashing)
                 objectStateMachine.TransitionTo(new PlayerMoveState());

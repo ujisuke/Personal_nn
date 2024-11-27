@@ -8,7 +8,7 @@ namespace Assets.Scripts.Player
     public class PlayerMove : MonoBehaviour
     {
         private PlayerParameter playerParameter;
-        private Player player;
+        private PlayerMain playerMain;
         private ObjectMove objectMove;
         private bool isAfterAttack = true;
         private bool isAfterDash = true;
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Player
         {
             this.playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
-            player = GetComponent<Player>();
+            playerMain = GetComponent<PlayerMain>();
         }
 
         private void OnEnable()
@@ -40,12 +40,12 @@ namespace Assets.Scripts.Player
 
         public bool CanAttack()
         {
-            return Input.GetMouseButton(0) && !isAfterAttack && player.CanUseEnergy(playerParameter.AttackEnergyConsumption);
+            return Input.GetMouseButton(0) && !isAfterAttack && playerMain.CanUseEnergy(playerParameter.AttackEnergyConsumption);
         }
 
         public bool CanDash()
         {
-            return Input.GetKey(KeyCode.LeftShift) && !isAfterDash && player.CanUseEnergy(playerParameter.DashEnergyConsumption);
+            return Input.GetKey(KeyCode.LeftShift) && !isAfterDash && playerMain.CanUseEnergy(playerParameter.DashEnergyConsumption);
         }
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()

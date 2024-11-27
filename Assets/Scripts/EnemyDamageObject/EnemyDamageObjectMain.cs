@@ -43,7 +43,7 @@ namespace Assets.Scripts.EnemyDamageObject
             obj.TakeDamage(_damageObjectParameter.AttackPower);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
 
         }

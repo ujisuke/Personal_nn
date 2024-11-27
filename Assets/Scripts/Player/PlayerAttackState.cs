@@ -6,14 +6,14 @@ namespace Assets.Scripts.Player
     {
         private ObjectStateMachine objectStateMachine;
         private PlayerAttack playerAttack;
-        private Player player;
+        private PlayerMain playerMain;
         private PlayerAnimation playerAnimation;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             playerAttack = objectStateMachine.GetComponent<PlayerAttack>();
-            player = objectStateMachine.GetComponent<Player>();
+            playerMain = objectStateMachine.GetComponent<PlayerMain>();
             playerAnimation = objectStateMachine.GetComponent<PlayerAnimation>();
             playerAttack.enabled = true;
             playerAnimation.StartAttack();
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Player
 
         public void FixedUpdate()
         {
-            if(player.IsDead())
+            if(playerMain.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
             if(!playerAttack.IsAttacking)
                 objectStateMachine.TransitionTo(new PlayerMoveState());

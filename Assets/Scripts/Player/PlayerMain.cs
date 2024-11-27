@@ -7,26 +7,28 @@ using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.Player
 {
-    public class Player : MonoBehaviour, IObject
+    public class PlayerMain : MonoBehaviour, IObject
     {
-        [SerializeField] private PlayerParameter playerParameter;
-        private HP hP;
+        [SerializeField] private PlayerParameter _playerParameter;
+        private HP hp;
         private Energy energy;
         private PlayerAttack playerAttack;
         private bool isReady = false;
         public bool IsReady => isReady;
+        public static int CurrentHP;
 
         private void Awake()
         {
             ObjectFacade.AddPlayer(this);
-            hP = HP.Initialize(playerParameter.MaxHP);
-            energy = Energy.Initialize(playerParameter.MaxEnergy);
+            hp = HP.Initialize(_playerParameter.MaxHP);
+            energy = Energy.Initialize(_playerParameter.MaxEnergy);
             playerAttack = GetComponent<PlayerAttack>();
-            GetComponent<ObjectMove>().Initialize(playerParameter, transform.position);
-            GetComponent<PlayerMove>().Initialize(playerParameter);
-            playerAttack.Initialize(playerParameter);
-            GetComponent<PlayerDash>().Initialize(playerParameter);
-            GetComponent<PlayerAnimation>().Initialize(playerParameter);
+            GetComponent<ObjectMove>().Initialize(_playerParameter, transform.position);
+            GetComponent<PlayerMove>().Initialize(_playerParameter);
+            playerAttack.Initialize(_playerParameter);
+            GetComponent<PlayerDash>().Initialize(_playerParameter);
+            GetComponent<PlayerAnimation>().Initialize(_playerParameter);
+            CurrentHP = hp.CurrentHP;
             StartCoroutine(ChargeEnergy());
         }
 
@@ -35,7 +37,7 @@ namespace Assets.Scripts.Player
             while(!IsDead())
             {
                 yield return new WaitUntil(() => !energy.IsFull());
-                yield return new WaitForSeconds(playerParameter.ChargingEnergyTime);
+                yield return new WaitForSeconds(_playerParameter.ChargingEnergyTime);
                 energy = energy.Charge(1);
             }
         }
@@ -47,7 +49,7 @@ namespace Assets.Scripts.Player
 
         public bool IsDead()
         {
-            return hP.IsZero();
+            return hp.IsZero();
         }
 
         public bool CanUseEnergy(int consumption)
@@ -62,12 +64,13 @@ namespace Assets.Scripts.Player
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(playerParameter.AttackPower);
+            obj.TakeDamage(_playerParameter.AttackPower);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
-            hP = hP.TakeDamage(damage);
+            hp = hp.TakeDamage(damage);
+            CurrentHP = hp.CurrentHP;
         }
 
         public void ConsumeEnergy(int consumption)
@@ -96,7 +99,7 @@ namespace Assets.Scripts.Player
 
         private IEnumerator WaitAndDestroy()
         {
-            yield return new WaitForSeconds(playerParameter.DeadTime);
+            yield return new WaitForSeconds(_playerParameter.DeadTime);
             Destroy(gameObject);
         }
 
