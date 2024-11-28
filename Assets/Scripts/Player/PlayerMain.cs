@@ -18,6 +18,7 @@ namespace Assets.Scripts.Player
         private PlayerAttack playerAttack;
         private bool isReady = false;
         public bool IsReady => isReady;
+        private bool isInvincible = false;
 
 
         private void Awake()
@@ -74,7 +75,16 @@ namespace Assets.Scripts.Player
 
         public void TakeDamage(int damage)
         {
+            if(isInvincible) return;
             singletonHP = singletonHP.TakeDamage(damage);
+            StartCoroutine(BecomeInvincible());
+        }
+
+        private IEnumerator BecomeInvincible()
+        {
+            isInvincible = true;
+            yield return new WaitForSeconds(_playerParameter.InvincibleTime);
+            isInvincible = false;
         }
 
         public static void ConsumeEnergy(int consumption)
