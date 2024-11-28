@@ -6,9 +6,9 @@ using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.UI
 {
-    public class SetPlayerHPBar : MonoBehaviour
+    public class SetPlayerAvailableEnergyBar : MonoBehaviour
     {
-        [SerializeField] private GameObject _SeparateUIPrefab;
+        [SerializeField] private GameObject _separateUIPrefab;
         [SerializeField] private PlayerParameter _playerParameter;
         private Image image;
 
@@ -16,18 +16,18 @@ namespace Assets.Scripts.UI
         {
             image = GetComponent<Image>();
             float barWidth = GetComponent<RectTransform>().rect.width;
-            for(int i = 0 ; i < _playerParameter.MaxHP + 1; i++)
+            for(int i = 0 ; i < _playerParameter.MaxEnergy + 1; i++)
             {
-                GameObject newSeparateUIPrefab = Instantiate(_SeparateUIPrefab, transform.position, Quaternion.identity);
+                GameObject newSeparateUIPrefab = Instantiate(_separateUIPrefab, transform.position, Quaternion.identity);
                 newSeparateUIPrefab.transform.SetParent(transform);
-                newSeparateUIPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(barWidth * (i / (float)_playerParameter.MaxHP - 0.5f), 0, 0);
+                newSeparateUIPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(barWidth * (i / (float)_playerParameter.MaxEnergy - 0.5f), 0, 0);
             }
         }
 
         private void FixedUpdate()
         {
             if(!ObjectFacade.IsPlayerLiving()) return;
-            image.fillAmount = PlayerMain.CurrentHP / (float)_playerParameter.MaxHP;
+            image.fillAmount = PlayerMain.CurrentAvailableEnergy / (float)_playerParameter.MaxEnergy;
         }
     }
 }

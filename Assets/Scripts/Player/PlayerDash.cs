@@ -8,14 +8,12 @@ namespace Assets.Scripts.Player
     public class PlayerDash : MonoBehaviour
     {
         private PlayerParameter playerParameter;
-        private PlayerMain playerMain;
         private ObjectMove objectMove;
         private bool isDashing = true;
         public bool IsDashing => isDashing;
         
         public void Initialize(PlayerParameter playerParameter)
         {
-            playerMain = GetComponent<PlayerMain>();
             objectMove = GetComponent<ObjectMove>();
             this.playerParameter = playerParameter;
         }
@@ -23,7 +21,7 @@ namespace Assets.Scripts.Player
         private void OnEnable()
         {
             isDashing = true;
-            playerMain.ConsumeEnergy(playerParameter.DashEnergyConsumption);
+            PlayerMain.ConsumeEnergy(playerParameter.DashEnergyConsumption);
             StartCoroutine(Dash());
         }
 

@@ -56,9 +56,9 @@ namespace Assets.Scripts.Objects
             return player.GetRePos3();
         }
 
-        public static bool IsPlayerDead()
+        public static bool IsPlayerLiving()
         {
-            return false;
+            return player != null;
         }
 
         public static bool IsEnemyLiving()
