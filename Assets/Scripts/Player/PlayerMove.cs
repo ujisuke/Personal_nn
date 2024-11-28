@@ -33,7 +33,7 @@ namespace Assets.Scripts.Player
             objectMove.TryToJump(Input.GetKey(KeyCode.Space));
 
             if(isAfterAttack && !Input.GetMouseButton(0)) isAfterAttack = false;
-            if(isAfterDash && !Input.GetKey(KeyCode.LeftShift)) isAfterDash = false;
+            if(isAfterDash && !Input.GetMouseButton(1)) isAfterDash = false;
         }
 
         public bool CanAttack()
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Player
 
         public bool CanDash()
         {
-            return Input.GetKey(KeyCode.LeftShift) && !isAfterDash && PlayerMain.CanUseEnergy(playerParameter.DashEnergyConsumption);
+            return Input.GetMouseButton(1) && !isAfterDash && PlayerMain.CanUseEnergy(playerParameter.DashEnergyConsumption);
         }
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
