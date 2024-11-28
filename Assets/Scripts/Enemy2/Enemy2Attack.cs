@@ -9,7 +9,7 @@ namespace Assets.Scripts.Enemy2
     public class Enemy2Attack : MonoBehaviour
     {
         private Enemy2Parameter enemy2Parameter;
-        [SerializeField] private GameObject damageObjectPrefab;
+        [SerializeField] private GameObject _damageObjectPrefab;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
@@ -29,17 +29,23 @@ namespace Assets.Scripts.Enemy2
 
         private IEnumerator Attack()
         {   
+            IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
-                ObjectCreator.InstantiateDamageObject(damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.DamageObjectParameter);
+                ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.DamageObjectParameter, enemy);
                 yield return new WaitForSeconds(enemy2Parameter.AttackCoolDownTime);
             } 
             isAttacking = false;
         }
 
+        public void StopAttack()
+        {
+            StopAllCoroutines();
+        }
+
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, ObjectFacade.GetPlayerRePos3());
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, ObjectStorage.GetPlayerRePos3());
             if(math.abs(moveDirectionIm3.x) > math.abs(moveDirectionIm3.y))
             {
                 if(moveDirectionIm3.x > 0)

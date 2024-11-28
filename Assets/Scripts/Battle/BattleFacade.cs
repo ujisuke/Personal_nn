@@ -1,49 +1,29 @@
 using UnityEngine;
-using Assets.Scripts.Objects;
-using Assets.Scripts.Stage;
-using Unity.Mathematics;
-using System.Collections;
 
 namespace Assets.Scripts.Battle
 {
     public class BattleFacade : MonoBehaviour
     {
-        private static int difficulty = 1;
-        public static int Difficulty => difficulty;
-        private static int stageCount = 1;
-        public static int StageCount => stageCount;
-        public static int DeathCount = 0;
-        private static readonly int _maxDifficulty = 3;
-        private static bool isResettingBattle = false;
+        public static int StageCount => BattleData.StageCount;
+        public static int DeathCount => BattleData.DeathCount;
+        public static int StageDifficulty => BattleData.StageDifficulty;
+        public static int EnemyDifficulty => BattleData.EnemyDifficulty;
 
-        private void Start()
+        private static BattleSetter singletonBattleSetter;
+
+        private void Awake()
         {
-            ResetBattle();
+            singletonBattleSetter = GetComponent<BattleSetter>();
         }
 
-        private void FixedUpdate()
+        public static void ResetStage()
         {
-            if(ObjectFacade.IsEnemyLiving() || isResettingBattle) return;
-            stageCount++;
-            difficulty = math.min(stageCount / 2 + 1, _maxDifficulty);
-            ResetBattle();
+            singletonBattleSetter.ResetBattle();
         }
 
-        private void ResetBattle()
+        public static void AddDeathCount()
         {
-            StartCoroutine(ResetStageAndObjects());
-        }
-
-        private static IEnumerator ResetStageAndObjects()
-        {
-            isResettingBattle = true;
-            ObjectFacade.RemoveAndDestroyAlivePlayer();
-            ObjectFacade.RemoveAndDestroyAllAliveEnemies();
-
-            StageFacade.CreateNewStage();
-            yield return new WaitUntil(() => !StageFacade.IsCreatingStage);
-            ObjectFacade.CreateNewObjects();
-            isResettingBattle = false;
+            BattleData.DeathCount++;
         }
     }
 }

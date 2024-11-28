@@ -5,13 +5,13 @@ namespace Assets.Scripts.Stage
 {   
     public class StageFacade : MonoBehaviour
     {
-        public const int _StageSide = 8;
-        public const int _StageHeight = _StageSide * 2;
-        public const float _TileHeight = 0.25f;
-        public const float _YOffset = 1.75f;
-        public static int[,] TileImZs{ get; private set; } = new int[_StageSide, _StageSide];
+        public static int StageSide => StageCreator._StageSide;
+        public static int StageHeight => StageCreator._StageHeight;
+        public static float TileHeight => StageCreator._TileHeight;
+        public static float YOffset => StageCreator._YOffset;
+        public static int[,] TileImZs => StageCreator.TileImZs;
         private static StageCreator singletonStageCreator;
-        public static bool IsCreatingStage = false;
+        public static bool IsCreatingStage => StageCreator.IsCreatingStage;
 
         private void Awake()
         {

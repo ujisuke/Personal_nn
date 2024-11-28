@@ -10,68 +10,73 @@ namespace Assets.Scripts.Stage
 {
     public class StageCreator : MonoBehaviour
     {
-        [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[StageFacade._StageSide * 2 - 1];
+        [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_StageSide * 2 - 1];
         [SerializeField] private ScriptableObjects.TileData TileData;
+        private static bool isCreatingStage = false;
+        public static bool IsCreatingStage => isCreatingStage;
+        public const int _StageSide = 8;
+        public const int _StageHeight = _StageSide * 2;
+        public const float _TileHeight = 0.25f;
+        public const float _YOffset = 1.75f;
+        public static int[,] TileImZs{ get; private set; } = new int[_StageSide, _StageSide];
 
         public void CreateNewStage()
         {
-            StageFacade.IsCreatingStage = true;
+            isCreatingStage = true;
             SetStageMatrix();
             StartCoroutine(SetAllTiles());
         }
 
         private static void SetStageMatrix()
         {
-            //行列の初期化
-            InitializeMatrix(StageFacade.TileImZs);
-            //高さを設定
+            InitializeMatrix(TileImZs);
             SetAllZs();
         }
 
         private static void InitializeMatrix(int[,] matrix)
         {
-            for(int i = 0; i < StageFacade._StageSide; i++)
-                for(int j = 0; j < StageFacade._StageSide; j++)
+            for(int i = 0; i < _StageSide; i++)
+                for(int j = 0; j < _StageSide; j++)
                     matrix[i, j] = -1;
         } 
         
         private static void SetAllZs()
         {
-            if(BattleFacade.Difficulty == 1)
+            if(BattleFacade.StageDifficulty == 1)
                 SetAllZsWhenDifficultyIs1();
-            else if(BattleFacade.Difficulty == 2)
+            else if(BattleFacade.StageDifficulty == 2)
                 SetAllZsWhenDifficultyIs2();
-            else if(BattleFacade.Difficulty == 3)
-                SetAllZsWhenDifficultyIs3();
+            else if(BattleFacade.StageDifficulty >= 3)
+                SetAllZsWhenDifficultyIs3OrMoreThan();
         }
 
         private static void SetAllZsWhenDifficultyIs1()
         {
-            int[,] _stageArea = new int[StageFacade._StageSide, StageFacade._StageSide];
+            int[,] _stageArea = new int[_StageSide, _StageSide];
             StageElement.AssignStageElementZs(_stageArea);
-            for(int i = 0; i < StageFacade._StageSide; i++)
-                for(int j = 0; j < StageFacade._StageSide; j++)
-                    StageFacade.TileImZs[i, j] = _stageArea[i, j];
+            for(int i = 0; i < _StageSide; i++)
+                for(int j = 0; j < _StageSide; j++)
+                    TileImZs[i, j] = _stageArea[i, j];
         }
 
         private static void SetAllZsWhenDifficultyIs2()
         {
             Random.InitState(System.DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
-            int clossI = Random.Range(2, StageFacade._StageSide - 2);
-            int clossJ = Random.Range(2, StageFacade._StageSide - 2);
+            int clossI = Random.Range(2, _StageSide - 2);
+            int clossJ = Random.Range(2, _StageSide - 2);
             List<(int startI, int startJ,  int endI, int endJ)> clossPointList = new();
             switch(Random.Range(0, 2))
             {
                 case 0:
-                    clossPointList.Add((0, clossJ, StageFacade._StageSide - 1, clossJ));
-                    stageAreaPointList.Add((0, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((0, 0, StageFacade._StageSide - 1, clossJ - 1));
+                    clossPointList.Add((0, clossJ, _StageSide - 1, clossJ));
+                    stageAreaPointList.Add((0, clossJ + 1, _StageSide - 1, _StageSide - 1));
+                    stageAreaPointList.Add((0, 0, _StageSide - 1, clossJ - 1));
                     break;
                 case 1:
-                    clossPointList.Add((clossI, 0, clossI, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((0, 0, clossI - 1, StageFacade._StageSide - 1));
+                    clossPointList.Add((clossI, 0, clossI, _StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, _StageSide - 1, _StageSide - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, _StageSide - 1));
                     break;
             }
             
@@ -84,53 +89,53 @@ namespace Assets.Scripts.Stage
                 StageElement.AssignStageElementZs(_stageArea);
                 for(int I = 0; I < h; I++)
                     for(int J = 0; J < w; J++)
-                        StageFacade.TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
+                        TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
                 
                 if(clossPointList.Count < i + 1) break;
                 for(int I = clossPointList[i].startI; I < clossPointList[i].endI + 1; I++)
                     for(int J = clossPointList[i].startJ; J < clossPointList[i].endJ + 1; J++)
-                        StageFacade.TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
+                        TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
                 offsetZ += _stageArea[0, 0] - 1;
             }
         }
 
 
-        private static void SetAllZsWhenDifficultyIs3()
+        private static void SetAllZsWhenDifficultyIs3OrMoreThan()
         {
             Random.InitState(System.DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
-            int clossI = Random.Range(2, StageFacade._StageSide - 2);
-            int clossJ = Random.Range(2, StageFacade._StageSide - 2);
+            int clossI = Random.Range(2, _StageSide - 2);
+            int clossJ = Random.Range(2, _StageSide - 2);
             List<(int startI, int startJ,  int endI, int endJ)> clossPointList = new();
             switch(Random.Range(0, 4))
             {
                 case 0:
-                    clossPointList.Add((0, clossJ, StageFacade._StageSide - 1, clossJ));
+                    clossPointList.Add((0, clossJ, _StageSide - 1, clossJ));
                     clossPointList.Add((clossI, 0, clossI, clossJ - 1));
-                    stageAreaPointList.Add((0, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, clossJ - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, _StageSide - 1, _StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, _StageSide - 1, clossJ - 1));
                     stageAreaPointList.Add((0, 0, clossI - 1, clossJ - 1));
                     break;
                 case 1:
-                    clossPointList.Add((clossI, clossJ + 1, clossI, StageFacade._StageSide - 1));
-                    clossPointList.Add((0, clossJ, StageFacade._StageSide - 1, clossJ));
-                    stageAreaPointList.Add((clossI + 1, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((0, 0, StageFacade._StageSide - 1, clossJ - 1));
+                    clossPointList.Add((clossI, clossJ + 1, clossI, _StageSide - 1));
+                    clossPointList.Add((0, clossJ, _StageSide - 1, clossJ));
+                    stageAreaPointList.Add((clossI + 1, clossJ + 1, _StageSide - 1, _StageSide - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, _StageSide - 1));
+                    stageAreaPointList.Add((0, 0, _StageSide - 1, clossJ - 1));
                     break;
                 case 2:
-                    clossPointList.Add((clossI, 0, clossI, StageFacade._StageSide - 1));
+                    clossPointList.Add((clossI, 0, clossI, _StageSide - 1));
                     clossPointList.Add((0, clossJ, clossI - 1, clossJ));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, StageFacade._StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, _StageSide - 1, _StageSide - 1));
+                    stageAreaPointList.Add((0, clossJ + 1, clossI - 1, _StageSide - 1));
                     stageAreaPointList.Add((0, 0, clossI - 1, clossJ - 1));
                     break;
                 case 3:
-                    clossPointList.Add((clossI + 1, clossJ, StageFacade._StageSide - 1, clossJ));
-                    clossPointList.Add((clossI, 0, clossI, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, clossJ + 1, StageFacade._StageSide - 1, StageFacade._StageSide - 1));
-                    stageAreaPointList.Add((clossI + 1, 0, StageFacade._StageSide - 1, clossJ - 1));
-                    stageAreaPointList.Add((0, 0, clossI - 1, StageFacade._StageSide - 1));
+                    clossPointList.Add((clossI + 1, clossJ, _StageSide - 1, clossJ));
+                    clossPointList.Add((clossI, 0, clossI, _StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, clossJ + 1, _StageSide - 1, _StageSide - 1));
+                    stageAreaPointList.Add((clossI + 1, 0, _StageSide - 1, clossJ - 1));
+                    stageAreaPointList.Add((0, 0, clossI - 1, _StageSide - 1));
                     break;
             }
             
@@ -143,31 +148,31 @@ namespace Assets.Scripts.Stage
                 StageElement.AssignStageElementZs(_stageArea);
                 for(int I = 0; I < h; I++)
                     for(int J = 0; J < w; J++)
-                        StageFacade.TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
+                        TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
                 
                 if(clossPointList.Count < i + 1) break;
                 for(int I = clossPointList[i].startI; I < clossPointList[i].endI + 1; I++)
                     for(int J = clossPointList[i].startJ; J < clossPointList[i].endJ + 1; J++)
-                        StageFacade.TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
+                        TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
                 offsetZ += _stageArea[0, 0] - 1;
             }
         }
 
         private IEnumerator SetAllTiles()
         {
-            for(int n = 0; n < StageFacade._StageSide * 2 - 1; n++)
+            for(int n = 0; n < _StageSide * 2 - 1; n++)
             {
-                for(int m = 0; m < StageFacade._StageSide; m++)
+                for(int m = 0; m < _StageSide; m++)
                 {
-                    (int i, int j) = (StageFacade._StageSide - 1 - m, StageFacade._StageSide - 1 - n + m);
-                    if(i >= StageFacade._StageSide || i < 0 || j >= StageFacade._StageSide || j < 0) continue;
-                    int tileHeight = StageFacade.TileImZs[i, j];
-                    Vector3Int tilePosition = new((StageFacade._StageSide - 1) / 2 - i, (StageFacade._StageSide - 1) / 2 - j, 0);
-                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[14 - n]);
+                    (int i, int j) = (_StageSide - 1 - m, _StageSide - 1 - n + m);
+                    if(i >= _StageSide || i < 0 || j >= _StageSide || j < 0) continue;
+                    int tileHeight = TileImZs[i, j];
+                    Vector3Int tilePosition = new((_StageSide - 1) / 2 - i, (_StageSide - 1) / 2 - j, 0);
+                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[_StageSide * 2 - 2 - n]);
                 }
                 yield return new WaitForSeconds(0.03f);
             }
-            StageFacade.IsCreatingStage = false;
+            isCreatingStage = false;
         }
     }
 }

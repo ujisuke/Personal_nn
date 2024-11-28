@@ -7,7 +7,7 @@ using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMain : MonoBehaviour, IObject
+    public class PlayerMain : MonoBehaviour
     {
         [SerializeField] private PlayerParameter _playerParameter;
         private static HP singletonHP;
@@ -18,11 +18,12 @@ namespace Assets.Scripts.Player
         private PlayerAttack playerAttack;
         private bool isReady = false;
         public bool IsReady => isReady;
+        private bool isInvincible = false;
 
 
         private void Awake()
         {
-            ObjectFacade.AddPlayer(this);
+            ObjectStorage.AddPlayer(this);
             singletonHP = HP.Initialize(_playerParameter.MaxHP);
             singletonEnergy = Energy.Initialize(_playerParameter.MaxEnergy);
             playerAttack = GetComponent<PlayerAttack>();
@@ -67,14 +68,23 @@ namespace Assets.Scripts.Player
             return playerAttack.IsDamaging;
         }
 
-        public void DamageTo(IObject obj)
+        public void DamageTo(IEnemyMain obj)
         {
             obj.TakeDamage(_playerParameter.AttackPower);
         }
 
         public void TakeDamage(int damage)
         {
+            if(isInvincible) return;
             singletonHP = singletonHP.TakeDamage(damage);
+            StartCoroutine(BecomeInvincible());
+        }
+
+        private IEnumerator BecomeInvincible()
+        {
+            isInvincible = true;
+            yield return new WaitForSeconds(_playerParameter.InvincibleTime);
+            isInvincible = false;
         }
 
         public static void ConsumeEnergy(int consumption)
@@ -85,19 +95,14 @@ namespace Assets.Scripts.Player
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._TileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade.TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
-        }
-
-        public Vector3 GetRePos3()
-        {
-            return transform.position;
         }
 
         public void DestroyDeadObject()
         {
-            ObjectFacade.RemovePlayer();
-            BattleFacade.DeathCount++;
+            ObjectStorage.RemovePlayer();
+            BattleFacade.AddDeathCount();
             StartCoroutine(WaitAndDestroy());
         }
 
@@ -109,7 +114,7 @@ namespace Assets.Scripts.Player
 
         public void DestroyAliveObject()
         {
-            ObjectFacade.RemovePlayer();
+            ObjectStorage.RemovePlayer();
             Destroy(gameObject);
         }
     }
