@@ -46,8 +46,8 @@ namespace Assets.Scripts.Stage
                 SetAllZsWhenDifficultyIs1();
             else if(BattleFacade.Difficulty == 2)
                 SetAllZsWhenDifficultyIs2();
-            else if(BattleFacade.Difficulty == 3)
-                SetAllZsWhenDifficultyIs3();
+            else if(BattleFacade.Difficulty >= 3)
+                SetAllZsWhenDifficultyIs3OrMoreThan();
         }
 
         private static void SetAllZsWhenDifficultyIs1()
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Stage
         }
 
 
-        private static void SetAllZsWhenDifficultyIs3()
+        private static void SetAllZsWhenDifficultyIs3OrMoreThan()
         {
             Random.InitState(System.DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();

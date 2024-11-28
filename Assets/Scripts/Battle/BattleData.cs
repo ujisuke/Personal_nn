@@ -10,12 +10,11 @@ namespace Assets.Scripts.Battle
         private static int stageCount = 1;
         public static int StageCount => stageCount;
         public static int DeathCount = 0;
-        private static readonly int _maxDifficulty = 3;
 
         public static void GoToNextStage()
         {
             stageCount++;
-            difficulty = math.min(stageCount / 2 + 1, _maxDifficulty);
+            difficulty = stageCount / 2 + 1 + 100;
         }
     }
 }

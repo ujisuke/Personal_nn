@@ -5,6 +5,7 @@ using System.Collections;
 using Assets.Scripts.Battle;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.ScriptableObjects;
+using Unity.Mathematics;
 
 namespace Assets.Scripts.Objects
 {
@@ -19,12 +20,12 @@ namespace Assets.Scripts.Objects
         {
             Instantiate(playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
 
-            int objectNumber = BattleFacade.Difficulty;            
-            List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectNumber, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade.StageSide);
+            int objectCount = math.min(BattleFacade.Difficulty, StageFacade.StageSide * StageFacade.StageSide - minimumDistanceBetweenPlayerAndEnemy * minimumDistanceBetweenPlayerAndEnemy);
+            List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectCount, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade.StageSide);
 
-            for (int i = 0; i < objectNumber; i++)
+            for (int i = 0; i < objectCount; i++)
             {
-                int randomIndex = Random.Range(0, enemyPrefabLists.Count);
+                int randomIndex = UnityEngine.Random.Range(0, enemyPrefabLists.Count);
                 GameObject objectPrefab = enemyPrefabLists[randomIndex];
                 Instantiate(objectPrefab, enemyRePos3List[i], Quaternion.identity);
             }

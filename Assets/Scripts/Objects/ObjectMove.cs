@@ -182,7 +182,7 @@ namespace Assets.Scripts.Objects
             return endIm3 - startIm3;
         }
 
-        public static List<Vector3> DrawSomeRePos3AtRandom(int PosNumber, (int i, int j) pivotTileNumber, int minimumRadius, int maximumRadius)
+        public static List<Vector3> DrawSomeRePos3AtRandom(int PosCount, (int i, int j) pivotTileNumber, int minimumRadius, int maximumRadius)
         {
             List<(int i, int j)> tileIndexList = new();
             for(int i = 0; i < StageFacade.StageSide; i++)
@@ -194,7 +194,7 @@ namespace Assets.Scripts.Objects
                 }
             tileIndexList = tileIndexList.OrderBy(a => Guid.NewGuid()).ToList();
             List<Vector3> rePos3List = new();
-            for(int i = 0; i < math.min(PosNumber, tileIndexList.Count); i++)
+            for(int i = 0; i < math.min(PosCount, tileIndexList.Count); i++)
             {
                 Vector3 rePos3 = ConvertToRePos3FromTileIndex(tileIndexList[i]);
                 rePos3List.Add(rePos3);
