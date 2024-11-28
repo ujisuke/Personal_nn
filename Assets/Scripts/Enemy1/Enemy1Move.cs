@@ -22,7 +22,7 @@ namespace Assets.Scripts.Enemy1
 
         private void OnEnable()
         {
-            targetRePos3 = ObjectFacade.GetPlayerRePos3();
+            targetRePos3 = ObjectStorage.GetPlayerRePos3();
             StartCoroutine(UpdateTargetPos3());
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Enemy1
             while(ObjectFacade.IsPlayerLiving())
             {
                 yield return new WaitForSeconds(0.2f);
-                targetRePos3 = ObjectFacade.GetPlayerRePos3();
+                targetRePos3 = ObjectStorage.GetPlayerRePos3();
             }
         }
     
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Enemy1
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, ObjectFacade.GetPlayerRePos3());
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, ObjectStorage.GetPlayerRePos3());
             if(math.abs(moveDirectionIm3.x) > math.abs(moveDirectionIm3.y))
             {
                 if(moveDirectionIm3.x > 0)

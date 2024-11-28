@@ -32,7 +32,7 @@ namespace Assets.Scripts.Enemy2
             IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
-                ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectFacade.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.DamageObjectParameter, enemy);
+                ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.DamageObjectParameter, enemy);
                 yield return new WaitForSeconds(enemy2Parameter.AttackCoolDownTime);
             } 
             isAttacking = false;
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Enemy2
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
         {
-            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, ObjectFacade.GetPlayerRePos3());
+            Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, ObjectStorage.GetPlayerRePos3());
             if(math.abs(moveDirectionIm3.x) > math.abs(moveDirectionIm3.y))
             {
                 if(moveDirectionIm3.x > 0)

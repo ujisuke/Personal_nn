@@ -17,7 +17,7 @@ namespace Assets.Scripts.Enemy1
 
         private void Awake()
         {
-            ObjectFacade.AddEnemy(this);
+            ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_enemy1Parameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_enemy1Parameter, transform.position);
             GetComponent<Enemy1Attack>().Initialize(_enemy1Parameter);
@@ -44,13 +44,13 @@ namespace Assets.Scripts.Enemy1
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._TileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade.TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
         
         public void DestroyDeadObject()
         {
-            ObjectFacade.RemoveEnemy(this);
+            ObjectStorage.RemoveEnemy(this);
             StartCoroutine(WaitAndDestroy());
         }
 
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Enemy1
 
         public void DestroyAliveObject()
         {
-            ObjectFacade.RemoveEnemy(this); 
+            ObjectStorage.RemoveEnemy(this); 
             Destroy(gameObject);
         }
     }

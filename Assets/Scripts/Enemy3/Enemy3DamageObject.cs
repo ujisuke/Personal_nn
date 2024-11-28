@@ -13,7 +13,7 @@ namespace Assets.Scripts.Enemy3
 
         private void Awake()
         {
-            ObjectFacade.AddEnemy(this);
+            ObjectStorage.AddEnemy(this);
             isDamaging = false;
             StartCoroutine(Suicide());
         }
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Enemy3
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, transform.localScale.y / StageFacade._TileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 2f, transform.localScale.y / 2f, transform.localScale.y / StageFacade.TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
@@ -60,13 +60,13 @@ namespace Assets.Scripts.Enemy3
 
         public void DestroyDeadObject()
         {
-            ObjectFacade.RemoveEnemy(this);
+            ObjectStorage.RemoveEnemy(this);
             Destroy(gameObject);
         }
 
         public void DestroyAliveObject()
         {
-            ObjectFacade.RemoveEnemy(this);
+            ObjectStorage.RemoveEnemy(this);
             Destroy(gameObject);
         }
     }

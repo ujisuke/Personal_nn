@@ -10,7 +10,7 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectCreator : MonoBehaviour
     {
-        private readonly (int i, int j) playerFirstTileIndex = (StageFacade._StageSide - 1, StageFacade._StageSide - 1);
+        private readonly (int i, int j) playerFirstTileIndex = (StageFacade.StageSide - 1, StageFacade.StageSide - 1);
         private readonly int minimumDistanceBetweenPlayerAndEnemy = 4;
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private List<GameObject> enemyPrefabLists;
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Objects
             Instantiate(playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
 
             int objectNumber = BattleFacade.Difficulty;            
-            List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectNumber, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade._StageSide);
+            List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectNumber, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade.StageSide);
 
             for (int i = 0; i < objectNumber; i++)
             {
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Objects
         private static IEnumerator SetReady()
         {
             yield return new WaitForSeconds(0.5f);
-            ObjectFacade.SetAllObjectsReady();
+            ObjectStorage.SetAllObjectsReady();
         }
         
         public static void InstantiateDamageObject(GameObject damageObject, Vector3 rePos3, DamageObjectParameter damageObjectParameter, IEnemyMain enemy)

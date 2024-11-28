@@ -18,7 +18,7 @@ namespace Assets.Scripts.Enemy1
 
         private void OnEnable()
         {
-            ObjectFacade.RemoveAndDestroyEnemyDamageObject(enemy1Main);
+            ObjectStorage.RemoveAndDestroyEnemyDamageObject(enemy1Main);
             StartCoroutine(WaitAndDestroy());
             GetComponent<ObjectMove>().Stop();
         }

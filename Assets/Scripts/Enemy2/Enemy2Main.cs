@@ -15,7 +15,7 @@ namespace Assets.Scripts.Enemy2
 
         private void Awake()
         {
-            ObjectFacade.AddEnemy(this);
+            ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_enemy2Parameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_enemy2Parameter, transform.position);
             GetComponent<Enemy2Move>().Initialize(_enemy2Parameter);
@@ -42,26 +42,26 @@ namespace Assets.Scripts.Enemy2
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._TileHeight);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade.TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
         public void DestroyDeadObject()
         {
-            ObjectFacade.RemoveAndDestroyEnemyDamageObject(this);
+            ObjectStorage.RemoveAndDestroyEnemyDamageObject(this);
             StartCoroutine(WaitAndDestroy());
         }
     
         private IEnumerator WaitAndDestroy()
         {
             yield return new WaitForSeconds(_enemy2Parameter.DeadTime);
-            ObjectFacade.RemoveEnemy(this);
+            ObjectStorage.RemoveEnemy(this);
             Destroy(gameObject);
         }
 
         public void DestroyAliveObject()
         {
-            ObjectFacade.RemoveEnemy(this);
+            ObjectStorage.RemoveEnemy(this);
             Destroy(gameObject);
         }
     }
