@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bfaacf692ab5b8488468ad38d2ac2fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy3Parameter: {fileID: 11400000, guid: 2df2aec6f0e54da408ca0b34f4ea3446, type: 2}
+  _enemy3Parameter: {fileID: 11400000, guid: 2df2aec6f0e54da408ca0b34f4ea3446, type: 2}
 --- !u!114 &-408884632941692499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e53a2b5f9cc72a4caff94c1f49b98a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageObjectPrefab: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
+  _damageObjectPrefab: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
 --- !u!114 &-2933305870396824441
 MonoBehaviour:
   m_ObjectHideFlags: 0

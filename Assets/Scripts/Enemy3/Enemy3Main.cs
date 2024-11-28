@@ -6,9 +6,9 @@ using System.Collections;
 
 namespace Assets.Scripts.Enemy3
 {
-    public class Enemy3Main : MonoBehaviour, IObject
+    public class Enemy3Main : MonoBehaviour, IEnemyMain
     {
-        [SerializeField] private Enemy3Parameter enemy3Parameter;
+        [SerializeField] private Enemy3Parameter _enemy3Parameter;
         private HP hP;
         private bool isReady = false;
         public bool IsReady => isReady;
@@ -16,11 +16,11 @@ namespace Assets.Scripts.Enemy3
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);
-            hP = HP.Initialize(enemy3Parameter.MaxHP);
-            GetComponent<ObjectMove>().Initialize(enemy3Parameter, transform.position);
-            GetComponent<Enemy3Move>().Initialize(enemy3Parameter);
-            GetComponent<Enemy3Attack>().Initialize(enemy3Parameter);
-            GetComponent<Enemy3Animation>().Initialize(enemy3Parameter);
+            hP = HP.Initialize(_enemy3Parameter.MaxHP);
+            GetComponent<ObjectMove>().Initialize(_enemy3Parameter, transform.position);
+            GetComponent<Enemy3Move>().Initialize(_enemy3Parameter);
+            GetComponent<Enemy3Attack>().Initialize(_enemy3Parameter);
+            GetComponent<Enemy3Animation>().Initialize(_enemy3Parameter);
         }
 
         public void SetReady()
@@ -31,16 +31,6 @@ namespace Assets.Scripts.Enemy3
         public bool IsDead()
         {
             return hP.IsZero();
-        }
-
-        public bool IsDamaging()
-        {
-            return false;
-        }
-
-        public void DamageTo(IObject obj)
-        {
-            obj.TakeDamage(enemy3Parameter.AttackPower);
         }
 
         public void TakeDamage(int damage)
@@ -55,20 +45,16 @@ namespace Assets.Scripts.Enemy3
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
-        public Vector3 GetRePos3()
-        {
-            return transform.position;
-        }
-
         public void DestroyDeadObject()
         {
-            ObjectFacade.RemoveEnemy(this);
+            ObjectFacade.RemoveAndDestroyEnemyDamageObject(this);
             StartCoroutine(WaitAndDestroy());
         }
 
         private IEnumerator WaitAndDestroy()
         {
-            yield return new WaitForSeconds(enemy3Parameter.DeadTime);
+            yield return new WaitForSeconds(_enemy3Parameter.DeadTime);
+            ObjectFacade.RemoveEnemy(this);
             Destroy(gameObject);
         }
 

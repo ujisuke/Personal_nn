@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f4d25895496b445a41bf8d38aad1f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy2Parameter: {fileID: 11400000, guid: 126c7c09cd9f59944bfae11e1acec103, type: 2}
+  _enemy2Parameter: {fileID: 11400000, guid: 126c7c09cd9f59944bfae11e1acec103, type: 2}
 --- !u!114 &-5485523353724756737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95123872ebbfea45a45ab7b1c646a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageObjectPrefab: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
+  _damageObjectPrefab: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
 --- !u!114 &-7659786617321229492
 MonoBehaviour:
   m_ObjectHideFlags: 0

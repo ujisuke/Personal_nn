@@ -30,6 +30,7 @@ namespace Assets.Scripts.Enemy3
         public void Exit()
         {
             enemy3Attack.enabled = false;
+            enemy3Attack.StopAttack();
             enemy3Animation.StopAttack();
         }
     }

@@ -1,5 +1,7 @@
 using Assets.Scripts.Objects;
 using UnityEngine;
+using Assets.ScriptableObjects;
+using System.Collections;
 
 namespace Assets.Scripts.Enemy2
 {

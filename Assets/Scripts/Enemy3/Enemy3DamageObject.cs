@@ -6,7 +6,7 @@ using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.Enemy3
 {
-    public class Enemy3DamageObject : MonoBehaviour, IObject
+    public class Enemy3DamageObject : MonoBehaviour, IEnemyMain
     {
         [SerializeField] private ObjectParameter objectParameter;
         private bool isDamaging = false;
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Enemy3
             return isDamaging;
         }
 
-        public void DamageTo(IObject obj)
+        public void DamageTo(IEnemyMain obj)
         {
             obj.TakeDamage(objectParameter.AttackPower);
         }

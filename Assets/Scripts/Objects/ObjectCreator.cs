@@ -38,10 +38,10 @@ namespace Assets.Scripts.Objects
             ObjectFacade.SetAllObjectsReady();
         }
         
-        public static void InstantiateDamageObject(GameObject damageObject, Vector3 rePos3, DamageObjectParameter damageObjectParameter)
+        public static void InstantiateDamageObject(GameObject damageObject, Vector3 rePos3, DamageObjectParameter damageObjectParameter, IEnemyMain enemy)
         {
             GameObject newDamageObject = Instantiate(damageObject, rePos3, Quaternion.identity);
-            newDamageObject.GetComponent<EnemyDamageObjectMain>().Initialize(damageObjectParameter);
+            newDamageObject.GetComponent<EnemyDamageObjectMain>().Initialize(damageObjectParameter, enemy);
         }
     }
 }

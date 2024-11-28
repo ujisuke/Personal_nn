@@ -7,7 +7,7 @@ using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMain : MonoBehaviour, IObject
+    public class PlayerMain : MonoBehaviour
     {
         [SerializeField] private PlayerParameter _playerParameter;
         private static HP singletonHP;
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Player
             return playerAttack.IsDamaging;
         }
 
-        public void DamageTo(IObject obj)
+        public void DamageTo(IEnemyMain obj)
         {
             obj.TakeDamage(_playerParameter.AttackPower);
         }
@@ -97,11 +97,6 @@ namespace Assets.Scripts.Player
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
             Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade._TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
-        }
-
-        public Vector3 GetRePos3()
-        {
-            return transform.position;
         }
 
         public void DestroyDeadObject()

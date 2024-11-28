@@ -9,7 +9,7 @@ namespace Assets.Scripts.Enemy3
     public class Enemy3Attack : MonoBehaviour
     {
         private Enemy3Parameter enemy3Parameter;
-        [SerializeField] private GameObject damageObjectPrefab;
+        [SerializeField] private GameObject _damageObjectPrefab;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
@@ -30,14 +30,20 @@ namespace Assets.Scripts.Enemy3
         private IEnumerator Attack()
         {
             List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
+            IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < objectRePos3ListList.Count; i++)
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
-                    ObjectCreator.InstantiateDamageObject(damageObjectPrefab, objectRePos3List[j], enemy3Parameter.DamageObjectParameter);
+                    ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, objectRePos3List[j], enemy3Parameter.DamageObjectParameter, enemy);
                 yield return new WaitForSeconds(enemy3Parameter.WaveMoveTime);
             }
             isAttacking = false;
+        }
+
+        public void StopAttack()
+        {
+            StopAllCoroutines();
         }
     }
 }

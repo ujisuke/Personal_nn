@@ -6,9 +6,9 @@ using System.Collections;
 
 namespace Assets.Scripts.Enemy2
 {
-    public class Enemy2Main : MonoBehaviour, IObject
+    public class Enemy2Main : MonoBehaviour, IEnemyMain
     {
-        [SerializeField] private Enemy2Parameter enemy2Parameter;
+        [SerializeField] private Enemy2Parameter _enemy2Parameter;
         private HP hP;
         private bool isReady = false;
         public bool IsReady => isReady;
@@ -16,12 +16,12 @@ namespace Assets.Scripts.Enemy2
         private void Awake()
         {
             ObjectFacade.AddEnemy(this);
-            hP = HP.Initialize(enemy2Parameter.MaxHP);
-            GetComponent<ObjectMove>().Initialize(enemy2Parameter, transform.position);
-            GetComponent<Enemy2Move>().Initialize(enemy2Parameter);
-            GetComponent<Enemy2Attack>().Initialize(enemy2Parameter);
-            GetComponent<Enemy2MissingPlayer>().Initialize(enemy2Parameter);
-            GetComponent<Enemy2Animation>().Initialize(enemy2Parameter);
+            hP = HP.Initialize(_enemy2Parameter.MaxHP);
+            GetComponent<ObjectMove>().Initialize(_enemy2Parameter, transform.position);
+            GetComponent<Enemy2Move>().Initialize(_enemy2Parameter);
+            GetComponent<Enemy2Attack>().Initialize(_enemy2Parameter);
+            GetComponent<Enemy2MissingPlayer>().Initialize(_enemy2Parameter);
+            GetComponent<Enemy2Animation>().Initialize(_enemy2Parameter);
         }
 
         public void SetReady()
@@ -29,19 +29,9 @@ namespace Assets.Scripts.Enemy2
             isReady = true;
         }
 
-        public bool IsDamaging()
-        {
-            return false;
-        }
-
         public bool IsDead()
         {
             return hP.IsZero();
-        }
-
-        public void DamageTo(IObject obj)
-        {
-            obj.TakeDamage(enemy2Parameter.AttackPower);
         }
 
         public void TakeDamage(int damage)
@@ -56,20 +46,16 @@ namespace Assets.Scripts.Enemy2
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
-        public Vector3 GetRePos3()
-        {
-            return transform.position;
-        }
-
         public void DestroyDeadObject()
         {
-            ObjectFacade.RemoveEnemy(this);
+            ObjectFacade.RemoveAndDestroyEnemyDamageObject(this);
             StartCoroutine(WaitAndDestroy());
         }
     
         private IEnumerator WaitAndDestroy()
         {
-            yield return new WaitForSeconds(enemy2Parameter.DeadTime);
+            yield return new WaitForSeconds(_enemy2Parameter.DeadTime);
+            ObjectFacade.RemoveEnemy(this);
             Destroy(gameObject);
         }
 

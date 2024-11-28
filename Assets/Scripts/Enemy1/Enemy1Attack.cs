@@ -14,7 +14,7 @@ namespace Assets.Scripts.Enemy1
         public bool IsAttacking => isAttacking;
         private bool isDamaging = false;
         public bool IsDamaging => isDamaging;
-        [SerializeField] GameObject damageObject;
+        [SerializeField] private GameObject _damageObject;
 
         public void Initialize(Enemy1Parameter enemy1Parameter)
         {
@@ -34,8 +34,9 @@ namespace Assets.Scripts.Enemy1
         {          
             List<Vector3> damageObjectRePos3List = ObjectMove.DrawSomeRePos3AtRandom(enemy1Parameter.AttackPanelCount, ObjectMove.ConvertToTileIndexFromRePos3(transform.position),
             enemy1Parameter.AttackPanelMinImRadius, enemy1Parameter.AttackPanelMaxImRadius);
+            IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
-                ObjectCreator.InstantiateDamageObject(damageObject, damageObjectRePos3List[i], enemy1Parameter.DamageObjectParameter);
+                ObjectCreator.InstantiateDamageObject(_damageObject, damageObjectRePos3List[i], enemy1Parameter.DamageObjectParameter, enemy);
             yield return new WaitForSeconds(enemy1Parameter.AttackCoolDownTime);
             isAttacking = false;
         }
