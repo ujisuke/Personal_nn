@@ -6,14 +6,12 @@ namespace Assets.Scripts.Player
     {
         private ObjectStateMachine objectStateMachine;
         private PlayerMove playerMove;
-        private Player player;
         private PlayerAnimation playerAnimation;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             playerMove = objectStateMachine.GetComponent<PlayerMove>();
-            player = objectStateMachine.GetComponent<Player>();
             playerAnimation = objectStateMachine.GetComponent<PlayerAnimation>();
             playerMove.enabled = true;
             playerAnimation.StartWalk();
@@ -22,7 +20,7 @@ namespace Assets.Scripts.Player
         public void FixedUpdate()
         {
             playerAnimation.SetLookingDirection(playerMove.GetLookingDirection());
-            if(player.IsDead())
+            if(PlayerMain.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
             if(playerMove.CanDash())
                 objectStateMachine.TransitionTo(new PlayerDashState());

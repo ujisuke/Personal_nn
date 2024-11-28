@@ -5,17 +5,17 @@ namespace Assets.Scripts.Player
     public class PlayerNotReadyState : IObjectState
     {
         private ObjectStateMachine objectStateMachine;
-        private Player player;
+        private PlayerMain playerMain;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
-            player = objectStateMachine.GetComponent<Player>();
+            playerMain = objectStateMachine.GetComponent<PlayerMain>();
         }
 
         public void FixedUpdate()
         {
-            if(player.IsReady)
+            if(playerMain.IsReady)
                 objectStateMachine.TransitionTo(new PlayerMoveState());
         }
 

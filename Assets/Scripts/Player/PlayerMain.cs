@@ -7,26 +7,30 @@ using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.Player
 {
-    public class Player : MonoBehaviour, IObject
+    public class PlayerMain : MonoBehaviour, IObject
     {
-        [SerializeField] private PlayerParameter playerParameter;
-        private HP hP;
-        private Energy energy;
+        [SerializeField] private PlayerParameter _playerParameter;
+        private static HP singletonHP;
+        public static int CurrentHP => singletonHP.CurrentHP;
+        private static Energy singletonEnergy;
+        public static int CurrentAvailableEnergy => singletonEnergy.CurrentAvailableEnergy;
+        public static float CurrentEnergy => singletonEnergy.CurrentEnergy;
         private PlayerAttack playerAttack;
         private bool isReady = false;
         public bool IsReady => isReady;
 
+
         private void Awake()
         {
             ObjectFacade.AddPlayer(this);
-            hP = HP.Initialize(playerParameter.MaxHP);
-            energy = Energy.Initialize(playerParameter.MaxEnergy);
+            singletonHP = HP.Initialize(_playerParameter.MaxHP);
+            singletonEnergy = Energy.Initialize(_playerParameter.MaxEnergy);
             playerAttack = GetComponent<PlayerAttack>();
-            GetComponent<ObjectMove>().Initialize(playerParameter, transform.position);
-            GetComponent<PlayerMove>().Initialize(playerParameter);
-            playerAttack.Initialize(playerParameter);
-            GetComponent<PlayerDash>().Initialize(playerParameter);
-            GetComponent<PlayerAnimation>().Initialize(playerParameter);
+            GetComponent<ObjectMove>().Initialize(_playerParameter, transform.position);
+            GetComponent<PlayerMove>().Initialize(_playerParameter);
+            playerAttack.Initialize(_playerParameter);
+            GetComponent<PlayerDash>().Initialize(_playerParameter);
+            GetComponent<PlayerAnimation>().Initialize(_playerParameter);
             StartCoroutine(ChargeEnergy());
         }
 
@@ -34,9 +38,12 @@ namespace Assets.Scripts.Player
         {
             while(!IsDead())
             {
-                yield return new WaitUntil(() => !energy.IsFull());
-                yield return new WaitForSeconds(playerParameter.ChargingEnergyTime);
-                energy = energy.Charge(1);
+                yield return new WaitUntil(() => !singletonEnergy.IsFull());
+                for(int i = 0; i < 10; i++)
+                {
+                    yield return new WaitForSeconds(_playerParameter.ChargingEnergyTime * 0.1f);
+                    singletonEnergy = singletonEnergy.Charge(0.1f);
+                }
             }
         }
 
@@ -45,14 +52,14 @@ namespace Assets.Scripts.Player
             isReady = true;
         }
 
-        public bool IsDead()
+        public static bool IsDead()
         {
-            return hP.IsZero();
+            return singletonHP.IsZero();
         }
 
-        public bool CanUseEnergy(int consumption)
+        public static bool CanUseEnergy(int consumption)
         {
-            return energy.CanUse(consumption);
+            return singletonEnergy.CanUse(consumption);
         }
 
         public bool IsDamaging()
@@ -62,17 +69,17 @@ namespace Assets.Scripts.Player
 
         public void DamageTo(IObject obj)
         {
-            obj.TakeDamage(playerParameter.AttackPower);
+            obj.TakeDamage(_playerParameter.AttackPower);
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
-            hP = hP.TakeDamage(damage);
+            singletonHP = singletonHP.TakeDamage(damage);
         }
 
-        public void ConsumeEnergy(int consumption)
+        public static void ConsumeEnergy(int consumption)
         {
-            energy = energy.Consume(consumption);
+            singletonEnergy = singletonEnergy.Consume(consumption);
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
@@ -96,7 +103,7 @@ namespace Assets.Scripts.Player
 
         private IEnumerator WaitAndDestroy()
         {
-            yield return new WaitForSeconds(playerParameter.DeadTime);
+            yield return new WaitForSeconds(_playerParameter.DeadTime);
             Destroy(gameObject);
         }
 

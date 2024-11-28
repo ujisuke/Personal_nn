@@ -4,10 +4,12 @@ namespace Assets.Scripts.Player
 {
     public class Energy
     {
-        private readonly int _currentEnergy;
+        private readonly float _currentEnergy;
+        public float CurrentEnergy => _currentEnergy;
+        public int CurrentAvailableEnergy => (int)_currentEnergy;
         private readonly int _maxEnergy;
 
-        public Energy(int maxEnergy, int currentEnergy)
+        public Energy(int maxEnergy, float currentEnergy)
         {
             _maxEnergy = maxEnergy;
             _currentEnergy = math.min(maxEnergy, math.max(currentEnergy, 0));
@@ -23,7 +25,7 @@ namespace Assets.Scripts.Player
             return new Energy(_maxEnergy, _currentEnergy - consumption);
         }
 
-        public Energy Charge(int charge)
+        public Energy Charge(float charge)
         {
             return new Energy(_maxEnergy, _currentEnergy + charge);
         }

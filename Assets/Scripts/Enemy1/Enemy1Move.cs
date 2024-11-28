@@ -28,7 +28,7 @@ namespace Assets.Scripts.Enemy1
 
         private IEnumerator UpdateTargetPos3()
         {
-            while(!ObjectFacade.IsPlayerDead())
+            while(ObjectFacade.IsPlayerLiving())
             {
                 yield return new WaitForSeconds(0.2f);
                 targetRePos3 = ObjectFacade.GetPlayerRePos3();

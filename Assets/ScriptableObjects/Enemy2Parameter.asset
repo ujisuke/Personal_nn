@@ -17,7 +17,7 @@ MonoBehaviour:
   _jumpHeight: 2.5
   _jumpTime: 0.6
   _attackPower: 0
-  maxHP: 1
+  _maxHP: 1
   _deadTime: 0.3
   _damageObjectParameter: {fileID: 11400000, guid: 74fba564a96be0848bae665acb2d4bb6, type: 2}
   _stopMoveImDistanceFromPlayer: 0.2
