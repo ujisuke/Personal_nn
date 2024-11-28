@@ -18,7 +18,7 @@ namespace Assets.Scripts.Battle
         private void FixedUpdate()
         {
             if(ObjectFacade.IsEnemyLiving() || isResettingBattle) return;
-            BattleData.GoToNextStage();
+            BattleData.StageCount++;
             ResetBattle();
         }
 

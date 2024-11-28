@@ -5,16 +5,11 @@ namespace Assets.Scripts.Battle
 {
     public class BattleData : MonoBehaviour
     {
-        private static int difficulty = 1;
-        public static int Difficulty => difficulty;
-        private static int stageCount = 1;
-        public static int StageCount => stageCount;
+        private static readonly int _stageDifficultySpan = 5;
+        public static int StageDifficulty => (StageCount - 1) / _stageDifficultySpan + 1;
+        private static readonly int _enemyDifficultySpan = 2;
+        public static int EnemyDifficulty => (StageCount - 1) / _enemyDifficultySpan + 1;
+        public static int StageCount = 1;
         public static int DeathCount = 0;
-
-        public static void GoToNextStage()
-        {
-            stageCount++;
-            difficulty = stageCount / 2 + 1 + 100;
-        }
     }
 }

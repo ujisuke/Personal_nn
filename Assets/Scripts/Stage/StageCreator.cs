@@ -42,11 +42,11 @@ namespace Assets.Scripts.Stage
         
         private static void SetAllZs()
         {
-            if(BattleFacade.Difficulty == 1)
+            if(BattleFacade.StageDifficulty == 1)
                 SetAllZsWhenDifficultyIs1();
-            else if(BattleFacade.Difficulty == 2)
+            else if(BattleFacade.StageDifficulty == 2)
                 SetAllZsWhenDifficultyIs2();
-            else if(BattleFacade.Difficulty >= 3)
+            else if(BattleFacade.StageDifficulty >= 3)
                 SetAllZsWhenDifficultyIs3OrMoreThan();
         }
 
