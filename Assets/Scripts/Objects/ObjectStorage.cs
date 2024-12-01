@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Scripts.Objects
 {
@@ -87,7 +88,8 @@ namespace Assets.Scripts.Objects
 
         public static void SetAllObjectsReady()
         {
-            if(player == null) return;
+            if(player == null)
+                return;
             player.SetReady();
             foreach(IEnemyMain enemy in enemyList)
                 enemy.SetReady();
@@ -95,7 +97,8 @@ namespace Assets.Scripts.Objects
 
         public static Vector3 GetPlayerRePos3()
         {
-            if(player == null) return Vector3.zero;
+            if(player == null)
+                return Vector3.zero;
             return player.transform.position;
         }
 
@@ -109,9 +112,14 @@ namespace Assets.Scripts.Objects
             return enemyList.Count > 0 || enemyDamageObjectList.Count > 0;
         }
 
-        public static void CreateNewObjects()
+        public static async UniTask CreateBattleObjects()
         {
-            singletonObjectCreator.CreateNewObjects();
+            await singletonObjectCreator.CreateBattleObjects();
+        }
+
+        public static async UniTask CreateLobbyObjects()
+        {
+            await singletonObjectCreator.CreateLobbyObjects();
         }
     }
 }

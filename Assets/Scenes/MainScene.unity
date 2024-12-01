@@ -755,7 +755,7 @@ MonoBehaviour:
   - {fileID: 776261900}
   - {fileID: 1394943590}
   - {fileID: 998262402}
-  TileData: {fileID: 11400000, guid: 63c79b1a37ab9be4aa2c1ce2853ea174, type: 2}
+  _tileData: {fileID: 11400000, guid: 63c79b1a37ab9be4aa2c1ce2853ea174, type: 2}
 --- !u!114 &477856908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -778,6 +778,50 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.9603394, y: 0.54109615, z: 922.8522}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &497373600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 497373602}
+  - component: {fileID: 497373601}
+  m_Layer: 0
+  m_Name: RoomState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &497373601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497373600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee53e452363fb44bb99f4c59c79a28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &497373602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497373600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.15904409, y: -0.3275013, z: -0.0042788433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2877,7 +2921,6 @@ GameObject:
   - component: {fileID: 1652296233}
   - component: {fileID: 1652296234}
   - component: {fileID: 1652296235}
-  - component: {fileID: 1652296236}
   m_Layer: 0
   m_Name: BattleFacade
   m_TagString: Untagged
@@ -2922,18 +2965,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9237ca1686223a4e9c4bf6dd6cfda80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1652296236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652296232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ca2588788dd4034da28111cb837b6c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1699440390
@@ -4001,3 +4032,4 @@ SceneRoots:
   - {fileID: 477856909}
   - {fileID: 1652296233}
   - {fileID: 811150554}
+  - {fileID: 497373602}

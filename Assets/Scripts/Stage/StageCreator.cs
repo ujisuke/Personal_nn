@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using Assets.Scripts.Battle;
 using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Stage
 {
     public class StageCreator : MonoBehaviour
     {
         [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_StageSide * 2 - 1];
-        [SerializeField] private ScriptableObjects.TileData TileData;
+        [SerializeField] private ScriptableObjects.TileData _tileData;
         private static bool isCreatingStage = false;
         public static bool IsCreatingStage => isCreatingStage;
         public const int _StageSide = 8;
@@ -20,14 +22,29 @@ namespace Assets.Scripts.Stage
         public const float _YOffset = 1.75f;
         public static int[,] TileImZs{ get; private set; } = new int[_StageSide, _StageSide];
 
-        public void CreateNewStage()
+        public async UniTask CreateLobbyStage()
         {
             isCreatingStage = true;
-            SetStageMatrix();
-            StartCoroutine(SetAllTiles());
+            SetLobbyStageMatrix();
+            await SetAllTiles();
         }
 
-        private static void SetStageMatrix()
+        private static void SetLobbyStageMatrix()
+        {
+            InitializeMatrix(TileImZs);
+            for(int i = 0; i < _StageSide; i++)
+                for(int j = 0; j < _StageSide; j++)
+                    TileImZs[i, j] = 1;
+        }
+
+        public async UniTask CreateBattleStage()
+        {
+            isCreatingStage = true;
+            SetNewStageMatrix();
+            await SetAllTiles();
+        }
+
+        private static void SetNewStageMatrix()
         {
             InitializeMatrix(TileImZs);
             SetAllZs();
@@ -158,7 +175,7 @@ namespace Assets.Scripts.Stage
             }
         }
 
-        private IEnumerator SetAllTiles()
+        private async UniTask SetAllTiles()
         {
             for(int n = 0; n < _StageSide * 2 - 1; n++)
             {
@@ -168,9 +185,9 @@ namespace Assets.Scripts.Stage
                     if(i >= _StageSide || i < 0 || j >= _StageSide || j < 0) continue;
                     int tileHeight = TileImZs[i, j];
                     Vector3Int tilePosition = new((_StageSide - 1) / 2 - i, (_StageSide - 1) / 2 - j, 0);
-                    TileData.SetTile(tileHeight, tilePosition, stageTilemapList[_StageSide * 2 - 2 - n]);
+                    _tileData.SetTile(tileHeight, tilePosition, stageTilemapList[_StageSide * 2 - 2 - n]);
                 }
-                yield return new WaitForSeconds(0.03f);
+                await UniTask.Delay(TimeSpan.FromSeconds(0.03f));
             }
             isCreatingStage = false;
         }
