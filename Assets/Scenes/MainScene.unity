@@ -666,10 +666,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6028222375032962928, guid: b5acf0d91d856954887d3eb6b9de537b, type: 3}
-  enemyPrefabLists:
+  enemyPrefabList:
   - {fileID: 835981607064012740, guid: 1e2e0af54bb4b244cab54211730ce91e, type: 3}
   - {fileID: 835981607064012740, guid: 443dc8f3e98993f4b88836fd44885fd9, type: 3}
   - {fileID: 835981607064012740, guid: 971330c56c3c1a9458efec6720dbfe65, type: 3}
+  uIEnemyPrefabList:
+  - {fileID: 835981607064012740, guid: 0263c5dad94777045ab21181c3ece351, type: 3}
 --- !u!114 &429188287
 MonoBehaviour:
   m_ObjectHideFlags: 0

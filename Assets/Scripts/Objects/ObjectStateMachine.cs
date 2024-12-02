@@ -3,6 +3,7 @@ using Assets.Scripts.Enemy1;
 using Assets.Scripts.Enemy2;
 using Assets.Scripts.Enemy3;
 using Assets.Scripts.Player;
+using Assets.Scripts.ExitEnemy;
 
 namespace Assets.Scripts.Objects
 {
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Objects
                 currentState = new Enemy2NotReadyState();
             else if(initialState == ObjectStateList.Enemy3Move)
                 currentState = new Enemy3NotReadyState();
+            else if(initialState == ObjectStateList.ExitEnemy)
+                currentState = new ExitEnemyNotReadyState();
             currentState.Enter(this);
         }
 
@@ -43,5 +46,6 @@ namespace Assets.Scripts.Objects
         Enemy1Move,
         Enemy2Move,
         Enemy3Move,
+        ExitEnemy,
     }
 }

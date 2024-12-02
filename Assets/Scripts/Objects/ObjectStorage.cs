@@ -3,6 +3,7 @@ using UnityEngine;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
+using Assets.Scripts.ExitEnemy;
 
 namespace Assets.Scripts.Objects
 {
@@ -120,6 +121,14 @@ namespace Assets.Scripts.Objects
         public static async UniTask CreateLobbyObjects()
         {
             await singletonObjectCreator.CreateLobbyObjects();
+        }
+
+        public static bool IsExitEnemyLiving()
+        {
+            foreach (var enemy in enemyList)
+                if (enemy is ExitEnemyMain)
+                    return true;
+            return false;
         }
     }
 }

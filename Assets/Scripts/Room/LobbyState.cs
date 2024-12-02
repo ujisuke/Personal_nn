@@ -24,8 +24,8 @@ namespace Assets.Scripts.Room
         {
             if (!isSet)
                 return;
-            if (Input.GetKey(KeyCode.Space))
-                roomStateMachine.TransitionTo(new BattleRoomState());
+            if (!ObjectFacade.IsExitEnemyLiving())
+                roomStateMachine.TransitionTo(new ExitRoomState());
         }
 
         public void Exit()

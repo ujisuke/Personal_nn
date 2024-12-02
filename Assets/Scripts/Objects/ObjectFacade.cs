@@ -29,5 +29,10 @@ namespace Assets.Scripts.Objects
         {
             await ObjectStorage.CreateLobbyObjects();
         }
+
+        public static bool IsExitEnemyLiving()
+        {
+            return ObjectStorage.IsExitEnemyLiving();
+        }
     }
 }

@@ -16,11 +16,13 @@ namespace Assets.Scripts.Objects
         private readonly (int i, int j) playerFirstTileIndex = (StageFacade.StageSide - 1, StageFacade.StageSide - 1);
         private readonly int minimumDistanceBetweenPlayerAndEnemy = 4;
         [SerializeField] private GameObject playerPrefab;
-        [SerializeField] private List<GameObject> enemyPrefabLists;
+        [SerializeField] private List<GameObject> enemyPrefabList;
+        [SerializeField] private List<GameObject> uIEnemyPrefabList;
 
         public async UniTask CreateLobbyObjects()
         {
             await InstantiateAsync(playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
+            await InstantiateAsync(uIEnemyPrefabList[0], ObjectMove.ConvertToRePos3FromTileIndex((0, 0)), Quaternion.identity);
             ObjectStorage.SetAllObjectsReady();
         }
 
@@ -33,8 +35,8 @@ namespace Assets.Scripts.Objects
 
             for (int i = 0; i < objectCount; i++)
             {
-                int randomIndex = UnityEngine.Random.Range(0, enemyPrefabLists.Count);
-                GameObject objectPrefab = enemyPrefabLists[randomIndex];
+                int randomIndex = UnityEngine.Random.Range(0, enemyPrefabList.Count);
+                GameObject objectPrefab = enemyPrefabList[randomIndex];
                 await InstantiateAsync(objectPrefab, enemyRePos3List[i], Quaternion.identity);
             }
 
