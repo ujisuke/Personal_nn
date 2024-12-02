@@ -34,5 +34,10 @@ namespace Assets.Scripts.Objects
         {
             return ObjectStorage.IsExitEnemyLiving();
         }
+
+        public static bool IsStartBattleEnemyLiving()
+        {
+            return ObjectStorage.IsStartBattleEnemyLiving();
+        }
     }
 }

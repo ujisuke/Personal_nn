@@ -4,6 +4,7 @@ using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using Assets.Scripts.ExitEnemy;
+using Assets.Scripts.StartBattleEnemy;
 
 namespace Assets.Scripts.Objects
 {
@@ -127,6 +128,14 @@ namespace Assets.Scripts.Objects
         {
             foreach (var enemy in enemyList)
                 if (enemy is ExitEnemyMain)
+                    return true;
+            return false;
+        }
+
+        public static bool IsStartBattleEnemyLiving()
+        {
+            foreach (var enemy in enemyList)
+                if (enemy is StartBattleEnemyMain)
                     return true;
             return false;
         }

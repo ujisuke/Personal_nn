@@ -9,8 +9,8 @@ namespace Assets.Scripts.Enemy3
     {
         private void OnEnable()
         {
-            GetComponent<Enemy3Main>().DestroyDeadObject();
             GetComponent<ObjectMove>().Stop();
+            GetComponent<Enemy3Main>().DestroyDeadObject();
         }
     }
 }

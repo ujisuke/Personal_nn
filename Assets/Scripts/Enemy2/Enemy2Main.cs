@@ -3,6 +3,8 @@ using Assets.Scripts.Objects;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
 using System.Collections;
+using System;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Scripts.Enemy2
 {
@@ -46,16 +48,10 @@ namespace Assets.Scripts.Enemy2
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
-        public void DestroyDeadObject()
+        public async void DestroyDeadObject()
         {
-            ObjectStorage.RemoveAndDestroyEnemyDamageObject(this);
-            StartCoroutine(WaitAndDestroy());
-        }
-    
-        private IEnumerator WaitAndDestroy()
-        {
-            yield return new WaitForSeconds(_enemy2Parameter.DeadTime);
             ObjectStorage.RemoveEnemy(this);
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemy2Parameter.DeadTime));
             Destroy(gameObject);
         }
 

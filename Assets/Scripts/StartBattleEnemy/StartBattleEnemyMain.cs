@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System;
 
-namespace Assets.Scripts.ExitEnemy
+namespace Assets.Scripts.StartBattleEnemy
 {
-    public class ExitEnemyMain : MonoBehaviour, IEnemyMain
+    public class StartBattleEnemyMain : MonoBehaviour, IEnemyMain
     {
         [SerializeField] private ObjectParameter _objectParameter;
         private HP hP;
@@ -21,9 +21,9 @@ namespace Assets.Scripts.ExitEnemy
             ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
-            GetComponent<ExitEnemyMove>().Initialize();
-            GetComponent<ExitEnemyDead>().Initialize(_objectParameter);
-            GetComponent<ExitEnemyAnimation>().Initialize(_objectParameter);
+            GetComponent<StartBattleEnemyMove>().Initialize();
+            GetComponent<StartBattleEnemyDead>().Initialize(_objectParameter);
+            GetComponent<StartBattleEnemyAnimation>().Initialize(_objectParameter);
         }
 
         public void SetReady()
