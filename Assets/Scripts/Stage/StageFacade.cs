@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Stage
@@ -18,9 +20,16 @@ namespace Assets.Scripts.Stage
             singletonStageCreator = GetComponent<StageCreator>();
         }
 
-        public static void CreateNewStage()
+        public static async UniTask CreateBattleStage()
         {
-            singletonStageCreator.CreateNewStage();
+            await singletonStageCreator.CreateBattleStage();
+        }
+
+        public static async UniTask CreateLobbyStage()
+        {
+            while (singletonStageCreator == null)
+                await UniTask.DelayFrame(1); 
+            await singletonStageCreator.CreateLobbyStage();
         }
     }
 }

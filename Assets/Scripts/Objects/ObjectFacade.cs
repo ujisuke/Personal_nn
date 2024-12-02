@@ -1,10 +1,11 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Objects
 {
     public class ObjectFacade : MonoBehaviour
     {
-        public static void ClearAllObjects()
+        public static void ClearObjects()
         {
             ObjectStorage.RemoveAndDestroyAll();
         }
@@ -19,9 +20,19 @@ namespace Assets.Scripts.Objects
             return ObjectStorage.IsEnemyLiving();
         }
 
-        public static void CreateNewObjects()
+        public static async UniTask CreateBattleObjects()
         {
-            ObjectStorage.CreateNewObjects();
+            await ObjectStorage.CreateBattleObjects();
+        }
+
+        public static async UniTask CreateLobbyObjects()
+        {
+            await ObjectStorage.CreateLobbyObjects();
+        }
+
+        public static bool IsExitEnemyLiving()
+        {
+            return ObjectStorage.IsExitEnemyLiving();
         }
     }
 }

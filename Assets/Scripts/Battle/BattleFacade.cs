@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle
@@ -9,16 +10,9 @@ namespace Assets.Scripts.Battle
         public static int StageDifficulty => BattleData.StageDifficulty;
         public static int EnemyDifficulty => BattleData.EnemyDifficulty;
 
-        private static BattleSetter singletonBattleSetter;
-
-        private void Awake()
+        public static void AddStageCount()
         {
-            singletonBattleSetter = GetComponent<BattleSetter>();
-        }
-
-        public static void ResetStage()
-        {
-            singletonBattleSetter.ResetBattle();
+            BattleData.StageCount++;
         }
 
         public static void AddDeathCount()
