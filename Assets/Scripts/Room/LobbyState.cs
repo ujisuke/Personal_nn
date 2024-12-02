@@ -26,6 +26,8 @@ namespace Assets.Scripts.Room
                 return;
             if (!ObjectFacade.IsExitEnemyLiving())
                 roomStateMachine.TransitionTo(new ExitRoomState());
+            else if(!ObjectFacade.IsStartBattleEnemyLiving())
+                roomStateMachine.TransitionTo(new BattleRoomState());
         }
 
         public void Exit()

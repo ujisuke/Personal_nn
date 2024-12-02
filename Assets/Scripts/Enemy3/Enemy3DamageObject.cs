@@ -3,6 +3,7 @@ using UnityEngine;
 using Assets.Scripts.Stage;
 using System.Collections;
 using Assets.ScriptableObjects;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Scripts.Enemy3
 {

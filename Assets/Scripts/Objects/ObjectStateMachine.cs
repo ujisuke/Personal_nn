@@ -4,6 +4,7 @@ using Assets.Scripts.Enemy2;
 using Assets.Scripts.Enemy3;
 using Assets.Scripts.Player;
 using Assets.Scripts.ExitEnemy;
+using Assets.Scripts.StartBattleEnemy;
 
 namespace Assets.Scripts.Objects
 {
@@ -14,16 +15,18 @@ namespace Assets.Scripts.Objects
 
         private void Awake()
         {
-            if(initialState == ObjectStateList.PlayerMove)
+            if(initialState == ObjectStateList.Player)
                 currentState = new PlayerNotReadyState();
-            else if(initialState == ObjectStateList.Enemy1Move)
+            else if(initialState == ObjectStateList.Enemy1)
                 currentState = new Enemy1NotReadyState();
-            else if(initialState == ObjectStateList.Enemy2Move)
+            else if(initialState == ObjectStateList.Enemy2)
                 currentState = new Enemy2NotReadyState();
-            else if(initialState == ObjectStateList.Enemy3Move)
+            else if(initialState == ObjectStateList.Enemy3)
                 currentState = new Enemy3NotReadyState();
             else if(initialState == ObjectStateList.ExitEnemy)
                 currentState = new ExitEnemyNotReadyState();
+            else if(initialState == ObjectStateList.StartBattleEnemy)
+                currentState = new StartBattleEnemyNotReadyState();
             currentState.Enter(this);
         }
 
@@ -42,10 +45,11 @@ namespace Assets.Scripts.Objects
 
     public enum ObjectStateList
     {
-        PlayerMove,
-        Enemy1Move,
-        Enemy2Move,
-        Enemy3Move,
+        Player,
+        Enemy1,
+        Enemy2,
+        Enemy3,
         ExitEnemy,
+        StartBattleEnemy,
     }
 }
