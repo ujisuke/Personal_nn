@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System;
 
-namespace Assets.Scripts.SettingEnemy
+namespace Assets.Scripts.SetGameEnemy
 {
-    public class SettingEnemyMain : MonoBehaviour, IEnemyMain
+    public class SetGameEnemyMain : MonoBehaviour, IEnemyMain
     {
         [SerializeField] private ObjectParameter _objectParameter;
         private HP hP;
@@ -21,8 +21,8 @@ namespace Assets.Scripts.SettingEnemy
             ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
-            GetComponent<SettingEnemyMove>().Initialize();
-            GetComponent<SettingEnemyAnimation>().Initialize(_objectParameter);
+            GetComponent<SetGameEnemyMove>().Initialize();
+            GetComponent<SetGameEnemyAnimation>().Initialize(_objectParameter);
         }
 
         public void SetReady()

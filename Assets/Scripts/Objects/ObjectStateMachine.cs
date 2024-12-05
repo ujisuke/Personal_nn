@@ -6,7 +6,7 @@ using Assets.Scripts.Player;
 using Assets.Scripts.ExitGameEnemy;
 using Assets.Scripts.StartBattleEnemy;
 using Assets.Scripts.ResetDataEnemy;
-using Assets.Scripts.SettingEnemy;
+using Assets.Scripts.SetGameEnemy;
 using Assets.Scripts.BackToLobbyEnemy;
 
 namespace Assets.Scripts.Objects
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Objects
             else if(initialState == ObjectStateList.ResetEnemy)
                 currentState = new ResetDataEnemyNotReadyState();
             else if(initialState == ObjectStateList.SettingEnemy)
-                currentState = new SettingEnemyNotReadyState();
+                currentState = new SetGameEnemyNotReadyState();
             else if(initialState == ObjectStateList.BackToLobbyEnemy)
                 currentState = new BackToLobbyEnemyNotReadyState();
             currentState.Enter(this);

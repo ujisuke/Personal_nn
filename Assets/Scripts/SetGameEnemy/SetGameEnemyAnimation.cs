@@ -1,9 +1,9 @@
 using Assets.ScriptableObjects;
 using UnityEngine;
 
-namespace Assets.Scripts.SettingEnemy
+namespace Assets.Scripts.SetGameEnemy
 {
-    public class SettingEnemyAnimation : MonoBehaviour
+    public class SetGameEnemyAnimation : MonoBehaviour
     {
         private Animator animator;
         private ObjectParameter _objectParameter;
