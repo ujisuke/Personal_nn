@@ -2,14 +2,13 @@ using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using System;
+using Assets.Scripts.Battle;
 
-namespace Assets.Scripts.ExitEnemy
+namespace Assets.Scripts.ResetEnemy
 {
-    public class ExitEnemyMain : MonoBehaviour, IEnemyMain
+    public class ResetEnemyMain : MonoBehaviour, IEnemyMain
     {
         [SerializeField] private ObjectParameter _objectParameter;
         private HP hP;
@@ -21,8 +20,8 @@ namespace Assets.Scripts.ExitEnemy
             ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
-            GetComponent<ExitEnemyMove>().Initialize();
-            GetComponent<ExitEnemyAnimation>().Initialize(_objectParameter);
+            GetComponent<ResetEnemyMove>().Initialize();
+            GetComponent<ResetEnemyAnimation>().Initialize(_objectParameter);
         }
 
         public void SetReady()
@@ -49,6 +48,7 @@ namespace Assets.Scripts.ExitEnemy
         
         public async void DestroyDeadObject()
         {
+            BattleFacade.ResetData();
             ObjectStorage.RemoveEnemy(this);
             await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.DeadTime));
             Destroy(gameObject);

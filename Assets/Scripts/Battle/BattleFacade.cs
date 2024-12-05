@@ -12,12 +12,17 @@ namespace Assets.Scripts.Battle
 
         public static void AddStageCount()
         {
-            BattleData.StageCount++;
+            BattleData.AddStageCount();
         }
 
         public static void AddDeathCount()
         {
-            BattleData.DeathCount++;
+            BattleData.AddDeathCount();
+        }
+
+        public static void ResetData()
+        {
+            BattleData.Reset();
         }
     }
 }

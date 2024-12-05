@@ -22,7 +22,6 @@ namespace Assets.Scripts.StartBattleEnemy
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
             GetComponent<StartBattleEnemyMove>().Initialize();
-            GetComponent<StartBattleEnemyDead>().Initialize(_objectParameter);
             GetComponent<StartBattleEnemyAnimation>().Initialize(_objectParameter);
         }
 

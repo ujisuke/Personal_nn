@@ -5,6 +5,7 @@ using Assets.Scripts.Enemy3;
 using Assets.Scripts.Player;
 using Assets.Scripts.ExitEnemy;
 using Assets.Scripts.StartBattleEnemy;
+using Assets.Scripts.ResetEnemy;
 
 namespace Assets.Scripts.Objects
 {
@@ -27,6 +28,8 @@ namespace Assets.Scripts.Objects
                 currentState = new ExitEnemyNotReadyState();
             else if(initialState == ObjectStateList.StartBattleEnemy)
                 currentState = new StartBattleEnemyNotReadyState();
+            else if(initialState == ObjectStateList.ResetEnemy)
+                currentState = new ResetEnemyNotReadyState();
             currentState.Enter(this);
         }
 
@@ -51,5 +54,6 @@ namespace Assets.Scripts.Objects
         Enemy3,
         ExitEnemy,
         StartBattleEnemy,
+        ResetEnemy,
     }
 }
