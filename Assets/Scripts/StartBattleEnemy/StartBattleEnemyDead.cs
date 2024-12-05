@@ -9,20 +9,11 @@ namespace Assets.Scripts.StartBattleEnemy
 {
     public class StartBattleEnemyDead : MonoBehaviour
     {
-        private ObjectParameter _objectParameter;
-        private StartBattleEnemyMain startBattleEnemyMain;
-        
-        public void Initialize(ObjectParameter objectParameter)
+        private void OnEnable()
         {
-            _objectParameter = objectParameter;
-            startBattleEnemyMain = GetComponent<StartBattleEnemyMain>();
-        }
-
-        private async void OnEnable()
-        {
+            StartBattleEnemyMain startBattleEnemyMain = GetComponent<StartBattleEnemyMain>();
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(startBattleEnemyMain);
             GetComponent<ObjectMove>().Stop();
-            await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.DeadTime));
             startBattleEnemyMain.DestroyDeadObject();
         } 
     }
