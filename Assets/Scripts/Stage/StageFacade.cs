@@ -22,6 +22,8 @@ namespace Assets.Scripts.Stage
 
         public static async UniTask CreateBattleStage()
         {
+            while (singletonStageCreator == null)
+                await UniTask.DelayFrame(1); 
             await singletonStageCreator.CreateBattleStage();
         }
 
@@ -30,6 +32,13 @@ namespace Assets.Scripts.Stage
             while (singletonStageCreator == null)
                 await UniTask.DelayFrame(1); 
             await singletonStageCreator.CreateLobbyStage();
+        }
+
+        public static async UniTask CreateSettingStage()
+        {
+            while (singletonStageCreator == null)
+                await UniTask.DelayFrame(1); 
+            await singletonStageCreator.CreateSettingStage();
         }
     }
 }

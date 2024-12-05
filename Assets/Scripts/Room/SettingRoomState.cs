@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 
 namespace Assets.Scripts.Room
 {
-    public class LobbyState : IRoomState
+    public class SettingRoomState : IRoomState
     {
         private RoomStateMachine roomStateMachine;
         private bool isSet = false;
@@ -15,8 +15,8 @@ namespace Assets.Scripts.Room
         public async UniTask Enter(RoomStateMachine roomStateMachine)
         {
             this.roomStateMachine = roomStateMachine;
-            await StageFacade.CreateLobbyStage();
-            await ObjectFacade.CreateLobbyObjects();
+            await StageFacade.CreateSettingStage();
+            await ObjectFacade.CreateSettingObjects();
             isSet = true;
         }
 
@@ -24,10 +24,8 @@ namespace Assets.Scripts.Room
         {
             if (!isSet)
                 return;
-            if(!ObjectFacade.IsStartBattleEnemyLiving())
-                roomStateMachine.TransitionTo(new BattleRoomState());
-            else if(!ObjectFacade.IsSettingEnemyLiving())
-                roomStateMachine.TransitionTo(new SettingRoomState());
+            if (!ObjectFacade.IsBackToLobbyEnemyLiving())
+                roomStateMachine.TransitionTo(new LobbyState());
         }
 
         public void Exit()

@@ -37,6 +37,21 @@ namespace Assets.Scripts.Stage
                     TileImZs[i, j] = 1;
         }
 
+        public async UniTask CreateSettingStage()
+        {
+            isCreatingStage = true;
+            SetSettingStageMatrix();
+            await SetAllTiles();
+        }
+
+        private static void SetSettingStageMatrix()
+        {
+            InitializeMatrix(TileImZs);
+            for(int i = 0; i < _StageSide; i++)
+                for(int j = 0; j < _StageSide; j++)
+                    TileImZs[i, j] = 2;
+        }
+
         public async UniTask CreateBattleStage()
         {
             isCreatingStage = true;
