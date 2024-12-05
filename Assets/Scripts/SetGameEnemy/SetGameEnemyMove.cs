@@ -4,9 +4,9 @@ using System.Collections;
 using Assets.ScriptableObjects;
 using Unity.Mathematics;
 
-namespace Assets.Scripts.SettingEnemy
+namespace Assets.Scripts.SetGameEnemy
 {
-    public class SettingEnemyMove : MonoBehaviour
+    public class SetGameEnemyMove : MonoBehaviour
     {
         private ObjectMove objectMove;
 

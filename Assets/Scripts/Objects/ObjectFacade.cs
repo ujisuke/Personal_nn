@@ -40,9 +40,9 @@ namespace Assets.Scripts.Objects
             return ObjectStorage.IsStartBattleEnemyLiving();
         }
 
-        public static bool IsSettingEnemyLiving()
+        public static bool IsSetGameEnemyLiving()
         {
-            return ObjectStorage.IsSettingEnemyLiving();
+            return ObjectStorage.IsSetGameEnemyLiving();
         }
 
         public static bool IsBackToLobbyEnemyLiving()

@@ -1,22 +1,22 @@
 using Assets.Scripts.Objects;
 
-namespace Assets.Scripts.SettingEnemy
+namespace Assets.Scripts.SetGameEnemy
 {
-    public class SettingEnemyNotReadyState : IObjectState
+    public class SetGameEnemyNotReadyState : IObjectState
     {
         private ObjectStateMachine objectStateMachine;
-        private SettingEnemyMain settingEnemyMain;
+        private SetGameEnemyMain setGameEnemyMain;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
-            settingEnemyMain = objectStateMachine.GetComponent<SettingEnemyMain>();
+            setGameEnemyMain = objectStateMachine.GetComponent<SetGameEnemyMain>();
         }
 
         public void FixedUpdate()
         {
-            if(settingEnemyMain.IsReady)
-                objectStateMachine.TransitionTo(new SettingEnemyMoveState());
+            if(setGameEnemyMain.IsReady)
+                objectStateMachine.TransitionTo(new SetGameEnemyMoveState());
         }
 
         public void Exit()

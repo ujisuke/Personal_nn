@@ -5,7 +5,7 @@ using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using Assets.Scripts.ExitGameEnemy;
 using Assets.Scripts.StartBattleEnemy;
-using Assets.Scripts.SettingEnemy;
+using Assets.Scripts.SetGameEnemy;
 using Assets.Scripts.BackToLobbyEnemy;
 
 namespace Assets.Scripts.Objects
@@ -139,10 +139,10 @@ namespace Assets.Scripts.Objects
             return false;
         }
 
-        public static bool IsSettingEnemyLiving()
+        public static bool IsSetGameEnemyLiving()
         {
             foreach (var enemy in enemyList)
-                if (enemy is SettingEnemyMain)
+                if (enemy is SetGameEnemyMain)
                     return true;
             return false;
         }
