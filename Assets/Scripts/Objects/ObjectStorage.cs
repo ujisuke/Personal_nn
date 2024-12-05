@@ -3,8 +3,10 @@ using UnityEngine;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
-using Assets.Scripts.ExitEnemy;
+using Assets.Scripts.ExitGameEnemy;
 using Assets.Scripts.StartBattleEnemy;
+using Assets.Scripts.SettingEnemy;
+using Assets.Scripts.BackToLobbyEnemy;
 
 namespace Assets.Scripts.Objects
 {
@@ -124,18 +126,31 @@ namespace Assets.Scripts.Objects
             await singletonObjectCreator.CreateLobbyObjects();
         }
 
-        public static bool IsExitEnemyLiving()
+        public static async UniTask CreateSettingObjects()
         {
-            foreach (var enemy in enemyList)
-                if (enemy is ExitEnemyMain)
-                    return true;
-            return false;
+            await singletonObjectCreator.CreateSettingObjects();
         }
 
         public static bool IsStartBattleEnemyLiving()
         {
             foreach (var enemy in enemyList)
                 if (enemy is StartBattleEnemyMain)
+                    return true;
+            return false;
+        }
+
+        public static bool IsSettingEnemyLiving()
+        {
+            foreach (var enemy in enemyList)
+                if (enemy is SettingEnemyMain)
+                    return true;
+            return false;
+        }
+
+        public static bool IsBackToLobbyEnemyLiving()
+        {
+            foreach (var enemy in enemyList)
+                if (enemy is BackToLobbyEnemyMain)
                     return true;
             return false;
         }

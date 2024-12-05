@@ -30,14 +30,24 @@ namespace Assets.Scripts.Objects
             await ObjectStorage.CreateLobbyObjects();
         }
 
-        public static bool IsExitEnemyLiving()
+        public static async UniTask CreateSettingObjects()
         {
-            return ObjectStorage.IsExitEnemyLiving();
+            await ObjectStorage.CreateSettingObjects();
         }
 
         public static bool IsStartBattleEnemyLiving()
         {
             return ObjectStorage.IsStartBattleEnemyLiving();
+        }
+
+        public static bool IsSettingEnemyLiving()
+        {
+            return ObjectStorage.IsSettingEnemyLiving();
+        }
+
+        public static bool IsBackToLobbyEnemyLiving()
+        {
+            return ObjectStorage.IsBackToLobbyEnemyLiving();
         }
     }
 }

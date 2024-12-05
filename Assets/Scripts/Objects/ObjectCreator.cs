@@ -25,6 +25,14 @@ namespace Assets.Scripts.Objects
             await InstantiateAsync(uIEnemyPrefabList[0], ObjectMove.ConvertToRePos3FromTileIndex((0, 0)), Quaternion.identity);
             await InstantiateAsync(uIEnemyPrefabList[1], ObjectMove.ConvertToRePos3FromTileIndex((0, 1)), Quaternion.identity);
             await InstantiateAsync(uIEnemyPrefabList[2], ObjectMove.ConvertToRePos3FromTileIndex((1, 0)), Quaternion.identity);
+            await InstantiateAsync(uIEnemyPrefabList[3], ObjectMove.ConvertToRePos3FromTileIndex((1, 1)), Quaternion.identity);
+            ObjectStorage.SetAllObjectsReady();
+        }
+
+        public async UniTask CreateSettingObjects()
+        {
+            await InstantiateAsync(playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
+            await InstantiateAsync(uIEnemyPrefabList[4], ObjectMove.ConvertToRePos3FromTileIndex((0, 0)), Quaternion.identity);
             ObjectStorage.SetAllObjectsReady();
         }
 
