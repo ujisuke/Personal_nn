@@ -139,7 +139,7 @@ namespace Assets.Scripts.Objects
             return false;
         }
 
-        public static bool IsSettingEnemyLiving()
+        public static bool IsSetGameEnemyLiving()
         {
             foreach (var enemy in enemyList)
                 if (enemy is SetGameEnemyMain)
