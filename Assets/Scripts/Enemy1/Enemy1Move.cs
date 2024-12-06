@@ -1,36 +1,31 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
-using System.Collections;
 using Unity.Mathematics;
 using Assets.ScriptableObjects;
+using Cysharp.Threading.Tasks;
+using System;
 
 
 namespace Assets.Scripts.Enemy1
 {
     public class Enemy1Move : MonoBehaviour
     {
-        private Enemy1Parameter enemy1Parameter;
+        private Enemy1Parameter _enemy1Parameter;
         private ObjectMove objectMove;
         private Vector3 targetRePos3 = new(-1, -1, -1);
 
-
         public void Initialize(Enemy1Parameter enemy1Parameter)
         {
-            this.enemy1Parameter = enemy1Parameter;
+            _enemy1Parameter = enemy1Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             targetRePos3 = ObjectStorage.GetPlayerRePos3();
-            StartCoroutine(UpdateTargetPos3());
-        }
-
-        private IEnumerator UpdateTargetPos3()
-        {
             while(ObjectFacade.IsPlayerLiving())
             {
-                yield return new WaitForSeconds(0.2f);
+                await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.DeadTime));   
                 targetRePos3 = ObjectStorage.GetPlayerRePos3();
             }
         }
@@ -38,17 +33,17 @@ namespace Assets.Scripts.Enemy1
         private void FixedUpdate()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
-            objectMove.HeadToPlusImX(moveDirectionIm3.x >= enemy1Parameter.StopMoveImDistanceFromPlayer);
-            objectMove.HeadToMinusImX(moveDirectionIm3.x < -enemy1Parameter.StopMoveImDistanceFromPlayer);
-            objectMove.HeadToPlusImY(moveDirectionIm3.y >= enemy1Parameter.StopMoveImDistanceFromPlayer);
-            objectMove.HeadToMinusImY(moveDirectionIm3.y < -enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToPlusImX(moveDirectionIm3.x >= _enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToMinusImX(moveDirectionIm3.x < -_enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToPlusImY(moveDirectionIm3.y >= _enemy1Parameter.StopMoveImDistanceFromPlayer);
+            objectMove.HeadToMinusImY(moveDirectionIm3.y < -_enemy1Parameter.StopMoveImDistanceFromPlayer);
             objectMove.TryToJump(objectMove.IsDestinationTileZReachableWithJumping(transform.position));
         }
 
         private bool IsNearPlayer()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);
-            return math.abs(moveDirectionIm3.x) <= enemy1Parameter.AttackImDistanceFromPlayer && math.abs(moveDirectionIm3.y) <= enemy1Parameter.AttackImDistanceFromPlayer;
+            return math.abs(moveDirectionIm3.x) <= _enemy1Parameter.AttackImDistanceFromPlayer && math.abs(moveDirectionIm3.y) <= _enemy1Parameter.AttackImDistanceFromPlayer;
         }
 
         public bool CanAttack()

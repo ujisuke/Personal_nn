@@ -1,7 +1,6 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
-using Unity.Mathematics;
 
 namespace Assets.Scripts.Player
 {

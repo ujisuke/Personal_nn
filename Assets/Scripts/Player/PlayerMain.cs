@@ -2,8 +2,9 @@ using Assets.Scripts.Objects;
 using UnityEngine;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
-using System.Collections;
 using Assets.Scripts.Battle;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Player
 {
@@ -32,17 +33,17 @@ namespace Assets.Scripts.Player
             playerAttack.Initialize(_playerParameter);
             GetComponent<PlayerDash>().Initialize(_playerParameter);
             GetComponent<PlayerAnimation>().Initialize(_playerParameter);
-            StartCoroutine(ChargeEnergy());
+            ChargeEnergy().Forget();
         }
 
-        private IEnumerator ChargeEnergy()
+        private async UniTask ChargeEnergy()
         {
             while(!IsDead())
             {
-                yield return new WaitUntil(() => !singletonEnergy.IsFull());
+                await UniTask.WaitUntil(() => !singletonEnergy.IsFull());
                 for(int i = 0; i < 10; i++)
                 {
-                    yield return new WaitForSeconds(_playerParameter.ChargingEnergyTime * 0.1f);
+                    await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.ChargingEnergyTime * 0.1f));
                     singletonEnergy = singletonEnergy.Charge(0.1f);
                 }
             }
@@ -77,13 +78,13 @@ namespace Assets.Scripts.Player
         {
             if(isInvincible) return;
             singletonHP = singletonHP.TakeDamage(damage);
-            StartCoroutine(BecomeInvincible());
+            BecomeInvincible().Forget();
         }
 
-        private IEnumerator BecomeInvincible()
+        private async UniTask BecomeInvincible()
         {
             isInvincible = true;
-            yield return new WaitForSeconds(_playerParameter.InvincibleTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime));
             isInvincible = false;
         }
 
@@ -99,16 +100,11 @@ namespace Assets.Scripts.Player
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
-        public void DestroyDeadObject()
+        public async UniTask DestroyDeadObject()
         {
             ObjectStorage.RemovePlayer();
             BattleFacade.AddDeathCount();
-            StartCoroutine(WaitAndDestroy());
-        }
-
-        private IEnumerator WaitAndDestroy()
-        {
-            yield return new WaitForSeconds(_playerParameter.DeadTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
             Destroy(gameObject);
         }
 

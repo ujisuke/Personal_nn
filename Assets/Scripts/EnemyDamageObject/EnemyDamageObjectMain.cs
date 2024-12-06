@@ -1,9 +1,10 @@
 using Assets.Scripts.Objects;
 using UnityEngine;
 using Assets.Scripts.Stage;
-using System.Collections;
 using Assets.ScriptableObjects;
 using Assets.Scripts.Player;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.EnemyDamageObject
 {
@@ -12,20 +13,15 @@ namespace Assets.Scripts.EnemyDamageObject
         private DamageObjectParameter _damageObjectParameter;
         private bool isDamaging = false;
 
-        public void Initialize(DamageObjectParameter _damageObjectParameter, IEnemyMain enemy)
+        public async UniTask Initialize(DamageObjectParameter _damageObjectParameter, IEnemyMain enemy)
         {
             this._damageObjectParameter = _damageObjectParameter;
             ObjectStorage.AddEnemyDamageObject(this, enemy);
             isDamaging = false;
             GetComponent<EnemyDamageObjectAnimation>().Initialize(_damageObjectParameter);
-            StartCoroutine(Suicide());
-        }
-
-        private IEnumerator Suicide()
-        {
-            yield return new WaitForSeconds(_damageObjectParameter.ReadyTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(_damageObjectParameter.ReadyTime));
             isDamaging = true;
-            yield return new WaitForSeconds(_damageObjectParameter.DamagingTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(_damageObjectParameter.DamagingTime));
             DestroyObject();
         }
 

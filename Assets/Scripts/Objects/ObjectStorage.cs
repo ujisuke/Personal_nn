@@ -3,7 +3,6 @@ using UnityEngine;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
-using Assets.Scripts.ExitGameEnemy;
 using Assets.Scripts.StartBattleEnemy;
 using Assets.Scripts.SetGameEnemy;
 using Assets.Scripts.BackToLobbyEnemy;

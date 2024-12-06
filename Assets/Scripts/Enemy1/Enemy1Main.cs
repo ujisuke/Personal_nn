@@ -2,7 +2,6 @@ using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 using Cysharp.Threading.Tasks;
@@ -53,7 +52,7 @@ namespace Assets.Scripts.Enemy1
         public async void DestroyDeadObject()
         {
             ObjectStorage.RemoveEnemy(this);
-            await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.DeadTime));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
             Destroy(gameObject);
         }
 

@@ -1,8 +1,9 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
-using System.Collections;
 using Assets.ScriptableObjects;
 using Unity.Mathematics;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Enemy3
 {
@@ -19,16 +20,11 @@ namespace Assets.Scripts.Enemy3
             objectMove = GetComponent<ObjectMove>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             canAttack = false;
             objectMove.Stop();
-            StartCoroutine(CoolDown());
-        }
-
-        private IEnumerator CoolDown()
-        { 
-            yield return new WaitForSeconds(enemy3Parameter.AttackCoolDownTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.AttackCoolDownTime));
             canAttack = true;
         }
 

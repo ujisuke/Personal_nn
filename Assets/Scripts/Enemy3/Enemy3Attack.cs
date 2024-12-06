@@ -1,8 +1,9 @@
 using UnityEngine;
-using System.Collections;
 using Assets.Scripts.Objects;
 using System.Collections.Generic;
 using Assets.ScriptableObjects;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Enemy3
 {
@@ -20,15 +21,10 @@ namespace Assets.Scripts.Enemy3
             objectMove = GetComponent<ObjectMove>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             isAttacking = true;
             objectMove.Stop();
-            StartCoroutine(Attack());
-        }
-
-        private IEnumerator Attack()
-        {
             List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
             IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < objectRePos3ListList.Count; i++)
@@ -36,7 +32,7 @@ namespace Assets.Scripts.Enemy3
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
                     ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, objectRePos3List[j], enemy3Parameter.DamageObjectParameter, enemy);
-                yield return new WaitForSeconds(enemy3Parameter.WaveMoveTime);
+                await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime));
             }
             isAttacking = false;
         }

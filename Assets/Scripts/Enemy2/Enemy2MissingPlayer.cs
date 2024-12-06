@@ -1,7 +1,8 @@
 using UnityEngine;
-using System.Collections;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Enemy2
 {
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Enemy2
             objectMove = GetComponent<ObjectMove>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             isMissingPlayer = true;
             objectMove.HeadToPlusImX(false);
@@ -26,12 +27,7 @@ namespace Assets.Scripts.Enemy2
             objectMove.HeadToPlusImY(false);
             objectMove.HeadToMinusImY(false);
             objectMove.TryToJump(false);
-            StartCoroutine(Stand());
-        }
-
-        private IEnumerator Stand()
-        {   
-            yield return new WaitForSeconds(enemy2Parameter.MissingPlayerTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.MissingPlayerTime));
             isMissingPlayer = false;
         }
     }

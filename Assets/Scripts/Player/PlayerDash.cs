@@ -1,7 +1,8 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
-using System.Collections;
 using Assets.ScriptableObjects;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Player
 {
@@ -18,17 +19,12 @@ namespace Assets.Scripts.Player
             this.playerParameter = playerParameter;
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             isDashing = true;
             PlayerMain.ConsumeEnergy(playerParameter.DashEnergyConsumption);
-            StartCoroutine(Dash());
-        }
-
-        private IEnumerator Dash()
-        {
             objectMove.StartDash(playerParameter.DashSpeedRatio);
-            yield return new WaitForSeconds(playerParameter.DashingTime);
+            await UniTask.Delay(TimeSpan.FromSeconds(playerParameter.DashingTime));
             objectMove.StopDash();
             isDashing = false;
         }

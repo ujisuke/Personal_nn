@@ -1,8 +1,9 @@
 using UnityEngine;
-using System.Collections;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
 using Unity.Mathematics;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Enemy2
 {
@@ -20,20 +21,15 @@ namespace Assets.Scripts.Enemy2
             objectMove = GetComponent<ObjectMove>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             isAttacking = true;
             objectMove.Stop();
-            StartCoroutine(Attack());
-        }
-
-        private IEnumerator Attack()
-        {   
             IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
                 ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.DamageObjectParameter, enemy);
-                yield return new WaitForSeconds(enemy2Parameter.AttackCoolDownTime);
+                await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime));
             } 
             isAttacking = false;
         }
