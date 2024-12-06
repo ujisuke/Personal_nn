@@ -20,7 +20,8 @@ namespace Assets.Scripts.ExitGameEnemy
         private async void OnEnable()
         {
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(exitGameEnemyMain);
-            GetComponent<ObjectMove>().Stop();
+            GetComponent<ObjectMove>().Dead();
+            GetComponent<SetShadow>().DestroyShadow();
             exitGameEnemyMain.DestroyDeadObject();
             await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.DeadTime));
             Application.Quit();

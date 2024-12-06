@@ -12,8 +12,7 @@ namespace Assets.Scripts.Stage
     {
         [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_StageSide * 2 - 1];
         [SerializeField] private ScriptableObjects.TileData _tileData;
-        private static bool isCreatingStage = false;
-        public static bool IsCreatingStage => isCreatingStage;
+
         public const int _StageSide = 8;
         public const int _StageHeight = _StageSide * 2;
         public const float _TileHeight = 0.25f;
@@ -22,7 +21,6 @@ namespace Assets.Scripts.Stage
 
         public async UniTask CreateLobbyStage()
         {
-            isCreatingStage = true;
             SetLobbyStageMatrix();
             await SetAllTiles();
         }
@@ -37,7 +35,6 @@ namespace Assets.Scripts.Stage
 
         public async UniTask CreateSettingStage()
         {
-            isCreatingStage = true;
             SetSettingStageMatrix();
             await SetAllTiles();
         }
@@ -52,7 +49,6 @@ namespace Assets.Scripts.Stage
 
         public async UniTask CreateBattleStage()
         {
-            isCreatingStage = true;
             SetNewStageMatrix();
             await SetAllTiles();
         }
@@ -202,7 +198,6 @@ namespace Assets.Scripts.Stage
                 }
                 await UniTask.Delay(TimeSpan.FromSeconds(0.03f));
             }
-            isCreatingStage = false;
         }
     }
 }
