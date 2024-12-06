@@ -2,7 +2,6 @@ using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
-using System.Collections;
 using Cysharp.Threading.Tasks;
 using System;
 

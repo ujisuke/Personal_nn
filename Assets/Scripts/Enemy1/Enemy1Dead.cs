@@ -1,7 +1,8 @@
 using Assets.Scripts.Objects;
 using UnityEngine;
 using Assets.ScriptableObjects;
-using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Enemy1
 {
@@ -16,17 +17,12 @@ namespace Assets.Scripts.Enemy1
             enemy1Main = GetComponent<Enemy1Main>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(enemy1Main);
-            StartCoroutine(WaitAndDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.DeadTime));
+            enemy1Main.DestroyDeadObject();
             GetComponent<ObjectMove>().Stop();
         }
-
-        private IEnumerator WaitAndDestroy()
-        {
-            yield return new WaitForSeconds(_enemy1Parameter.DeadTime);
-            enemy1Main.DestroyDeadObject();
-        }        
     }
 }

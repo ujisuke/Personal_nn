@@ -4,7 +4,6 @@ using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
-using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.ResetDataEnemy
 {

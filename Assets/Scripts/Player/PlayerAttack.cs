@@ -1,7 +1,8 @@
 using UnityEngine;
-using System.Collections;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.Player
 {
@@ -20,12 +21,14 @@ namespace Assets.Scripts.Player
             objectMove = GetComponent<ObjectMove>();
         }
 
-        private void OnEnable()
+        private async void OnEnable()
         {
             isAttacking = true;
             isDamaging = true;
             PlayerMain.ConsumeEnergy(playerParameter.AttackEnergyConsumption);
-            StartCoroutine(Attack());
+            await UniTask.Delay(TimeSpan.FromSeconds(playerParameter.AttackingTime));
+            isDamaging = false;
+            isAttacking = false;
         }
 
         private void FixedUpdate()
@@ -35,13 +38,6 @@ namespace Assets.Scripts.Player
             objectMove.HeadToMinusImY(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A));
             objectMove.HeadToPlusImX(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S));
             objectMove.TryToJump(Input.GetKey(KeyCode.Space));
-        }
-
-        private IEnumerator Attack()
-        {
-            yield return new WaitForSeconds(playerParameter.AttackingTime);
-            isDamaging = false;
-            isAttacking = false;
         }
     }
 }

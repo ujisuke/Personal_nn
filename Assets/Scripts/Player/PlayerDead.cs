@@ -1,5 +1,6 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
+using Cysharp.Threading.Tasks;
 
 namespace Assets.Scripts.Player
 {
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Player
     {
         private void OnEnable()
         {
-            GetComponent<PlayerMain>().DestroyDeadObject();
+            GetComponent<PlayerMain>().DestroyDeadObject().Forget();
             GetComponent<ObjectMove>().Stop();
         }
 

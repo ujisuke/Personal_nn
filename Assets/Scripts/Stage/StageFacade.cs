@@ -1,6 +1,4 @@
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Stage

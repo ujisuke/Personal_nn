@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Assets.ScriptableObjects;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using Assets.Scripts.Battle;
-using System.Collections;
 using Cysharp.Threading.Tasks;
 using System;
 
@@ -134,7 +132,7 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs3OrMoreThan()
         {
-            Random.InitState(System.DateTime.Now.Millisecond);
+            Random.InitState(DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
             int clossI = Random.Range(2, _StageSide - 2);
             int clossJ = Random.Range(2, _StageSide - 2);

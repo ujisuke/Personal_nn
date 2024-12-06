@@ -10,7 +10,6 @@ namespace Assets.ScriptableObjects
         public float StopMoveImDistanceFromPlayer => _stopMoveImDistanceFromPlayer;
         [SerializeField] private float _attackImDistanceFromPlayer;
         public float AttackImDistanceFromPlayer => _attackImDistanceFromPlayer;
-
         [SerializeField] private int _attackPanelCount;
         public int AttackPanelCount => _attackPanelCount;
         [SerializeField] private int _attackPanelMinImRadius;

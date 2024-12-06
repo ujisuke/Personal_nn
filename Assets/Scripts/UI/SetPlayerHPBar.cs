@@ -3,7 +3,8 @@ using UnityEngine;
 using Assets.ScriptableObjects;
 using Assets.Scripts.Player;
 using Assets.Scripts.Objects;
-using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Assets.Scripts.UI
 {
@@ -30,18 +31,19 @@ namespace Assets.Scripts.UI
         {
             if(!ObjectFacade.IsPlayerLiving()) return;
             image.fillAmount = PlayerMain.CurrentHP / (float)_playerParameter.MaxHP;
-            if(latestCurrentHP != PlayerMain.CurrentHP && PlayerMain.CurrentHP != _playerParameter.MaxHP) StartCoroutine(Flash());
+            if(latestCurrentHP != PlayerMain.CurrentHP && PlayerMain.CurrentHP != _playerParameter.MaxHP)
+                Flash().Forget();
             latestCurrentHP = PlayerMain.CurrentHP;
         }
 
-        private IEnumerator Flash()
+        private async UniTask Flash()
         {
             for(int i = 0; i < 3; i++)
             {
                 image.enabled = false;
-                yield return new WaitForSeconds(_playerParameter.InvincibleTime / 6);
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6));
                 image.enabled = true;
-                yield return new WaitForSeconds(_playerParameter.InvincibleTime / 6);
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6));
             }
         }
     }
