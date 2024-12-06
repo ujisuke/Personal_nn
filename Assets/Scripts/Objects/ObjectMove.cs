@@ -26,6 +26,7 @@ namespace Assets.Scripts.Objects
         private bool isHeadingToPlusImX = false;
         private bool isTryingToJump = false;
         private int destinationTileImZ = 0;
+        private bool isDead = false;
 
         public void Initialize(ObjectParameter objectParameter, Vector3 objectRePos3)
         {
@@ -36,6 +37,7 @@ namespace Assets.Scripts.Objects
 
         private void FixedUpdate()
         {
+            if(isDead) return;
             Vector3 objectImPos3 = ConvertToImPos3FromRePos3(transform.position);
             (int i, int j) objectTileIndex = ConvertToTileIndexFromImPos3(objectImPos3);
             
@@ -325,6 +327,12 @@ namespace Assets.Scripts.Objects
             isHeadingToMinusImY = false;
             isHeadingToPlusImX = false;
             isTryingToJump = false;
+        }
+
+        public void Dead()
+        {
+            Stop();
+            isDead = true;
         }
         
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
