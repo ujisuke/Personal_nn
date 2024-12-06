@@ -665,17 +665,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d45a374256f8874ba4ed0ee3e485fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 6028222375032962928, guid: b5acf0d91d856954887d3eb6b9de537b, type: 3}
-  enemyPrefabList:
+  _playerPrefab: {fileID: 6028222375032962928, guid: b5acf0d91d856954887d3eb6b9de537b, type: 3}
+  _enemyPrefabList:
   - {fileID: 835981607064012740, guid: 1e2e0af54bb4b244cab54211730ce91e, type: 3}
   - {fileID: 835981607064012740, guid: 443dc8f3e98993f4b88836fd44885fd9, type: 3}
   - {fileID: 835981607064012740, guid: 971330c56c3c1a9458efec6720dbfe65, type: 3}
-  uIEnemyPrefabList:
-  - {fileID: 835981607064012740, guid: 0263c5dad94777045ab21181c3ece351, type: 3}
-  - {fileID: 835981607064012740, guid: c5c05997e55e16b45b2b1ae9299ee602, type: 3}
-  - {fileID: 835981607064012740, guid: 64a9ad9b73f90a6459a8330ef4931daa, type: 3}
-  - {fileID: 835981607064012740, guid: 1148853c3d505de4099874052c280a7f, type: 3}
-  - {fileID: 835981607064012740, guid: e92e8a51b8c8cfb47b29f7c02b24f44e, type: 3}
+  _enemyDamageObjectPrefab: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
+  _startBattleEnemyPrefab: {fileID: 835981607064012740, guid: 64a9ad9b73f90a6459a8330ef4931daa, type: 3}
+  _resetDataEnemyPrefab: {fileID: 835981607064012740, guid: c5c05997e55e16b45b2b1ae9299ee602, type: 3}
+  _setGameEnemyPrefab: {fileID: 835981607064012740, guid: 1148853c3d505de4099874052c280a7f, type: 3}
+  _exitGameEnemyPrefab: {fileID: 835981607064012740, guid: 0263c5dad94777045ab21181c3ece351, type: 3}
+  _backToLobbyEnemyPrefab: {fileID: 835981607064012740, guid: e92e8a51b8c8cfb47b29f7c02b24f44e, type: 3}
 --- !u!114 &429188287
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,19 +10,20 @@ namespace Assets.Scripts.EnemyDamageObject
 {
     public class EnemyDamageObjectMain : MonoBehaviour
     {
-        private DamageObjectParameter _damageObjectParameter;
+        private EnemyDamageObjectParameter _enemyDamageObjectParameter;
         private bool isDamaging = false;
 
-        public async UniTask Initialize(DamageObjectParameter _damageObjectParameter, IEnemyMain enemy)
+        public async UniTask Initialize(EnemyDamageObjectParameter _enemyDamageObjectParameter, IEnemyMain enemy)
         {
-            this._damageObjectParameter = _damageObjectParameter;
+            this._enemyDamageObjectParameter = _enemyDamageObjectParameter;
             ObjectStorage.AddEnemyDamageObject(this, enemy);
             isDamaging = false;
-            GetComponent<EnemyDamageObjectAnimation>().Initialize(_damageObjectParameter);
-            await UniTask.Delay(TimeSpan.FromSeconds(_damageObjectParameter.ReadyTime));
+            GetComponent<EnemyDamageObjectAnimation>().Initialize(_enemyDamageObjectParameter);
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemyDamageObjectParameter.ReadyTime));
             isDamaging = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(_damageObjectParameter.DamagingTime));
-            DestroyObject();
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemyDamageObjectParameter.DamagingTime));
+            if(this != null)
+                DestroyObject();
         }
 
         public bool IsDamaging()
@@ -32,7 +33,7 @@ namespace Assets.Scripts.EnemyDamageObject
 
         public void DamageTo(PlayerMain player)
         {
-            player.TakeDamage(_damageObjectParameter.AttackPower);
+            player.TakeDamage(_enemyDamageObjectParameter.AttackPower);
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()

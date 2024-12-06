@@ -4,16 +4,18 @@ using Assets.ScriptableObjects;
 using Unity.Mathematics;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace Assets.Scripts.Enemy2
 {
     public class Enemy2Attack : MonoBehaviour
     {
         private Enemy2Parameter enemy2Parameter;
-        [SerializeField] private GameObject _damageObjectPrefab;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
+        private CancellationTokenSource cancellationTokenSource = null;
+        private CancellationTokenSource linkedTokenSource = null;
         
         public void Initialize(Enemy2Parameter enemy2Parameter)
         {
@@ -23,20 +25,35 @@ namespace Assets.Scripts.Enemy2
 
         private async void OnEnable()
         {
+            cancellationTokenSource = new();
+            linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, this.GetCancellationTokenOnDestroy());
             isAttacking = true;
             objectMove.Stop();
+            await Attack(linkedTokenSource.Token).SuppressCancellationThrow();
+            isAttacking = false;
+        }
+
+        private async UniTask Attack(CancellationToken token)
+        {
             IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
-                ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.DamageObjectParameter, enemy);
-                await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime));
+                ObjectCreator.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);
+                await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime), cancellationToken: token);
             } 
-            isAttacking = false;
         }
 
         public void StopAttack()
         {
-            StopAllCoroutines();
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
+            linkedTokenSource.Cancel();
+            linkedTokenSource.Dispose();
+        }
+
+        private void OnDestory()
+        {
+            StopAttack();
         }
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()

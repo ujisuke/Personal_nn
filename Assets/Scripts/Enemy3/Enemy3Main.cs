@@ -21,6 +21,7 @@ namespace Assets.Scripts.Enemy3
             GetComponent<ObjectMove>().Initialize(_enemy3Parameter, transform.position);
             GetComponent<Enemy3Move>().Initialize(_enemy3Parameter);
             GetComponent<Enemy3Attack>().Initialize(_enemy3Parameter);
+            GetComponent<Enemy3Dead>().Initialize(_enemy3Parameter);
             GetComponent<Enemy3Animation>().Initialize(_enemy3Parameter);
         }
 

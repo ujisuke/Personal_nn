@@ -11,18 +11,18 @@ namespace Assets.Scripts.Enemy1
         private Enemy1Parameter _enemy1Parameter;
         private Enemy1Main enemy1Main;
         
-        public void Initialize(Enemy1Parameter enemy1Parameter)
+        public void Initialize(Enemy1Parameter _enemy1Parameter)
         {
-            _enemy1Parameter = enemy1Parameter;
+            this._enemy1Parameter = _enemy1Parameter;
             enemy1Main = GetComponent<Enemy1Main>();
         }
 
         private async void OnEnable()
         {
+            GetComponent<ObjectMove>().Stop();
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(enemy1Main);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.DeadTime));
             enemy1Main.DestroyDeadObject();
-            GetComponent<ObjectMove>().Stop();
         }
     }
 }
