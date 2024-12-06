@@ -9,16 +9,16 @@ namespace Assets.Scripts.EnemyDamageObject
         private EnemyDamageObjectMain enemyDamageObjectMain;
         private Animator animator;
         private bool isDamaging = false;
-        private DamageObjectParameter _damageObjectParameter;
+        private EnemyDamageObjectParameter _enemyDamageObjectParameter;
 
-        public void Initialize(DamageObjectParameter damageObjectParameter)
+        public void Initialize(EnemyDamageObjectParameter enemyDamageObjectParameter)
         {
             enemyDamageObjectMain = GetComponent<EnemyDamageObjectMain>();
             animator = GetComponent<Animator>();
-            animator.runtimeAnimatorController = damageObjectParameter.AnimatorController;
+            animator.runtimeAnimatorController = enemyDamageObjectParameter.AnimatorController;
             isDamaging = false;
-            _damageObjectParameter = damageObjectParameter;
-            animator.SetFloat("ReadySpeed" , 1f / _damageObjectParameter.ReadyTime);
+            _enemyDamageObjectParameter = enemyDamageObjectParameter;
+            animator.SetFloat("ReadySpeed" , 1f / _enemyDamageObjectParameter.ReadyTime);
             GetComponent<SpriteRenderer>().sortingOrder = ObjectMove.CalculateSortingOrderFromRePos3(transform.position);
         }
 
@@ -26,7 +26,7 @@ namespace Assets.Scripts.EnemyDamageObject
         {
             if (!enemyDamageObjectMain.IsDamaging() || isDamaging) return;
             animator.SetTrigger("StartDamage");
-            animator.SetFloat("DamagingSpeed", 1f / _damageObjectParameter.DamagingTime);
+            animator.SetFloat("DamagingSpeed", 1f / _enemyDamageObjectParameter.DamagingTime);
             isDamaging = true;
         }
     }

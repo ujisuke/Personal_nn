@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5972084743471520511}
   - component: {fileID: -661045569222232453}
   m_Layer: 0
-  m_Name: ResetEnemyPrefab
+  m_Name: ResetDataEnemyPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -4,16 +4,18 @@ using System.Collections.Generic;
 using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace Assets.Scripts.Enemy3
 {
     public class Enemy3Attack : MonoBehaviour
     {
         private Enemy3Parameter enemy3Parameter;
-        [SerializeField] private GameObject _damageObjectPrefab;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
+        private CancellationTokenSource cancellationTokenSource = null;
+        private CancellationTokenSource linkedTokenSource = null;
     
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
@@ -23,23 +25,33 @@ namespace Assets.Scripts.Enemy3
 
         private async void OnEnable()
         {
+            cancellationTokenSource = new();
+            linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, this.GetCancellationTokenOnDestroy());
             isAttacking = true;
             objectMove.Stop();
+            await Attack(linkedTokenSource.Token).SuppressCancellationThrow();
+            isAttacking = false;
+        }
+
+        private async UniTask Attack(CancellationToken token)
+        {
             List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
             IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < objectRePos3ListList.Count; i++)
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
-                    ObjectCreator.InstantiateDamageObject(_damageObjectPrefab, objectRePos3List[j], enemy3Parameter.DamageObjectParameter, enemy);
-                await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime));
+                    ObjectCreator.InstantiateEnemyDamageObject(objectRePos3List[j], enemy3Parameter.EnemyDamageObjectParameter, enemy);
+                await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime), cancellationToken: token);
             }
-            isAttacking = false;
         }
 
         public void StopAttack()
         {
-            StopAllCoroutines();
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
+            linkedTokenSource.Cancel();
+            linkedTokenSource.Dispose();
         }
     }
 }

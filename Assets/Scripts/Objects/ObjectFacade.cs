@@ -22,17 +22,17 @@ namespace Assets.Scripts.Objects
 
         public static async UniTask CreateBattleObjects()
         {
-            await ObjectStorage.CreateBattleObjects();
+            await ObjectCreator.CreateBattleObjects();
         }
 
         public static async UniTask CreateLobbyObjects()
         {
-            await ObjectStorage.CreateLobbyObjects();
+            await ObjectCreator.CreateLobbyObjects();
         }
 
         public static async UniTask CreateSettingObjects()
         {
-            await ObjectStorage.CreateSettingObjects();
+            await ObjectCreator.CreateSettingObjects();
         }
 
         public static bool IsStartBattleEnemyLiving()

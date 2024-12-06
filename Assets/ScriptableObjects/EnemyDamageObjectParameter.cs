@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Assets.ScriptableObjects
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/DamageObjectParameter")]
-    public class DamageObjectParameter : ScriptableObject
+    [CreateAssetMenu(menuName = "ScriptableObjects/EnemyDamageObjectParameter")]
+    public class EnemyDamageObjectParameter : ScriptableObject
     {
         [SerializeField] private int _attackPower;
         public int AttackPower => _attackPower;

@@ -19,7 +19,7 @@ namespace Assets.ScriptableObjects
         public int MaxHP => _maxHP;
         [SerializeField] private float _deadTime;
         public float DeadTime => _deadTime;
-        [SerializeField] private DamageObjectParameter _damageObjectParameter;
-        public DamageObjectParameter DamageObjectParameter => _damageObjectParameter;
+        [SerializeField] private EnemyDamageObjectParameter _enemyDamageObjectParameter;
+        public EnemyDamageObjectParameter EnemyDamageObjectParameter => _enemyDamageObjectParameter;
     }
 }

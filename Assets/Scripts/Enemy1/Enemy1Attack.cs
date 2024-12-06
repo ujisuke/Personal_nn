@@ -15,7 +15,6 @@ namespace Assets.Scripts.Enemy1
         public bool IsAttacking => isAttacking;
         private bool isDamaging = false;
         public bool IsDamaging => isDamaging;
-        [SerializeField] private GameObject _damageObject;
 
         public void Initialize(Enemy1Parameter enemy1Parameter)
         {
@@ -32,7 +31,7 @@ namespace Assets.Scripts.Enemy1
             _enemy1Parameter.AttackPanelMinImRadius, _enemy1Parameter.AttackPanelMaxImRadius);
             IEnemyMain enemy = GetComponent<IEnemyMain>();
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
-                ObjectCreator.InstantiateDamageObject(_damageObject, damageObjectRePos3List[i], _enemy1Parameter.DamageObjectParameter, enemy);
+                ObjectCreator.InstantiateEnemyDamageObject(damageObjectRePos3List[i], _enemy1Parameter.EnemyDamageObjectParameter, enemy);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.AttackCoolDownTime));
             isAttacking = false;
         }

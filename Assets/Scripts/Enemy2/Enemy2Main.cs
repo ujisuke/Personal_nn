@@ -22,6 +22,7 @@ namespace Assets.Scripts.Enemy2
             GetComponent<Enemy2Move>().Initialize(_enemy2Parameter);
             GetComponent<Enemy2Attack>().Initialize(_enemy2Parameter);
             GetComponent<Enemy2MissingPlayer>().Initialize(_enemy2Parameter);
+            GetComponent<Enemy2Dead>().Initialize(_enemy2Parameter);
             GetComponent<Enemy2Animation>().Initialize(_enemy2Parameter);
         }
 

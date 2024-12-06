@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
-using Cysharp.Threading.Tasks;
 using Assets.Scripts.StartBattleEnemy;
 using Assets.Scripts.SetGameEnemy;
 using Assets.Scripts.BackToLobbyEnemy;
@@ -14,12 +13,6 @@ namespace Assets.Scripts.Objects
         private static PlayerMain player;
         private static List<IEnemyMain> enemyList = new();
         private static List<(EnemyDamageObjectMain enemyDamageObject, IEnemyMain enemy)> enemyDamageObjectList = new();
-        private static ObjectCreator singletonObjectCreator;
-        
-        private void Awake()
-        {
-            singletonObjectCreator = GetComponent<ObjectCreator>();
-        }
 
         private void FixedUpdate()
         {
@@ -113,21 +106,6 @@ namespace Assets.Scripts.Objects
         public static bool IsEnemyLiving()
         {
             return enemyList.Count > 0 || enemyDamageObjectList.Count > 0;
-        }
-
-        public static async UniTask CreateBattleObjects()
-        {
-            await singletonObjectCreator.CreateBattleObjects();
-        }
-
-        public static async UniTask CreateLobbyObjects()
-        {
-            await singletonObjectCreator.CreateLobbyObjects();
-        }
-
-        public static async UniTask CreateSettingObjects()
-        {
-            await singletonObjectCreator.CreateSettingObjects();
         }
 
         public static bool IsStartBattleEnemyLiving()
