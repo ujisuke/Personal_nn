@@ -10,6 +10,7 @@ namespace Assets.Scripts.BackToLobbyEnemy
             BackToLobbyEnemyMain exitEnemyMain = GetComponent<BackToLobbyEnemyMain>();
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(exitEnemyMain);
             GetComponent<ObjectMove>().Stop();
+            GetComponent<SetShadow>().DestroyShadow();
             exitEnemyMain.DestroyDeadObject();
         } 
     }

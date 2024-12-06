@@ -20,6 +20,7 @@ namespace Assets.Scripts.Enemy2
         private async void OnEnable()
         {
             GetComponent<ObjectMove>().Stop();
+            GetComponent<SetShadow>().DestroyShadow();
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(enemy2Main);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy2Parameter.DeadTime));
             enemy2Main.DestroyDeadObject();

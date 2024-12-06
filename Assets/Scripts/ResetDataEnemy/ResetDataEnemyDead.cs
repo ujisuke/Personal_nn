@@ -11,6 +11,7 @@ namespace Assets.Scripts.ResetDataEnemy
             ResetDataEnemyMain resetDataEnemyMain = GetComponent<ResetDataEnemyMain>();
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(resetDataEnemyMain);
             GetComponent<ObjectMove>().Stop();
+            GetComponent<SetShadow>().DestroyShadow();
             BattleFacade.ResetData();
             resetDataEnemyMain.DestroyDeadObject();
         } 

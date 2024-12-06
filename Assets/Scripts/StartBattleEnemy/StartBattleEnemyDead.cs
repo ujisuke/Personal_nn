@@ -10,6 +10,7 @@ namespace Assets.Scripts.StartBattleEnemy
             StartBattleEnemyMain startBattleEnemyMain = GetComponent<StartBattleEnemyMain>();
             ObjectStorage.RemoveAndDestroyEnemyDamageObject(startBattleEnemyMain);
             GetComponent<ObjectMove>().Stop();
+            GetComponent<SetShadow>().DestroyShadow();
             startBattleEnemyMain.DestroyDeadObject();
         } 
     }

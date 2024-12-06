@@ -11,7 +11,6 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectMove : MonoBehaviour
     {
-        [SerializeField] private GameObject shadow;
         private ObjectParameter objectParameter;
         private readonly int[,] _tileImZs = StageFacade.TileImZs;
         private bool isJumping = false;
@@ -21,7 +20,6 @@ namespace Assets.Scripts.Objects
         private float prevImZ = 0;
         private float dashSpeed = 1f;
         private SpriteRenderer objectSpriteRenderer;
-        private SpriteRenderer shadowSpriteRenderer;
         private bool isHeadingToMinusImX = false;
         private bool isHeadingToPlusImY = false;
         private bool isHeadingToMinusImY = false;
@@ -34,7 +32,6 @@ namespace Assets.Scripts.Objects
             this.objectParameter = objectParameter;
             prevImZ = objectRePos3.z;
             objectSpriteRenderer = GetComponent<SpriteRenderer>();
-            shadowSpriteRenderer = shadow.GetComponent<SpriteRenderer>();
         }
 
         private void FixedUpdate()
@@ -97,16 +94,9 @@ namespace Assets.Scripts.Objects
                 objectImPos3.z = destinationImPos3.z;
                 isJumping = true;
             }
-            
-            objectTileIndex = ConvertToTileIndexFromImPos3(objectImPos3);
-            objectTileZ = _tileImZs[objectTileIndex.i, objectTileIndex.j];
             destinationTileImZ = _tileImZs[destinationTileIndex.i, destinationTileIndex.j];
-
             transform.position = ConvertToRePos3FromImPos3(objectImPos3);
             objectSpriteRenderer.sortingOrder = CalculateSortingOrderFromRePos3(transform.position);
-            Vector3 shadowImPos3 = new(objectImPos3.x, objectImPos3.y, objectTileZ + 1f);
-            shadow.transform.position = ConvertToRePos3FromImPos3(shadowImPos3);
-            shadowSpriteRenderer.sortingOrder = CalculateSortingOrderFromRePos3(shadow.transform.position);
         }
 
         private Vector3 GetDestinationImPos3()

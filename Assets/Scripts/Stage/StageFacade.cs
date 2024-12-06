@@ -11,7 +11,6 @@ namespace Assets.Scripts.Stage
         public static float YOffset => StageCreator._YOffset;
         public static int[,] TileImZs => StageCreator.TileImZs;
         private static StageCreator singletonStageCreator;
-        public static bool IsCreatingStage => StageCreator.IsCreatingStage;
 
         private void Awake()
         {

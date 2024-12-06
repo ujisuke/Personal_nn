@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2439935415444004589}
   - component: {fileID: 6535951732038360067}
   - component: {fileID: 7872466907143792591}
+  - component: {fileID: 7342984384739900929}
   m_Layer: 0
   m_Name: Enemy1Prefab
   m_TagString: Untagged
@@ -108,7 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3be9dd2875ee34e8838ad2629b95bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadow: {fileID: 4502411192134155000}
 --- !u!114 &5559750665094269716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41df8a76eca81c740b393f2b3ab4be03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageObject: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
 --- !u!114 &2439935415444004589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +205,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59aa40028a1ede4884e204e496821ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7342984384739900929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835981607064012740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf5079295e3bcd14cb118facce2f608f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadow: {fileID: 4502411192134155000}
 --- !u!1 &4502411192134155000
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,7 +245,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.4, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2341691144739971984}
@@ -281,9 +293,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_SortingOrder: 12
+  m_Sprite: {fileID: 4093480436322176185, guid: b1938e1b67cfb1540ac1e1d8406b4833, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.49803922}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
