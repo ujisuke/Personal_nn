@@ -7,11 +7,9 @@ namespace Assets.Scripts.SetGameEnemy
     {
         private void OnEnable()
         {
-            SetGameEnemyMain setGameEnemyMain = GetComponent<SetGameEnemyMain>();
-            ObjectStorage.RemoveAndDestroyEnemyDamageObject(setGameEnemyMain);
             GetComponent<ObjectMove>().Dead();
             GetComponent<SetShadow>().DestroyShadow();
-            setGameEnemyMain.DestroyDeadObject();
+            GetComponent<SetGameEnemyMain>().DestroyDeadObject();
         } 
     }
 }

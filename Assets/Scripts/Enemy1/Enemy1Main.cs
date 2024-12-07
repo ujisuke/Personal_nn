@@ -14,7 +14,6 @@ namespace Assets.Scripts.Enemy1
         private HP hP;
         private bool isReady = false;
         public bool IsReady => isReady;
-        public List<IEnemyMain> DamageObjects = new();
 
         private void Awake()
         {
@@ -23,7 +22,6 @@ namespace Assets.Scripts.Enemy1
             GetComponent<ObjectMove>().Initialize(_enemy1Parameter, transform.position);
             GetComponent<Enemy1Attack>().Initialize(_enemy1Parameter);
             GetComponent<Enemy1Move>().Initialize(_enemy1Parameter);
-            GetComponent<Enemy1Dead>().Initialize(_enemy1Parameter);
             GetComponent<Enemy1Animation>().Initialize(_enemy1Parameter);
         }
 
@@ -52,14 +50,14 @@ namespace Assets.Scripts.Enemy1
         public async void DestroyDeadObject()
         {
             ObjectStorage.RemoveEnemy(this);
+            ObjectStorage.RemoveAndDestroyEnemyDamageObjects(this);
             await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
             Destroy(gameObject);
         }
 
-        public void DestroyAliveObject()
+        public void KillAliveObject()
         {
-            ObjectStorage.RemoveEnemy(this); 
-            Destroy(gameObject);
+            hP = hP.GetZero();
         }
     }
 }

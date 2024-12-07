@@ -39,7 +39,7 @@ namespace Assets.Scripts.Objects
             enemyList.Remove(enemy);
         }
 
-        public static void RemoveAndDestroyEnemyDamageObject(IEnemyMain enemy)
+        public static void RemoveAndDestroyEnemyDamageObjects(IEnemyMain enemy)
         {
             int i = 0;
             while(true)
@@ -56,12 +56,11 @@ namespace Assets.Scripts.Objects
 
         public static void RemoveAndDestroyAll()
         {
-            int enemyListCount = enemyList.Count;
-            int enemyDamageObjectListCount = enemyDamageObjectList.Count;
             if(player != null) 
-                player.DestroyAliveObject();
-            for(int i = 0; i < enemyListCount; i++)
-                enemyList[0].DestroyAliveObject();
+                PlayerMain.DestroyAliveObject();
+            for(int i = 0; i < enemyList.Count; i++)
+                enemyList[i].KillAliveObject();
+            int enemyDamageObjectListCount = enemyDamageObjectList.Count;
             for(int i = 0; i < enemyDamageObjectListCount; i++)
                 enemyDamageObjectList[0].enemyDamageObject.DestroyObject();
         }

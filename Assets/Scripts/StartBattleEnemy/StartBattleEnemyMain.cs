@@ -19,7 +19,6 @@ namespace Assets.Scripts.StartBattleEnemy
             ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
-            GetComponent<StartBattleEnemyMove>().Initialize();
             GetComponent<StartBattleEnemyAnimation>().Initialize(_objectParameter);
         }
 
@@ -52,10 +51,9 @@ namespace Assets.Scripts.StartBattleEnemy
             Destroy(gameObject);
         }
 
-        public void DestroyAliveObject()
+        public void KillAliveObject()
         {
-            ObjectStorage.RemoveEnemy(this); 
-            Destroy(gameObject);
+            hP = hP.GetZero();
         }
     }
 }

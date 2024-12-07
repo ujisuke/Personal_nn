@@ -7,11 +7,9 @@ namespace Assets.Scripts.BackToLobbyEnemy
     {
         private void OnEnable()
         {
-            BackToLobbyEnemyMain exitEnemyMain = GetComponent<BackToLobbyEnemyMain>();
-            ObjectStorage.RemoveAndDestroyEnemyDamageObject(exitEnemyMain);
             GetComponent<ObjectMove>().Dead();
             GetComponent<SetShadow>().DestroyShadow();
-            exitEnemyMain.DestroyDeadObject();
+            GetComponent<BackToLobbyEnemyMain>().DestroyDeadObject();
         } 
     }
 }

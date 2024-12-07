@@ -25,6 +25,11 @@ namespace Assets.Scripts.Objects
             return new HP(_maxHP, _currentHP - damage);
         }
 
+        public HP GetZero()
+        {
+            return new HP(_maxHP, 0);
+        }
+
         public bool IsZero()
         {
             return _currentHP <= 0f;

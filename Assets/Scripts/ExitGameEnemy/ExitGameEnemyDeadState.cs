@@ -4,12 +4,9 @@ namespace Assets.Scripts.ExitGameEnemy
 {
     public class ExitGameEnemyDeadState : IObjectState
     {
-        private ExitGameEnemyDead exitGameEnemyDead;
-
         public void Enter(ObjectStateMachine objectStateMachine)
         {
-            exitGameEnemyDead = objectStateMachine.GetComponent<ExitGameEnemyDead>();
-            exitGameEnemyDead.enabled = true;
+            objectStateMachine.GetComponent<ExitGameEnemyDead>().enabled = true;
             objectStateMachine.GetComponent<ExitGameEnemyAnimation>().StartDead();
         }
 

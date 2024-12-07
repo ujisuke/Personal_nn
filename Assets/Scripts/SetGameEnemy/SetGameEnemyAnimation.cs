@@ -16,12 +16,12 @@ namespace Assets.Scripts.SetGameEnemy
             animator.SetFloat("ReadySpeed", 1f / _objectParameter.ReadyTime);
         }
 
-        public void StartWalk()
+        public void StartMove()
         {
             animator.SetBool("IsWalking", true);
         }
 
-        public void StopWalk()
+        public void StopMove()
         {
             animator.SetBool("IsWalking", false);
         }

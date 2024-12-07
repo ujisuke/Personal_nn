@@ -21,7 +21,6 @@ namespace Assets.Scripts.Enemy3
             GetComponent<ObjectMove>().Initialize(_enemy3Parameter, transform.position);
             GetComponent<Enemy3Move>().Initialize(_enemy3Parameter);
             GetComponent<Enemy3Attack>().Initialize(_enemy3Parameter);
-            GetComponent<Enemy3Dead>().Initialize(_enemy3Parameter);
             GetComponent<Enemy3Animation>().Initialize(_enemy3Parameter);
         }
 
@@ -50,14 +49,14 @@ namespace Assets.Scripts.Enemy3
         public async void DestroyDeadObject()
         {
             ObjectStorage.RemoveEnemy(this);
+            ObjectStorage.RemoveAndDestroyEnemyDamageObjects(this);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy3Parameter.DeadTime));
             Destroy(gameObject);
         }
 
-        public void DestroyAliveObject()
+        public void KillAliveObject()
         {
-            ObjectStorage.RemoveEnemy(this);
-            Destroy(gameObject);
+            hP = hP.GetZero();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Assets.Scripts.ResetDataEnemy
             resetDataEnemyMain = objectStateMachine.GetComponent<ResetDataEnemyMain>();
             resetDataEnemyAnimation = objectStateMachine.GetComponent<ResetDataEnemyAnimation>();
             resetDataEnemyMove.enabled = true;
-            resetDataEnemyAnimation.StartStand();
+            resetDataEnemyAnimation.StartMove();
         }
 
         public void FixedUpdate()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.ResetDataEnemy
         public void Exit()
         {
             resetDataEnemyMove.enabled = false;
-            resetDataEnemyAnimation.StopStand();
+            resetDataEnemyAnimation.StopMove();
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Assets.Scripts.ExitGameEnemy
             ObjectStorage.AddEnemy(this);
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
-            GetComponent<ExitGameEnemyMove>().Initialize();
             GetComponent<ExitGameEnemyDead>().Initialize(_objectParameter);
             GetComponent<ExitGameEnemyAnimation>().Initialize(_objectParameter);
         }
@@ -53,10 +52,9 @@ namespace Assets.Scripts.ExitGameEnemy
             Destroy(gameObject);
         }
 
-        public void DestroyAliveObject()
+        public void KillAliveObject()
         {
-            ObjectStorage.RemoveEnemy(this); 
-            Destroy(gameObject);
+            hP = hP.GetZero();
         }
     }
 }

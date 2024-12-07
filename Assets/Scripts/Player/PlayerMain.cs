@@ -5,6 +5,7 @@ using Assets.ScriptableObjects;
 using Assets.Scripts.Battle;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace Assets.Scripts.Player
 {
@@ -20,6 +21,7 @@ namespace Assets.Scripts.Player
         private bool isReady = false;
         public bool IsReady => isReady;
         private bool isInvincible = false;
+        CancellationTokenSource cancellationTokenSource = null;
 
 
         private void Awake()
@@ -84,7 +86,8 @@ namespace Assets.Scripts.Player
         private async UniTask BecomeInvincible()
         {
             isInvincible = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime));
+            cancellationTokenSource = new();
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime), cancellationToken : cancellationTokenSource.Token).SuppressCancellationThrow();
             isInvincible = false;
         }
 
@@ -102,16 +105,17 @@ namespace Assets.Scripts.Player
 
         public async UniTask DestroyDeadObject()
         {
+            cancellationTokenSource?.Cancel();
+            cancellationTokenSource?.Dispose();
             ObjectStorage.RemovePlayer();
             BattleFacade.AddDeathCount();
             await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
             Destroy(gameObject);
         }
 
-        public void DestroyAliveObject()
+        public static void DestroyAliveObject()
         {
-            ObjectStorage.RemovePlayer();
-            Destroy(gameObject);
+            singletonHP = singletonHP.GetZero();
         }
     }
 }

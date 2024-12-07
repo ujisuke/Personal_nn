@@ -16,7 +16,7 @@ namespace Assets.Scripts.SetGameEnemy
             setGameEnemyMain = objectStateMachine.GetComponent<SetGameEnemyMain>();
             setGameEnemyAnimation = objectStateMachine.GetComponent<SetGameEnemyAnimation>();
             setGameEnemyMove.enabled = true;
-            setGameEnemyAnimation.StartWalk();
+            setGameEnemyAnimation.StartMove();
         }
 
         public void FixedUpdate()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.SetGameEnemy
         public void Exit()
         {
             setGameEnemyMove.enabled = false;
-            setGameEnemyAnimation.StopWalk();
+            setGameEnemyAnimation.StopMove();
         }
     }
 }

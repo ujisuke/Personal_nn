@@ -5,16 +5,9 @@ namespace Assets.Scripts.ExitGameEnemy
 {
     public class ExitGameEnemyMove : MonoBehaviour
     {
-        private ObjectMove objectMove;
-
-        public void Initialize()
-        {
-            objectMove = GetComponent<ObjectMove>();
-        }
-
         private void OnEnable()
         {
-            objectMove.Stop();
+            GetComponent<ObjectMove>().Stop();
         }
     }
 }

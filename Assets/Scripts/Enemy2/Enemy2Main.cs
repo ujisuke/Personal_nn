@@ -22,7 +22,6 @@ namespace Assets.Scripts.Enemy2
             GetComponent<Enemy2Move>().Initialize(_enemy2Parameter);
             GetComponent<Enemy2Attack>().Initialize(_enemy2Parameter);
             GetComponent<Enemy2MissingPlayer>().Initialize(_enemy2Parameter);
-            GetComponent<Enemy2Dead>().Initialize(_enemy2Parameter);
             GetComponent<Enemy2Animation>().Initialize(_enemy2Parameter);
         }
 
@@ -51,14 +50,14 @@ namespace Assets.Scripts.Enemy2
         public async void DestroyDeadObject()
         {
             ObjectStorage.RemoveEnemy(this);
+            ObjectStorage.RemoveAndDestroyEnemyDamageObjects(this);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy2Parameter.DeadTime));
             Destroy(gameObject);
         }
 
-        public void DestroyAliveObject()
+        public void KillAliveObject()
         {
-            ObjectStorage.RemoveEnemy(this);
-            Destroy(gameObject);
+            hP = hP.GetZero();
         }
     }
 }

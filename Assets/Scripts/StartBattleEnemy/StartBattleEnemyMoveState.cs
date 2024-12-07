@@ -16,7 +16,7 @@ namespace Assets.Scripts.StartBattleEnemy
             startBattleEnemyMain = objectStateMachine.GetComponent<StartBattleEnemyMain>();
             startBattleEnemyAnimation = objectStateMachine.GetComponent<StartBattleEnemyAnimation>();
             startBattleEnemyMove.enabled = true;
-            startBattleEnemyAnimation.StartWalk();
+            startBattleEnemyAnimation.StartMove();
         }
 
         public void FixedUpdate()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.StartBattleEnemy
         public void Exit()
         {
             startBattleEnemyMove.enabled = false;
-            startBattleEnemyAnimation.StopWalk();
+            startBattleEnemyAnimation.StopMove();
         }
     }
 }

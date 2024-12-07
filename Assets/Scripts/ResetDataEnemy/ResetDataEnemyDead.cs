@@ -8,12 +8,10 @@ namespace Assets.Scripts.ResetDataEnemy
     {
         private void OnEnable()
         {
-            ResetDataEnemyMain resetDataEnemyMain = GetComponent<ResetDataEnemyMain>();
-            ObjectStorage.RemoveAndDestroyEnemyDamageObject(resetDataEnemyMain);
             GetComponent<ObjectMove>().Dead();
             GetComponent<SetShadow>().DestroyShadow();
             BattleFacade.ResetData();
-            resetDataEnemyMain.DestroyDeadObject();
+            GetComponent<ResetDataEnemyMain>().DestroyDeadObject();
         } 
     }
 }

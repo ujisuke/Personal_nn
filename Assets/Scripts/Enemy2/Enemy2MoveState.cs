@@ -33,7 +33,7 @@ namespace Assets.Scripts.Enemy2
         public void Exit()
         {
             enemy2Move.enabled = false;
-            enemy2Animation.StopWalk();
+            enemy2Animation.StopMove();
         }
     }
 }

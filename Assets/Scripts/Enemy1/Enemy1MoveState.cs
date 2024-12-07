@@ -31,6 +31,7 @@ namespace Assets.Scripts.Enemy1
         public void Exit()
         {
             enemy1Move.enabled = false;
+            enemy1Move.StopMove();
             enemy1Animation.StopWalk();
         }
     }

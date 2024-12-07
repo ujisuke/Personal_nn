@@ -4,12 +4,9 @@ namespace Assets.Scripts.StartBattleEnemy
 {
     public class StartBattleEnemyDeadState : IObjectState
     {
-        private StartBattleEnemyDead startBattleEnemyDead;
-
         public void Enter(ObjectStateMachine objectStateMachine)
         {
-            startBattleEnemyDead = objectStateMachine.GetComponent<StartBattleEnemyDead>();
-            startBattleEnemyDead.enabled = true;
+            objectStateMachine.GetComponent<StartBattleEnemyDead>().enabled = true;
             objectStateMachine.GetComponent<StartBattleEnemyAnimation>().StartDead();
         }
 
