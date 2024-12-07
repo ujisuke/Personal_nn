@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enemy3
             enemy3Main = objectStateMachine.GetComponent<Enemy3Main>();
             enemy3Animation = objectStateMachine.GetComponent<Enemy3Animation>();
             enemy3Move.enabled = true;
-            enemy3Animation.StartStand();
+            enemy3Animation.StartMove();
         }
 
         public void FixedUpdate()
@@ -30,8 +30,9 @@ namespace Assets.Scripts.Enemy3
 
         public void Exit()
         {
+            enemy3Move.StopMove();
             enemy3Move.enabled = false;
-            enemy3Animation.StopStand();
+            enemy3Animation.StopMove();
         }
     }
 }

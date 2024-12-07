@@ -29,8 +29,9 @@ namespace Assets.Scripts.Enemy2
 
         public void Exit()
         {
+            enemy2MissingPlayer.StopMissingPlayer();
             enemy2MissingPlayer.enabled = false;
-            enemy2Animation.StopStand();
+            enemy2Animation.StopMissingPlayer();
         }
     }
 }

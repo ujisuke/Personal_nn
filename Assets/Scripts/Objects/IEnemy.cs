@@ -9,6 +9,6 @@ namespace Assets.Scripts.Objects
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s(); 
 
         public void DestroyDeadObject();
-        public void DestroyAliveObject();
+        public void KillAliveObject();
     }
 }

@@ -5,6 +5,7 @@ using Assets.ScriptableObjects;
 using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace Assets.Scripts.EnemyDamageObject
 {
@@ -12,18 +13,24 @@ namespace Assets.Scripts.EnemyDamageObject
     {
         private EnemyDamageObjectParameter _enemyDamageObjectParameter;
         private bool isDamaging = false;
+        private CancellationTokenSource cancellationTokenSource = null;
 
         public async UniTask Initialize(EnemyDamageObjectParameter _enemyDamageObjectParameter, IEnemyMain enemy)
         {
+            cancellationTokenSource = new();
             this._enemyDamageObjectParameter = _enemyDamageObjectParameter;
             ObjectStorage.AddEnemyDamageObject(this, enemy);
-            isDamaging = false;
             GetComponent<EnemyDamageObjectAnimation>().Initialize(_enemyDamageObjectParameter);
-            await UniTask.Delay(TimeSpan.FromSeconds(_enemyDamageObjectParameter.ReadyTime));
+            await Damage().SuppressCancellationThrow();
+        }
+
+        private async UniTask Damage()
+        {
+            isDamaging = false;
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemyDamageObjectParameter.ReadyTime), cancellationToken: cancellationTokenSource.Token);
             isDamaging = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(_enemyDamageObjectParameter.DamagingTime));
-            if(this != null)
-                DestroyObject();
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemyDamageObjectParameter.DamagingTime), cancellationToken: cancellationTokenSource.Token);
+            DestroyObject();
         }
 
         public bool IsDamaging()
@@ -45,6 +52,8 @@ namespace Assets.Scripts.EnemyDamageObject
 
         public void DestroyObject()
         {
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
             ObjectStorage.RemoveEnemyDamageObject(this);
             Destroy(gameObject);
         }

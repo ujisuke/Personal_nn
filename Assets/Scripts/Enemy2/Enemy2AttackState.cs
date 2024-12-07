@@ -30,8 +30,8 @@ namespace Assets.Scripts.Enemy2
 
         public void Exit()
         {
-            enemy2Attack.enabled = false;
             enemy2Attack.StopAttack();
+            enemy2Attack.enabled = false;
             enemy2Animation.StopAttack();
         }
     }

@@ -29,7 +29,7 @@ namespace Assets.Scripts.Enemy2
             animator.SetBool("IsWalking", true);
         }
 
-        public void StopWalk()
+        public void StopMove()
         {
             animator.SetBool("IsWalking", false);
         }
@@ -46,12 +46,12 @@ namespace Assets.Scripts.Enemy2
 
         public void StartStand()
         {
-            animator.SetBool("IsStanding", true);
+            animator.SetBool("IsMissingPlayer", true);
         }
 
-        public void StopStand()
+        public void StopMissingPlayer()
         {
-            animator.SetBool("IsStanding", false);
+            animator.SetBool("IsMissingPlayer", false);
         }
 
         public void StartDead()

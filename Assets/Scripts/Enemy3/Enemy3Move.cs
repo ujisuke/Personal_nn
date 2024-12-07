@@ -4,6 +4,7 @@ using Assets.ScriptableObjects;
 using Unity.Mathematics;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace Assets.Scripts.Enemy3
 {
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Enemy3
         private ObjectMove objectMove;
         private bool canAttack = false;
         public bool CanAttack => canAttack;
+        CancellationTokenSource cancellationTokenSource = null;
 
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
@@ -24,7 +26,8 @@ namespace Assets.Scripts.Enemy3
         {
             canAttack = false;
             objectMove.Stop();
-            await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.AttackCoolDownTime));
+            cancellationTokenSource = new();
+            await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
             canAttack = true;
         }
 
@@ -45,6 +48,12 @@ namespace Assets.Scripts.Enemy3
                 else
                     return (false, false, false, true);
             }
+        }
+
+        public void StopMove()
+        {
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
         }
     }
 }

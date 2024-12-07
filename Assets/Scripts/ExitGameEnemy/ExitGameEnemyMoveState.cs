@@ -16,7 +16,7 @@ namespace Assets.Scripts.ExitGameEnemy
             exitGameEnemyMain = objectStateMachine.GetComponent<ExitGameEnemyMain>();
             exitGameEnemyAnimation = objectStateMachine.GetComponent<ExitGameEnemyAnimation>();
             exitGameEnemyMove.enabled = true;
-            exitGameEnemyAnimation.StartStand();
+            exitGameEnemyAnimation.StartMove();
         }
 
         public void FixedUpdate()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.ExitGameEnemy
         public void Exit()
         {
             exitGameEnemyMove.enabled = false;
-            exitGameEnemyAnimation.StopStand();
+            exitGameEnemyAnimation.StopMove();
         }
     }
 }

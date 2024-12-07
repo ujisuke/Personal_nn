@@ -15,7 +15,6 @@ namespace Assets.Scripts.Enemy3
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         private CancellationTokenSource cancellationTokenSource = null;
-        private CancellationTokenSource linkedTokenSource = null;
     
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
@@ -26,14 +25,13 @@ namespace Assets.Scripts.Enemy3
         private async void OnEnable()
         {
             cancellationTokenSource = new();
-            linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationTokenSource.Token, this.GetCancellationTokenOnDestroy());
             isAttacking = true;
             objectMove.Stop();
-            await Attack(linkedTokenSource.Token).SuppressCancellationThrow();
+            await Attack().SuppressCancellationThrow();
             isAttacking = false;
         }
 
-        private async UniTask Attack(CancellationToken token)
+        private async UniTask Attack()
         {
             List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
             IEnemyMain enemy = GetComponent<IEnemyMain>();
@@ -42,7 +40,7 @@ namespace Assets.Scripts.Enemy3
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
                     ObjectCreator.InstantiateEnemyDamageObject(objectRePos3List[j], enemy3Parameter.EnemyDamageObjectParameter, enemy);
-                await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime), cancellationToken: token);
+                await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime), cancellationToken: cancellationTokenSource.Token);
             }
         }
 
@@ -50,8 +48,6 @@ namespace Assets.Scripts.Enemy3
         {
             cancellationTokenSource.Cancel();
             cancellationTokenSource.Dispose();
-            linkedTokenSource.Cancel();
-            linkedTokenSource.Dispose();
         }
     }
 }

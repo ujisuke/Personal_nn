@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 
 namespace Assets.Scripts.Enemy1
@@ -13,6 +14,7 @@ namespace Assets.Scripts.Enemy1
         private Enemy1Parameter _enemy1Parameter;
         private ObjectMove objectMove;
         private Vector3 targetRePos3 = new(-1, -1, -1);
+        private CancellationTokenSource cancellationTokenSource = null;
 
         public void Initialize(Enemy1Parameter enemy1Parameter)
         {
@@ -22,14 +24,26 @@ namespace Assets.Scripts.Enemy1
 
         private async void OnEnable()
         {
+            cancellationTokenSource = new();
+            await Move().SuppressCancellationThrow();
+        }
+
+        private async UniTask Move()
+        {
             targetRePos3 = ObjectStorage.GetPlayerRePos3();
             while(ObjectFacade.IsPlayerLiving())
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.DeadTime));   
+                await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: cancellationTokenSource.Token);   
                 targetRePos3 = ObjectStorage.GetPlayerRePos3();
             }
         }
-    
+
+        public void StopMove()
+        {
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
+        }
+
         private void FixedUpdate()
         {
             Vector3 moveDirectionIm3 = ObjectMove.CalculateImDirection3BetWeenTwoRePos3(transform.position, targetRePos3);

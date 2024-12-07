@@ -24,12 +24,12 @@ namespace Assets.Scripts.Enemy3
             animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
         }
 
-        public void StartStand()
+        public void StartMove()
         {
             animator.SetBool("IsStanding", true);
         }
 
-        public void StopStand()
+        public void StopMove()
         {
             animator.SetBool("IsStanding", false);
         }

@@ -19,4 +19,4 @@ MonoBehaviour:
   _attackPower: 0
   _maxHP: 1
   _deadTime: 0.3
-  _damageObjectParameter: {fileID: 0}
+  _enemyDamageObjectParameter: {fileID: 0}

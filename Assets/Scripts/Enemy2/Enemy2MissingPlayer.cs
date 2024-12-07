@@ -3,6 +3,7 @@ using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 
 namespace Assets.Scripts.Enemy2
 {
@@ -12,6 +13,8 @@ namespace Assets.Scripts.Enemy2
         private ObjectMove objectMove;
         private bool isMissingPlayer = true;
         public bool IsMissingPlayer => isMissingPlayer;
+        private CancellationTokenSource cancellationTokenSource = null;
+
         
         public void Initialize(Enemy2Parameter enemy2Parameter)
         {
@@ -22,13 +25,16 @@ namespace Assets.Scripts.Enemy2
         private async void OnEnable()
         {
             isMissingPlayer = true;
-            objectMove.HeadToPlusImX(false);
-            objectMove.HeadToMinusImX(false);
-            objectMove.HeadToPlusImY(false);
-            objectMove.HeadToMinusImY(false);
-            objectMove.TryToJump(false);
-            await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.MissingPlayerTime));
+            objectMove.Stop();
+            cancellationTokenSource = new();
+            await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.MissingPlayerTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
             isMissingPlayer = false;
+        }
+
+        public void StopMissingPlayer()
+        {
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
         }
     }
 }

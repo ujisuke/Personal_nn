@@ -1,5 +1,4 @@
 using UnityEngine;
-using Unity.Mathematics;
 
 namespace Assets.Scripts.Battle
 {
