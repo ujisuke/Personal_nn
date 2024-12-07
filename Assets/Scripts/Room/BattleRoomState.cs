@@ -18,22 +18,22 @@ namespace Assets.Scripts.Room
             isSet = true;
         }
 
-        public void FixedUpdate()
+        public async void FixedUpdate()
         {
             if (!isSet)
                 return;
             if (!ObjectFacade.IsPlayerLiving())
-                roomStateMachine.TransitionTo(new LobbyState());
+                await roomStateMachine.TransitionTo(new LobbyState());
             else if (!ObjectFacade.IsEnemyLiving())
             {
                 BattleFacade.AddStageCount();
-                roomStateMachine.TransitionTo(new BattleRoomState());
+                await roomStateMachine.TransitionTo(new BattleRoomState());
             }
         }
 
         public void Exit()
         {
-            ObjectFacade.ClearObjects();
+            ObjectFacade.KillAllObjects();
         }
     }
 }

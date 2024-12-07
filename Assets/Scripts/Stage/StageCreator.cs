@@ -11,7 +11,9 @@ namespace Assets.Scripts.Stage
     public class StageCreator : MonoBehaviour
     {
         [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_StageSide * 2 - 1];
+        private static Tilemap[] _singletonStageTilemapList;
         [SerializeField] private ScriptableObjects.TileData _tileData;
+        private static ScriptableObjects.TileData _singletonTileData;
 
         public const int _StageSide = 8;
         public const int _StageHeight = _StageSide * 2;
@@ -19,7 +21,13 @@ namespace Assets.Scripts.Stage
         public const float _YOffset = 1.75f;
         public static int[,] TileImZs{ get; private set; } = new int[_StageSide, _StageSide];
 
-        public async UniTask CreateLobbyStage()
+        private void Awake()
+        {
+            _singletonStageTilemapList = stageTilemapList;
+            _singletonTileData = _tileData;
+        }
+
+        public static async UniTask CreateLobbyStage()
         {
             SetLobbyStageMatrix();
             await SetAllTiles();
@@ -33,7 +41,7 @@ namespace Assets.Scripts.Stage
                     TileImZs[i, j] = 1;
         }
 
-        public async UniTask CreateSettingStage()
+        public static async UniTask CreateSettingStage()
         {
             SetSettingStageMatrix();
             await SetAllTiles();
@@ -47,7 +55,7 @@ namespace Assets.Scripts.Stage
                     TileImZs[i, j] = 2;
         }
 
-        public async UniTask CreateBattleStage()
+        public static async UniTask CreateBattleStage()
         {
             SetNewStageMatrix();
             await SetAllTiles();
@@ -87,7 +95,7 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs2()
         {
-            Random.InitState(System.DateTime.Now.Millisecond);
+            Random.InitState(DateTime.Now.Millisecond);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
             int clossI = Random.Range(2, _StageSide - 2);
             int clossJ = Random.Range(2, _StageSide - 2);
@@ -184,7 +192,7 @@ namespace Assets.Scripts.Stage
             }
         }
 
-        private async UniTask SetAllTiles()
+        private static async UniTask SetAllTiles()
         {
             for(int n = 0; n < _StageSide * 2 - 1; n++)
             {
@@ -194,7 +202,7 @@ namespace Assets.Scripts.Stage
                     if(i >= _StageSide || i < 0 || j >= _StageSide || j < 0) continue;
                     int tileHeight = TileImZs[i, j];
                     Vector3Int tilePosition = new((_StageSide - 1) / 2 - i, (_StageSide - 1) / 2 - j, 0);
-                    _tileData.SetTile(tileHeight, tilePosition, stageTilemapList[_StageSide * 2 - 2 - n]);
+                    _singletonTileData.SetTile(tileHeight, tilePosition, _singletonStageTilemapList[_StageSide * 2 - 2 - n]);
                 }
                 await UniTask.Delay(TimeSpan.FromSeconds(0.03f));
             }

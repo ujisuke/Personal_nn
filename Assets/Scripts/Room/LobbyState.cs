@@ -17,19 +17,19 @@ namespace Assets.Scripts.Room
             isSet = true;
         }
 
-        public void FixedUpdate()
+        public async void FixedUpdate()
         {
             if (!isSet)
                 return;
             if(!ObjectFacade.IsStartBattleEnemyLiving())
-                roomStateMachine.TransitionTo(new BattleRoomState());
+                await roomStateMachine.TransitionTo(new BattleRoomState());
             else if(!ObjectFacade.IsSetGameEnemyLiving())
-                roomStateMachine.TransitionTo(new SettingRoomState());
+                await roomStateMachine.TransitionTo(new SettingRoomState());
         }
 
         public void Exit()
         {
-            ObjectFacade.ClearObjects();
+            ObjectFacade.KillAllObjects();
         }
     }
 }

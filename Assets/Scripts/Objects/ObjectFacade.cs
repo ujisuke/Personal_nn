@@ -5,9 +5,9 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectFacade : MonoBehaviour
     {
-        public static void ClearObjects()
+        public static void KillAllObjects()
         {
-            ObjectStorage.RemoveAndDestroyAll();
+            ObjectStorage.KillAllObjects();
         }
 
         public static bool IsPlayerLiving()

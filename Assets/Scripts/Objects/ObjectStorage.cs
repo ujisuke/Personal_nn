@@ -54,10 +54,10 @@ namespace Assets.Scripts.Objects
             }
         }
 
-        public static void RemoveAndDestroyAll()
+        public static void KillAllObjects()
         {
             if(player != null) 
-                PlayerMain.DestroyAliveObject();
+                PlayerMain.KillAliveObject();
             for(int i = 0; i < enemyList.Count; i++)
                 enemyList[i].KillAliveObject();
             int enemyDamageObjectListCount = enemyDamageObjectList.Count;

@@ -1,6 +1,5 @@
 using Assets.Scripts.Objects;
 using UnityEngine;
-using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.ResetDataEnemy
 {
@@ -10,7 +9,6 @@ namespace Assets.Scripts.ResetDataEnemy
         {
             GetComponent<ObjectMove>().Dead();
             GetComponent<SetShadow>().DestroyShadow();
-            BattleFacade.ResetData();
             GetComponent<ResetDataEnemyMain>().DestroyDeadObject();
         } 
     }

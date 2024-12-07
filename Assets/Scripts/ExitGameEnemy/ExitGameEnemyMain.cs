@@ -33,9 +33,11 @@ namespace Assets.Scripts.ExitGameEnemy
             return hP.IsZero();
         }
 
-        public void TakeDamage(int damage)
+        public async void TakeDamage(int damage)
         {
             hP = hP.TakeDamage(damage);
+            await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.DeadTime));
+            Application.Quit();
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()

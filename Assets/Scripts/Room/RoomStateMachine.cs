@@ -1,4 +1,6 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.Room
 {
@@ -12,11 +14,12 @@ namespace Assets.Scripts.Room
             currentState.Enter(this);
         }
 
-        public void TransitionTo(IRoomState newState)
+        public async UniTask TransitionTo(IRoomState newState)
         {
             currentState.Exit();
             currentState = newState;
-            newState.Enter(this);
+            await UniTask.WaitUntil(() => !ObjectFacade.IsPlayerLiving() && !ObjectFacade.IsEnemyLiving());
+            await newState.Enter(this);
         }
 
         private void FixedUpdate()

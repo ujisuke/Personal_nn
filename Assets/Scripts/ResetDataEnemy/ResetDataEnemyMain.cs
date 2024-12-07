@@ -4,6 +4,7 @@ using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
+using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.ResetDataEnemy
 {
@@ -35,6 +36,7 @@ namespace Assets.Scripts.ResetDataEnemy
         public void TakeDamage(int damage)
         {
             hP = hP.TakeDamage(damage);
+            BattleFacade.ResetData();
         }
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()

@@ -108,12 +108,13 @@ namespace Assets.Scripts.Player
             cancellationTokenSource?.Cancel();
             cancellationTokenSource?.Dispose();
             ObjectStorage.RemovePlayer();
-            BattleFacade.AddDeathCount();
+            if(ObjectStorage.IsEnemyLiving())
+                BattleFacade.AddDeathCount();
             await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
             Destroy(gameObject);
         }
 
-        public static void DestroyAliveObject()
+        public static void KillAliveObject()
         {
             singletonHP = singletonHP.GetZero();
         }
