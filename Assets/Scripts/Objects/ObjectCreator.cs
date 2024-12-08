@@ -79,7 +79,7 @@ namespace Assets.Scripts.Objects
             ObjectStorage.SetAllObjectsReady();
         }
         
-        public static void InstantiateEnemyDamageObject(Vector3 rePos3, EnemyDamageObjectParameter enemyDamageObjectParameter, IEnemyMain enemy)
+        public static void InstantiateEnemyDamageObject(Vector3 rePos3, EnemyDamageObjectParameter enemyDamageObjectParameter, EnemyMain enemy)
         {
             GameObject newDamageObject = Instantiate(_singletonEnemyDamageObjectPrefab, rePos3, Quaternion.identity);
             newDamageObject.GetComponent<EnemyDamageObjectMain>().Initialize(enemyDamageObjectParameter, enemy).Forget();

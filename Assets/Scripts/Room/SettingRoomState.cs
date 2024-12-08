@@ -17,17 +17,17 @@ namespace Assets.Scripts.Room
             isSet = true;
         }
 
-        public void FixedUpdate()
+        public async void FixedUpdate()
         {
             if (!isSet)
                 return;
             if (!ObjectFacade.IsBackToLobbyEnemyLiving())
-                roomStateMachine.TransitionTo(new LobbyState());
+                await roomStateMachine.TransitionTo(new LobbyState());
         }
 
         public void Exit()
         {
-            ObjectFacade.ClearObjects();
+            ObjectFacade.CleanAllObjects();
         }
     }
 }

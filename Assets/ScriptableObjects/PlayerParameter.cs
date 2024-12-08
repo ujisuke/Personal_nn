@@ -19,7 +19,5 @@ namespace Assets.ScriptableObjects
         public float DashingTime => _dashingTime;
         [SerializeField] private int _dashEnergyConsumption;
         public int DashEnergyConsumption => _dashEnergyConsumption;
-        [SerializeField] private float _invincibleTime;
-        public float InvincibleTime => _invincibleTime;
     }
 }

@@ -15,7 +15,7 @@ namespace Assets.Scripts.EnemyDamageObject
         private bool isDamaging = false;
         private CancellationTokenSource cancellationTokenSource = null;
 
-        public async UniTask Initialize(EnemyDamageObjectParameter _enemyDamageObjectParameter, IEnemyMain enemy)
+        public async UniTask Initialize(EnemyDamageObjectParameter _enemyDamageObjectParameter, EnemyMain enemy)
         {
             cancellationTokenSource = new();
             this._enemyDamageObjectParameter = _enemyDamageObjectParameter;

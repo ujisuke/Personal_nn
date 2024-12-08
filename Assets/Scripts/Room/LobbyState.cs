@@ -14,22 +14,25 @@ namespace Assets.Scripts.Room
             this.roomStateMachine = roomStateMachine;
             await StageFacade.CreateLobbyStage();
             await ObjectFacade.CreateLobbyObjects();
+            ObjectStorage.IsStartBattleEnemyLiving = true;
+            ObjectStorage.IsBackToLobbyEnemyLiving = true;
+            ObjectStorage.IsSetGameEnemyLiving = true;
             isSet = true;
         }
 
-        public void FixedUpdate()
+        public async void FixedUpdate()
         {
             if (!isSet)
                 return;
             if(!ObjectFacade.IsStartBattleEnemyLiving())
-                roomStateMachine.TransitionTo(new BattleRoomState());
+                await roomStateMachine.TransitionTo(new BattleRoomState());
             else if(!ObjectFacade.IsSetGameEnemyLiving())
-                roomStateMachine.TransitionTo(new SettingRoomState());
+                await roomStateMachine.TransitionTo(new SettingRoomState());
         }
 
         public void Exit()
         {
-            ObjectFacade.ClearObjects();
+            ObjectFacade.CleanAllObjects();
         }
     }
 }

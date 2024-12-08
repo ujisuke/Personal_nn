@@ -17,6 +17,8 @@ namespace Assets.ScriptableObjects
         public int AttackPower => _attackPower;
         [SerializeField] private int _maxHP;
         public int MaxHP => _maxHP;
+        [SerializeField] private float _invincibleTime;
+        public float InvincibleTime => _invincibleTime;
         [SerializeField] private float _deadTime;
         public float DeadTime => _deadTime;
         [SerializeField] private EnemyDamageObjectParameter _enemyDamageObjectParameter;

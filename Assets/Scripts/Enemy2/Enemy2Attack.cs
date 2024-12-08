@@ -33,7 +33,7 @@ namespace Assets.Scripts.Enemy2
 
         private async UniTask Attack()
         {
-            IEnemyMain enemy = GetComponent<IEnemyMain>();
+            EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
                 ObjectCreator.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);

@@ -10,32 +10,20 @@ namespace Assets.Scripts.Stage
         public static float TileHeight => StageCreator._TileHeight;
         public static float YOffset => StageCreator._YOffset;
         public static int[,] TileImZs => StageCreator.TileImZs;
-        private static StageCreator singletonStageCreator;
-
-        private void Awake()
-        {
-            singletonStageCreator = GetComponent<StageCreator>();
-        }
 
         public static async UniTask CreateBattleStage()
         {
-            while (singletonStageCreator == null)
-                await UniTask.DelayFrame(1); 
-            await singletonStageCreator.CreateBattleStage();
+            await StageCreator.CreateBattleStage();
         }
 
         public static async UniTask CreateLobbyStage()
         {
-            while (singletonStageCreator == null)
-                await UniTask.DelayFrame(1); 
-            await singletonStageCreator.CreateLobbyStage();
+            await StageCreator.CreateLobbyStage();
         }
 
         public static async UniTask CreateSettingStage()
         {
-            while (singletonStageCreator == null)
-                await UniTask.DelayFrame(1); 
-            await singletonStageCreator.CreateSettingStage();
+            await StageCreator.CreateSettingStage();
         }
     }
 }

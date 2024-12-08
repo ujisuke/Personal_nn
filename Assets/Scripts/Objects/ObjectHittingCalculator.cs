@@ -7,18 +7,18 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectHittingCalculator : MonoBehaviour
     {
-        public static void CalculateHitting(PlayerMain player, List<IEnemyMain> enemyMainList, List<(EnemyDamageObjectMain enemyDamageObject, IEnemyMain enemy)> enemyDamageObjectMainList)
+        public static void CalculateHitting(PlayerMain player, List<EnemyMain> enemyMainList, List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectMainList)
         {
             CalculateHittingPlayerToEnemy(player, enemyMainList);
             CalculateHittingEnemyDamageObjectToPlayer(player, enemyDamageObjectMainList);
         }
 
-        private static void CalculateHittingPlayerToEnemy(PlayerMain player, List<IEnemyMain> enemyMainList)
+        private static void CalculateHittingPlayerToEnemy(PlayerMain player, List<EnemyMain> enemyMainList)
         {
             if(player == null || !player.IsDamaging() || enemyMainList.Count == 0)
                 return;
             (Vector3 playerMinImPos3, Vector3 playerMaxImPos3) = player.GetImPos3s();
-            foreach(IEnemyMain enemy in enemyMainList)
+            foreach(EnemyMain enemy in enemyMainList)
             {
                 (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemy.GetImPos3s();
                 if(playerMaxImPos3.x < enemyMinImPos3.x || playerMinImPos3.x > enemyMaxImPos3.x
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Objects
             }
         }
 
-        private static void CalculateHittingEnemyDamageObjectToPlayer(PlayerMain player, List<(EnemyDamageObjectMain enemyDamageObject, IEnemyMain enemy)> enemyDamageObjectMainList)
+        private static void CalculateHittingEnemyDamageObjectToPlayer(PlayerMain player, List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectMainList)
         {
             if(player == null || enemyDamageObjectMainList.Count == 0)
                 return;

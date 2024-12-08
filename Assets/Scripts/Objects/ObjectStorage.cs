@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.EnemyDamageObject;
 using Assets.Scripts.Player;
-using Assets.Scripts.StartBattleEnemy;
-using Assets.Scripts.SetGameEnemy;
-using Assets.Scripts.BackToLobbyEnemy;
 
 namespace Assets.Scripts.Objects
 {
     public class ObjectStorage : MonoBehaviour
     {
         private static PlayerMain player;
-        private static List<IEnemyMain> enemyList = new();
-        private static List<(EnemyDamageObjectMain enemyDamageObject, IEnemyMain enemy)> enemyDamageObjectList = new();
+        private static List<EnemyMain> enemyList = new();
+        private static List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectList = new();
+        public static bool IsStartBattleEnemyLiving = false;
+        public static bool IsSetGameEnemyLiving = false;
+        public static bool IsBackToLobbyEnemyLiving = false;
 
         private void FixedUpdate()
         {
@@ -29,17 +29,18 @@ namespace Assets.Scripts.Objects
             player = null;
         }
 
-        public static void AddEnemy(IEnemyMain enemy)
+        public static void AddEnemy(EnemyMain enemy)
         {
             enemyList.Add(enemy);
         }
 
-        public static void RemoveEnemy(IEnemyMain enemy)
+        public static void RemoveEnemyAndDestroyDamageObject(EnemyMain enemy)
         {
             enemyList.Remove(enemy);
+            RemoveAndDestroyEnemyDamageObjects(enemy);
         }
 
-        public static void RemoveAndDestroyEnemyDamageObjects(IEnemyMain enemy)
+        private static void RemoveAndDestroyEnemyDamageObjects(EnemyMain enemy)
         {
             int i = 0;
             while(true)
@@ -54,18 +55,18 @@ namespace Assets.Scripts.Objects
             }
         }
 
-        public static void RemoveAndDestroyAll()
+        public static void CleanAllObjects()
         {
             if(player != null) 
-                PlayerMain.DestroyAliveObject();
+                player.SetCleaned();
             for(int i = 0; i < enemyList.Count; i++)
-                enemyList[i].KillAliveObject();
+                enemyList[i].SetCleaned();
             int enemyDamageObjectListCount = enemyDamageObjectList.Count;
             for(int i = 0; i < enemyDamageObjectListCount; i++)
                 enemyDamageObjectList[0].enemyDamageObject.DestroyObject();
         }
 
-        public static void AddEnemyDamageObject(EnemyDamageObjectMain enemyDamageObject, IEnemyMain enemy)
+        public static void AddEnemyDamageObject(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)
         {
             enemyDamageObjectList.Add((enemyDamageObject, enemy));
         }
@@ -86,7 +87,7 @@ namespace Assets.Scripts.Objects
             if(player == null)
                 return;
             player.SetReady();
-            foreach(IEnemyMain enemy in enemyList)
+            foreach(EnemyMain enemy in enemyList)
                 enemy.SetReady();
         }
 
@@ -105,30 +106,6 @@ namespace Assets.Scripts.Objects
         public static bool IsEnemyLiving()
         {
             return enemyList.Count > 0 || enemyDamageObjectList.Count > 0;
-        }
-
-        public static bool IsStartBattleEnemyLiving()
-        {
-            foreach (var enemy in enemyList)
-                if (enemy is StartBattleEnemyMain)
-                    return true;
-            return false;
-        }
-
-        public static bool IsSetGameEnemyLiving()
-        {
-            foreach (var enemy in enemyList)
-                if (enemy is SetGameEnemyMain)
-                    return true;
-            return false;
-        }
-
-        public static bool IsBackToLobbyEnemyLiving()
-        {
-            foreach (var enemy in enemyList)
-                if (enemy is BackToLobbyEnemyMain)
-                    return true;
-            return false;
         }
     }
 }
