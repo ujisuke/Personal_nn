@@ -329,7 +329,7 @@ namespace Assets.Scripts.Objects
             isTryingToJump = false;
         }
 
-        public void Dead()
+        public void Freeze()
         {
             Stop();
             isDead = true;

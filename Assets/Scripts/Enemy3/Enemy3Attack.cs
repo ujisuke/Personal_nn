@@ -34,7 +34,7 @@ namespace Assets.Scripts.Enemy3
         private async UniTask Attack()
         {
             List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
-            IEnemyMain enemy = GetComponent<IEnemyMain>();
+            EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < objectRePos3ListList.Count; i++)
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];

@@ -33,7 +33,7 @@ namespace Assets.Scripts.Room
 
         public void Exit()
         {
-            ObjectFacade.KillAllObjects();
+            ObjectFacade.CleanAllObjects();
         }
     }
 }

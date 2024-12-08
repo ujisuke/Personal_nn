@@ -1,40 +1,27 @@
 using Assets.Scripts.Objects;
-using UnityEngine;
-using Assets.Scripts.Stage;
 using Assets.ScriptableObjects;
-using Assets.Scripts.Battle;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMain : MonoBehaviour
+    public class PlayerMain : ObjectMainBase
     {
-        [SerializeField] private PlayerParameter _playerParameter;
+        private PlayerParameter _playerParameter;
         private static HP singletonHP;
         public static int CurrentHP => singletonHP.CurrentHP;
         private static Energy singletonEnergy;
-        public static int CurrentAvailableEnergy => singletonEnergy.CurrentAvailableEnergy;
+        public static int CurrentAvailableEnergy => singletonEnergy.CurrentAvailableEnergy;//identity
         public static float CurrentEnergy => singletonEnergy.CurrentEnergy;
         private PlayerAttack playerAttack;
-        private bool isReady = false;
-        public bool IsReady => isReady;
-        private bool isInvincible = false;
-        CancellationTokenSource cancellationTokenSource = null;
 
-
-        private void Awake()
+        public void InitializePlayer(PlayerParameter playerParameter)
         {
-            ObjectStorage.AddPlayer(this);
-            singletonHP = HP.Initialize(_playerParameter.MaxHP);
+            _playerParameter = playerParameter;
+            Initialize(_playerParameter);
+            singletonHP = hP;
             singletonEnergy = Energy.Initialize(_playerParameter.MaxEnergy);
             playerAttack = GetComponent<PlayerAttack>();
-            GetComponent<ObjectMove>().Initialize(_playerParameter, transform.position);
-            GetComponent<PlayerMove>().Initialize(_playerParameter);
-            playerAttack.Initialize(_playerParameter);
-            GetComponent<PlayerDash>().Initialize(_playerParameter);
-            GetComponent<PlayerAnimation>().Initialize(_playerParameter);
             ChargeEnergy().Forget();
         }
 
@@ -51,16 +38,6 @@ namespace Assets.Scripts.Player
             }
         }
 
-        public void SetReady()
-        {
-            isReady = true;
-        }
-
-        public static bool IsDead()
-        {
-            return singletonHP.IsZero();
-        }
-
         public static bool CanUseEnergy(int consumption)
         {
             return singletonEnergy.CanUse(consumption);
@@ -71,52 +48,14 @@ namespace Assets.Scripts.Player
             return playerAttack.IsDamaging;
         }
 
-        public void DamageTo(IEnemyMain obj)
+        public void DamageTo(EnemyMain enemy)
         {
-            obj.TakeDamage(_playerParameter.AttackPower);
-        }
-
-        public void TakeDamage(int damage)
-        {
-            if(isInvincible) return;
-            singletonHP = singletonHP.TakeDamage(damage);
-            BecomeInvincible().Forget();
-        }
-
-        private async UniTask BecomeInvincible()
-        {
-            isInvincible = true;
-            cancellationTokenSource = new();
-            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime), cancellationToken : cancellationTokenSource.Token).SuppressCancellationThrow();
-            isInvincible = false;
+            enemy.TakeDamage(_playerParameter.AttackPower);
         }
 
         public static void ConsumeEnergy(int consumption)
         {
             singletonEnergy = singletonEnergy.Consume(consumption);
-        }
-
-        public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
-        {
-            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageFacade.TileHeight);
-            return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
-        }
-
-        public async UniTask DestroyDeadObject()
-        {
-            cancellationTokenSource?.Cancel();
-            cancellationTokenSource?.Dispose();
-            ObjectStorage.RemovePlayer();
-            if(ObjectStorage.IsEnemyLiving())
-                BattleFacade.AddDeathCount();
-            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
-            Destroy(gameObject);
-        }
-
-        public static void KillAliveObject()
-        {
-            singletonHP = singletonHP.GetZero();
         }
     }
 }

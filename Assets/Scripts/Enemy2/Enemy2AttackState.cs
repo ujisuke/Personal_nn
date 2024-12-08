@@ -6,14 +6,14 @@ namespace Assets.Scripts.Enemy2
     {
         private ObjectStateMachine objectStateMachine;
         private Enemy2Attack enemy2Attack;
-        private Enemy2Main enemy2Main;
+        private EnemyMain enemyMain;
         private Enemy2Animation enemy2Animation;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             enemy2Attack = objectStateMachine.GetComponent<Enemy2Attack>();
-            enemy2Main = objectStateMachine.GetComponent<Enemy2Main>();
+            enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy2Animation = objectStateMachine.GetComponent<Enemy2Animation>();
             enemy2Attack.enabled = true;
             enemy2Animation.SetLookingDirection(enemy2Attack.GetLookingDirection());
@@ -22,9 +22,11 @@ namespace Assets.Scripts.Enemy2
 
         public void FixedUpdate()
         {
-            if(enemy2Main.IsDead())
+            if(enemyMain.IsCleaned)
+                objectStateMachine.TransitionTo(new Enemy2CleanedState());
+            else if(enemyMain.IsDead())
                 objectStateMachine.TransitionTo(new Enemy2DeadState());
-            if(!enemy2Attack.IsAttacking)
+            else if(!enemy2Attack.IsAttacking)
                 objectStateMachine.TransitionTo(new Enemy2MoveState());
         }
 

@@ -6,14 +6,14 @@ namespace Assets.Scripts.Enemy2
     {
         private ObjectStateMachine objectStateMachine;
         private Enemy2Move enemy2Move;
-        private Enemy2Main enemy2Main;
+        private EnemyMain enemyMain;
         private Enemy2Animation enemy2Animation;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             enemy2Move = objectStateMachine.GetComponent<Enemy2Move>();
-            enemy2Main = objectStateMachine.GetComponent<Enemy2Main>();
+            enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy2Animation = objectStateMachine.GetComponent<Enemy2Animation>();
             enemy2Move.enabled = true;
             enemy2Animation.StartWalk();
@@ -22,7 +22,9 @@ namespace Assets.Scripts.Enemy2
         public void FixedUpdate()
         {
             enemy2Animation.SetLookingDirection(enemy2Move.GetLookingDirection());
-            if(enemy2Main.IsDead())
+            if(enemyMain.IsCleaned)
+                objectStateMachine.TransitionTo(new Enemy2CleanedState());
+            else if(enemyMain.IsDead())
                 objectStateMachine.TransitionTo(new Enemy2DeadState());
             else if(enemy2Move.IsMissingPlayer())
                 objectStateMachine.TransitionTo(new Enemy2MissingPlayerState());

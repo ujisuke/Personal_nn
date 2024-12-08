@@ -14,6 +14,9 @@ namespace Assets.Scripts.Room
             this.roomStateMachine = roomStateMachine;
             await StageFacade.CreateLobbyStage();
             await ObjectFacade.CreateLobbyObjects();
+            ObjectStorage.IsStartBattleEnemyLiving = true;
+            ObjectStorage.IsBackToLobbyEnemyLiving = true;
+            ObjectStorage.IsSetGameEnemyLiving = true;
             isSet = true;
         }
 
@@ -29,7 +32,7 @@ namespace Assets.Scripts.Room
 
         public void Exit()
         {
-            ObjectFacade.KillAllObjects();
+            ObjectFacade.CleanAllObjects();
         }
     }
 }

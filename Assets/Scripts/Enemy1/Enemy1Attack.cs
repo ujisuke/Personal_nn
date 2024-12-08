@@ -35,7 +35,7 @@ namespace Assets.Scripts.Enemy1
         {
             List<Vector3> damageObjectRePos3List = ObjectMove.DrawSomeRePos3AtRandom(_enemy1Parameter.AttackPanelCount, ObjectMove.ConvertToTileIndexFromRePos3(transform.position),
             _enemy1Parameter.AttackPanelMinImRadius, _enemy1Parameter.AttackPanelMaxImRadius);
-            IEnemyMain enemy = GetComponent<IEnemyMain>();
+            EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
                 ObjectCreator.InstantiateEnemyDamageObject(damageObjectRePos3List[i], _enemy1Parameter.EnemyDamageObjectParameter, enemy);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);

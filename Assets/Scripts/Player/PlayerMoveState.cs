@@ -4,6 +4,7 @@ namespace Assets.Scripts.Player
 {
     public class PlayerMoveState : IObjectState
     {
+        private PlayerMain playerMain;
         private ObjectStateMachine objectStateMachine;
         private PlayerMove playerMove;
         private PlayerAnimation playerAnimation;
@@ -11,6 +12,7 @@ namespace Assets.Scripts.Player
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
+            playerMain = objectStateMachine.GetComponent<PlayerMain>();
             playerMove = objectStateMachine.GetComponent<PlayerMove>();
             playerAnimation = objectStateMachine.GetComponent<PlayerAnimation>();
             playerMove.enabled = true;
@@ -20,11 +22,13 @@ namespace Assets.Scripts.Player
         public void FixedUpdate()
         {
             playerAnimation.SetLookingDirection(playerMove.GetLookingDirection());
-            if(PlayerMain.IsDead())
+            if(playerMain.IsCleaned)
+                objectStateMachine.TransitionTo(new PlayerCleanedState());
+            else if(playerMain.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
-            if(playerMove.CanDash())
+            else if(playerMove.CanDash())
                 objectStateMachine.TransitionTo(new PlayerDashState());
-            if(playerMove.CanAttack())
+            else if(playerMove.CanAttack())
                 objectStateMachine.TransitionTo(new PlayerAttackState());
         }
 

@@ -6,14 +6,14 @@ namespace Assets.Scripts.Enemy3
     {
         private ObjectStateMachine objectStateMachine;
         private Enemy3Attack enemy3Attack;
-        private Enemy3Main enemy3Main;
+        private EnemyMain enemyMain;
         private Enemy3Animation enemy3Animation;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
             enemy3Attack = objectStateMachine.GetComponent<Enemy3Attack>();
-            enemy3Main = objectStateMachine.GetComponent<Enemy3Main>();
+            enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy3Animation = objectStateMachine.GetComponent<Enemy3Animation>();
             enemy3Attack.enabled = true;
             enemy3Animation.StartAttack();
@@ -21,9 +21,11 @@ namespace Assets.Scripts.Enemy3
 
         public void FixedUpdate()
         {
-            if(enemy3Main.IsDead())
+            if(enemyMain.IsCleaned)
+                objectStateMachine.TransitionTo(new Enemy3CleanedState());
+            else if(enemyMain.IsDead())
                 objectStateMachine.TransitionTo(new Enemy3DeadState());
-            if(!enemy3Attack.IsAttacking)
+            else if(!enemy3Attack.IsAttacking)
                 objectStateMachine.TransitionTo(new Enemy3MoveState());
         }
 

@@ -6,7 +6,8 @@ namespace Assets.Scripts.Enemy3
     {
         public void Enter(ObjectStateMachine objectStateMachine)
         {
-            objectStateMachine.GetComponent<Enemy3Dead>().enabled = true;
+            ObjectStorage.RemoveEnemyAndDestroyDamageObject(objectStateMachine.GetComponent<EnemyMain>());
+            objectStateMachine.GetComponent<ObjectDead>().enabled = true;
             objectStateMachine.GetComponent<Enemy3Animation>().StartDead();
         }
 

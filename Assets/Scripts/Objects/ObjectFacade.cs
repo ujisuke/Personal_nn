@@ -5,9 +5,9 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectFacade : MonoBehaviour
     {
-        public static void KillAllObjects()
+        public static void CleanAllObjects()
         {
-            ObjectStorage.KillAllObjects();
+            ObjectStorage.CleanAllObjects();
         }
 
         public static bool IsPlayerLiving()
@@ -37,17 +37,17 @@ namespace Assets.Scripts.Objects
 
         public static bool IsStartBattleEnemyLiving()
         {
-            return ObjectStorage.IsStartBattleEnemyLiving();
+            return ObjectStorage.IsStartBattleEnemyLiving;
         }
 
         public static bool IsSetGameEnemyLiving()
         {
-            return ObjectStorage.IsSetGameEnemyLiving();
+            return ObjectStorage.IsSetGameEnemyLiving;
         }
 
         public static bool IsBackToLobbyEnemyLiving()
         {
-            return ObjectStorage.IsBackToLobbyEnemyLiving();
+            return ObjectStorage.IsBackToLobbyEnemyLiving;
         }
     }
 }
