@@ -21,7 +21,7 @@ namespace Assets.Scripts.Enemy3
 
         public void FixedUpdate()
         {
-            enemy3Animation.SetLookingDirection(enemy3Move.GetLookingDirection());
+            enemy3Animation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
             if(enemyMain.IsCleaned)
                 objectStateMachine.TransitionTo(new Enemy3CleanedState());
             else if(enemyMain.IsDead())

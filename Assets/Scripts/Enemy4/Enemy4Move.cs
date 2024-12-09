@@ -1,24 +1,24 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
-using Assets.ScriptableObjects;
 using Unity.Mathematics;
+using Assets.ScriptableObjects;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading;
 
-namespace Assets.Scripts.Enemy3
+namespace Assets.Scripts.Enemy4
 {
-    public class Enemy3Move : MonoBehaviour
+    public class Enemy4Move : MonoBehaviour
     {
-        private Enemy3Parameter enemy3Parameter;
+        private Enemy4Parameter _enemy4Parameter;
         private ObjectMove objectMove;
         private bool canAttack = false;
         public bool CanAttack => canAttack;
         CancellationTokenSource cancellationTokenSource = null;
 
-        public void Initialize(Enemy3Parameter enemy3Parameter)
+        public void Initialize(Enemy4Parameter enemy4Parameter)
         {
-            this.enemy3Parameter = enemy3Parameter;
+            _enemy4Parameter = enemy4Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Enemy3
             canAttack = false;
             objectMove.Stop();
             cancellationTokenSource = new();
-            await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemy4Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
             canAttack = true;
         }
 
