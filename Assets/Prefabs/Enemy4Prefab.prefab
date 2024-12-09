@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 2525615898051364751}
   - component: {fileID: 7730141918932099894}
   - component: {fileID: 596375153673371645}
-  - component: {fileID: -3999508591021902771}
   - component: {fileID: 5905260140551697866}
   m_Layer: 0
   m_Name: Enemy4Prefab
@@ -89,8 +88,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 12
-  m_Sprite: {fileID: -3221336467227754873, guid: 0c937c1b42e4db3419d2c89f679fd7af, type: 3}
-  m_Color: {r: 0.010342768, g: 0, b: 0.5471698, a: 1}
+  m_Sprite: {fileID: 4738432643718747978, guid: a3eb621932a81b2469191230da8f4f6d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -134,7 +133,7 @@ Animator:
   m_GameObject: {fileID: 835981607064012740}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 95665dff3cd38b64db77786ff9ef4197, type: 2}
+  m_Controller: {fileID: 9100000, guid: ef735bed06f19854593a9faa3d3f8bcd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -230,18 +229,6 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 981ab51e2dbde574cbb893cdcb0b7c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-3999508591021902771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835981607064012740}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef5f601dd9b84948985ca15181749ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5905260140551697866
