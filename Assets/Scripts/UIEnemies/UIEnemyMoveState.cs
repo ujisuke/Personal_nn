@@ -21,6 +21,7 @@ namespace Assets.Scripts.UIEnemies
 
         public void FixedUpdate()
         {
+            uIEnemyAnimation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
             if(enemyMain.IsCleaned)
                 objectStateMachine.TransitionTo(new UIEnemyCleanedState());
             else if(enemyMain.IsDead())

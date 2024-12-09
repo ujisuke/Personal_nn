@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 6949826592757479874}
   - component: {fileID: 5081440516687168312}
   - component: {fileID: -3375878352795121955}
+  - component: {fileID: 3554408929478980650}
   m_Layer: 0
   m_Name: BackToLobbyEnemyPrefab
   m_TagString: Untagged
@@ -205,6 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aef0b60a18b3b14e9c3cd216cc31b78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plusImX: 1
+  minusImX: 0
+  plusImY: 0
+  minusImY: 0
 --- !u!114 &5081440516687168312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +234,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf1a659f0f296b4098195e8b6dfac3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiEnemyParameter: {fileID: 0}
+  _uiEnemyParameter: {fileID: 11400000, guid: 44deae161840c6549a04be9be3d86f31, type: 2}
+--- !u!114 &3554408929478980650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835981607064012740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679e099d35f6b394aa55b355e3184138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8445994928882255183
 GameObject:
   m_ObjectHideFlags: 0

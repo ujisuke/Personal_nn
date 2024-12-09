@@ -16,22 +16,22 @@ namespace Assets.Scripts.Enemy1
             animator.SetFloat("ReadySpeed", 1f / _enemy1Parameter.ReadyTime);
         }
 
-        public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
+        public void SetLookingDirection((bool plusImX, bool minusImX, bool plusImY, bool minusImY) isLooking)
         {
-            animator.SetBool("IsLookingPlusImX", isLooking.PlusImX);
-            animator.SetBool("IsLookingMinusImX", isLooking.MinusImX);
-            animator.SetBool("IsLookingPlusImY", isLooking.PlusImY);
-            animator.SetBool("IsLookingMinusImY", isLooking.MinusImY);
+            animator.SetBool("IsLookingPlusImX", isLooking.plusImX);
+            animator.SetBool("IsLookingMinusImX", isLooking.minusImX);
+            animator.SetBool("IsLookingPlusImY", isLooking.plusImY);
+            animator.SetBool("IsLookingMinusImY", isLooking.minusImY);
         }
 
-        public void StartWalk()
+        public void StartMove()
         {
-            animator.SetBool("IsWalking", true);
+            animator.SetBool("IsMoving", true);
         }
 
-        public void StopWalk()
+        public void StopMove()
         {
-            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsMoving", false);
         }
 
         public void StartAttack()

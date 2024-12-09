@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enemy4
             enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy4Animation = objectStateMachine.GetComponent<Enemy4Animation>();
             enemy4Move.enabled = true;
-            enemy4Animation.StartWalk();
+            enemy4Animation.StartMove();
         }
 
         public void FixedUpdate()
