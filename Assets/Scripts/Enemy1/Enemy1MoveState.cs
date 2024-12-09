@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enemy1
             enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy1Animation = objectStateMachine.GetComponent<Enemy1Animation>();
             enemy1Move.enabled = true;
-            enemy1Animation.StartWalk();
+            enemy1Animation.StartMove();
         }
 
         public void FixedUpdate()
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Enemy1
         {
             enemy1Move.enabled = false;
             enemy1Move.StopMove();
-            enemy1Animation.StopWalk();
+            enemy1Animation.StopMove();
         }
     }
 }

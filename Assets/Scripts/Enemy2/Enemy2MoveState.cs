@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enemy2
             enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy2Animation = objectStateMachine.GetComponent<Enemy2Animation>();
             enemy2Move.enabled = true;
-            enemy2Animation.StartWalk();
+            enemy2Animation.StartMove();
         }
 
         public void FixedUpdate()

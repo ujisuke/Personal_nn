@@ -16,14 +16,22 @@ namespace Assets.Scripts.Objects
             animator.SetFloat("ReadySpeed", 1f / _objectParameter.ReadyTime);
         }
 
+        public void SetLookingDirection((bool plusImX, bool minusImX, bool plusImY, bool minusImY) isLooking)
+        {
+            animator.SetBool("IsLookingPlusImX", isLooking.plusImX);
+            animator.SetBool("IsLookingMinusImX", isLooking.minusImX);
+            animator.SetBool("IsLookingPlusImY", isLooking.plusImY);
+            animator.SetBool("IsLookingMinusImY", isLooking.minusImY);
+        }
+
         public void StartMove()
         {
-            animator.SetBool("IsStanding", true);
+            animator.SetBool("IsMoving", true);
         }
 
         public void StopMove()
         {
-            animator.SetBool("IsStanding", false);
+            animator.SetBool("IsMoving", false);
         }
 
         public void StartDead()
