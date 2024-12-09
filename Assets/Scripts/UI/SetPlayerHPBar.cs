@@ -29,9 +29,8 @@ namespace Assets.Scripts.UI
 
         private void FixedUpdate()
         {
-            if(!ObjectFacade.IsPlayerLiving()) return;
             image.fillAmount = PlayerMain.CurrentHP / (float)_playerParameter.MaxHP;
-            if(latestCurrentHP != PlayerMain.CurrentHP && PlayerMain.CurrentHP != _playerParameter.MaxHP)
+            if(latestCurrentHP > PlayerMain.CurrentHP)
                 Flash().Forget();
             latestCurrentHP = PlayerMain.CurrentHP;
         }

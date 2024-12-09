@@ -8,8 +8,7 @@ namespace Assets.Scripts.Player
     public class PlayerMain : ObjectMainBase
     {
         private PlayerParameter _playerParameter;
-        private static HP singletonHP;
-        public static int CurrentHP => singletonHP.CurrentHP;
+        public static int CurrentHP{ get; private set; }
         private static Energy singletonEnergy;
         public static int CurrentAvailableEnergy => singletonEnergy.CurrentAvailableEnergy;//identity
         public static float CurrentEnergy => singletonEnergy.CurrentEnergy;
@@ -19,7 +18,6 @@ namespace Assets.Scripts.Player
         {
             _playerParameter = playerParameter;
             Initialize(_playerParameter);
-            singletonHP = hP;
             singletonEnergy = Energy.Initialize(_playerParameter.MaxEnergy);
             playerAttack = GetComponent<PlayerAttack>();
             ChargeEnergy().Forget();
@@ -36,6 +34,11 @@ namespace Assets.Scripts.Player
                     singletonEnergy = singletonEnergy.Charge(0.1f);
                 }
             }
+        }
+
+        private void FixedUpdate()
+        {
+            CurrentHP = hP.CurrentHP;
         }
 
         public static bool CanUseEnergy(int consumption)
