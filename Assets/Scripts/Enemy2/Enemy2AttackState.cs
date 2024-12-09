@@ -16,7 +16,7 @@ namespace Assets.Scripts.Enemy2
             enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy2Animation = objectStateMachine.GetComponent<Enemy2Animation>();
             enemy2Attack.enabled = true;
-            enemy2Animation.SetLookingDirection(enemy2Attack.GetLookingDirection());
+            enemy2Animation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
             enemy2Animation.StartAttack();
         }
 

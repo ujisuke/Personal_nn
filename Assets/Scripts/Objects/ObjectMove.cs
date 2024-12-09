@@ -269,6 +269,36 @@ namespace Assets.Scripts.Objects
             return isVisited;
         }
 
+        public static List<Vector3> GetAllRePos3Cross(Vector3 rePos3)
+        {
+            List<Vector3> rePos3List = new();
+            (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
+            for(int i = 0; i < StageFacade.StageSide; i++)
+                rePos3List.Add(ConvertToRePos3FromTileIndex((i, pivotTileIndex.j)));
+            for(int j = 0; j < StageFacade.StageSide; j++)
+                rePos3List.Add(ConvertToRePos3FromTileIndex((pivotTileIndex.i, j)));
+            return rePos3List;
+        }
+
+        public static List<Vector3> GetAllRePos3DiagonalCross(Vector3 rePos3)
+        {
+            List<Vector3> rePos3List = new();
+            (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
+            for(int i = 0; i < StageFacade.StageSide; i++)
+            {
+                int j = pivotTileIndex.j + i - pivotTileIndex.i;
+                if(j < 0 || StageFacade.StageSide <= j) continue;
+                rePos3List.Add(ConvertToRePos3FromTileIndex((i, j)));
+            }
+            for(int i = 0; i < StageFacade.StageSide; i++)
+            {
+                int j = pivotTileIndex.j - i + pivotTileIndex.i;
+                if(j < 0 || StageFacade.StageSide <= j) continue;
+                rePos3List.Add(ConvertToRePos3FromTileIndex((i, j)));
+            }
+            return rePos3List;
+        }
+
         public static bool IsHitWall(Vector3 imPos3)
         {
             if(imPos3.x < -StageFacade.StageSide / 2f || StageFacade.StageSide / 2f < imPos3.x
@@ -313,6 +343,25 @@ namespace Assets.Scripts.Objects
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()
         {
             return (isHeadingToPlusImX, isHeadingToMinusImX, isHeadingToPlusImY, isHeadingToMinusImY);
+        }
+
+        public static (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingAtPlayerDirection(Vector3 rePos3)
+        {
+            Vector3 moveDirectionIm3 = CalculateImDirection3BetWeenTwoRePos3(rePos3, ObjectStorage.GetPlayerRePos3());
+            if(math.abs(moveDirectionIm3.x) > math.abs(moveDirectionIm3.y))
+            {
+                if(moveDirectionIm3.x > 0)
+                    return (true, false, false, false);
+                else
+                    return (false, true, false, false);
+            }
+            else
+            {
+                if(moveDirectionIm3.y > 0)
+                    return (false, false, true, false);
+                else
+                    return (false, false, false, true);
+            }
         }
 
         public void TryToJump(bool isTrying)

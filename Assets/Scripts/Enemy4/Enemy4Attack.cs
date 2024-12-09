@@ -1,24 +1,24 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
-using Unity.Mathematics;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
-namespace Assets.Scripts.Enemy2
+namespace Assets.Scripts.Enemy4
 {
-    public class Enemy2Attack : MonoBehaviour
+    public class Enemy4Attack : MonoBehaviour
     {
-        private Enemy2Parameter enemy2Parameter;
+        private Enemy4Parameter _enemy4Parameter;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         private CancellationTokenSource cancellationTokenSource = null;
-        
-        public void Initialize(Enemy2Parameter enemy2Parameter)
+    
+        public void Initialize(Enemy4Parameter enemy4Parameter)
         {
-            this.enemy2Parameter = enemy2Parameter;
+            _enemy4Parameter = enemy4Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
@@ -33,12 +33,11 @@ namespace Assets.Scripts.Enemy2
 
         private async UniTask Attack()
         {
+            List<Vector3> objectRePos3List = ObjectMove.GetAllRePos3Cross(transform.position);
             EnemyMain enemy = GetComponent<EnemyMain>();
-            for(int i = 0; i < enemy2Parameter.AttackCount; i++)
-            {
-                ObjectCreator.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);
-                await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
-            } 
+            for(int i = 0; i < objectRePos3List.Count; i++)
+                ObjectCreator.InstantiateEnemyDamageObject(objectRePos3List[i], _enemy4Parameter.EnemyDamageObjectParameter, enemy);
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemy4Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
         }
 
         public void StopAttack()

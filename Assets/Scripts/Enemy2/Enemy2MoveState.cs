@@ -21,7 +21,7 @@ namespace Assets.Scripts.Enemy2
 
         public void FixedUpdate()
         {
-            enemy2Animation.SetLookingDirection(enemy2Move.GetLookingDirection());
+            enemy2Animation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
             if(enemyMain.IsCleaned)
                 objectStateMachine.TransitionTo(new Enemy2CleanedState());
             else if(enemyMain.IsDead())

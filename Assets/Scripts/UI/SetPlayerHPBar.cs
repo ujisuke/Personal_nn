@@ -2,7 +2,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using Assets.ScriptableObjects;
 using Assets.Scripts.Player;
-using Assets.Scripts.Objects;
 using Cysharp.Threading.Tasks;
 using System;
 
@@ -29,9 +28,8 @@ namespace Assets.Scripts.UI
 
         private void FixedUpdate()
         {
-            if(!ObjectFacade.IsPlayerLiving()) return;
             image.fillAmount = PlayerMain.CurrentHP / (float)_playerParameter.MaxHP;
-            if(latestCurrentHP != PlayerMain.CurrentHP && PlayerMain.CurrentHP != _playerParameter.MaxHP)
+            if(latestCurrentHP > PlayerMain.CurrentHP)
                 Flash().Forget();
             latestCurrentHP = PlayerMain.CurrentHP;
         }

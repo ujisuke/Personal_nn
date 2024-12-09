@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: f3b2e0d6d1601574c91c318733fd887f
+guid: 0225146315b570c4ba3f6b03624755ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7677485684785953111
-    second: Enemy2AttackObject_0
+      213: 8825363405073984153
+    second: Enemy4AttackObject_0
   - first:
-      213: -6619141536957604078
-    second: Enemy2AttackObject_1
+      213: 1637919239089716047
+    second: Enemy4AttackObject_1
   - first:
-      213: 2726734139705845672
-    second: Enemy2AttackObject_2
+      213: -590163416679346298
+    second: Enemy4AttackObject_2
   - first:
-      213: 295427245470547220
-    second: Enemy2AttackObject_3
+      213: -7154070128541704687
+    second: Enemy4AttackObject_3
   - first:
-      213: 5666678843596060131
-    second: Enemy2AttackObject_4
+      213: -3860933172895442977
+    second: Enemy4AttackObject_4
   - first:
-      213: -4581757600578599285
-    second: Enemy2AttackObject_5
+      213: 544094157592883389
+    second: Enemy4AttackObject_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -115,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy2AttackObject_0
+      name: Enemy4DamageObject_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,16 +128,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 75930d1ad88eb8a60800000000000000
-      internalID: 7677485684785953111
+      spriteID: 076767abeee2e5e4e91922ae7f5da3e7
+      internalID: 1950464655
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy2AttackObject_1
+      name: Enemy4DamageObject_1
       rect:
         serializedVersion: 2
         x: 32
@@ -150,16 +150,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 21fdb9387d51424a0800000000000000
-      internalID: -6619141536957604078
+      spriteID: 3f75fb8c4ec24a34cafe66bb8475982d
+      internalID: 172486071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy2AttackObject_2
+      name: Enemy4DamageObject_2
       rect:
         serializedVersion: 2
         x: 64
@@ -172,16 +172,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8a7e812d04e47d520800000000000000
-      internalID: 2726734139705845672
+      spriteID: 338c191f7cfa12542999154191320464
+      internalID: -87299837
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy2AttackObject_3
+      name: Enemy4DamageObject_3
       rect:
         serializedVersion: 2
         x: 96
@@ -194,16 +194,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 41d7e37b381991400800000000000000
-      internalID: 295427245470547220
+      spriteID: 1a751cc0d4d83c643b0ad87608c57c1e
+      internalID: 1786629047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy2AttackObject_4
+      name: Enemy4DamageObject_4
       rect:
         serializedVersion: 2
         x: 128
@@ -216,16 +216,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 3e5b3c8826614ae40800000000000000
-      internalID: 5666678843596060131
+      spriteID: 32763d1f954367e48bb1f0668f2dba7a
+      internalID: -327788834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy2AttackObject_5
+      name: Enemy4DamageObject_5
       rect:
         serializedVersion: 2
         x: 160
@@ -238,10 +238,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b86019accb35a60c0800000000000000
-      internalID: -4581757600578599285
+      spriteID: dd660076f943a4043a8f868987bd2ebd
+      internalID: 556464657
       vertices: []
       indices: 
       edges: []
@@ -250,7 +250,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: fb1cde7a0664ff94e9e9510e9f0fe13a
+    spriteID: 125eb378597d8cd47a1f97e28a8b219c
     internalID: 0
     vertices: []
     indices: 
@@ -260,12 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Enemy2AttackObject_0: 7677485684785953111
-      Enemy2AttackObject_1: -6619141536957604078
-      Enemy2AttackObject_2: 2726734139705845672
-      Enemy2AttackObject_3: 295427245470547220
-      Enemy2AttackObject_4: 5666678843596060131
-      Enemy2AttackObject_5: -4581757600578599285
+      Enemy4DamageObject_0: 1950464655
+      Enemy4DamageObject_1: 172486071
+      Enemy4DamageObject_2: -87299837
+      Enemy4DamageObject_3: 1786629047
+      Enemy4DamageObject_4: -327788834
+      Enemy4DamageObject_5: 556464657
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
