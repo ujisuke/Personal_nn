@@ -17,7 +17,7 @@ namespace Assets.Scripts.Enemy4
         public void FixedUpdate()
         {
             if(enemyMain.IsReady)
-                objectStateMachine.TransitionTo(new Enemy4Move1State());
+                objectStateMachine.TransitionTo(new Enemy4MoveState());
         }
 
         public void Exit()

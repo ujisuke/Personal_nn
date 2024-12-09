@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Enemy4
 {
-    public class Enemy4Attack1 : MonoBehaviour
+    public class Enemy4Attack : MonoBehaviour
     {
         private Enemy4Parameter _enemy4Parameter;
         private ObjectMove objectMove;

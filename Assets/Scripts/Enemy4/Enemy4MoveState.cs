@@ -2,39 +2,38 @@ using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.Enemy4
 {
-    public class Enemy4Attack2State : IObjectState
+    public class Enemy4MoveState : IObjectState
     {
         private ObjectStateMachine objectStateMachine;
-        private Enemy4Attack2 enemy4Attack2;
+        private Enemy4Move enemy4Move;
         private EnemyMain enemyMain;
         private Enemy4Animation enemy4Animation;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
-            enemy4Attack2 = objectStateMachine.GetComponent<Enemy4Attack2>();
+            enemy4Move = objectStateMachine.GetComponent<Enemy4Move>();
             enemyMain = objectStateMachine.GetComponent<EnemyMain>();
             enemy4Animation = objectStateMachine.GetComponent<Enemy4Animation>();
-            enemy4Attack2.enabled = true;
-            enemy4Animation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
-            enemy4Animation.StartAttack();
+            enemy4Move.enabled = true;
+            enemy4Animation.StartWalk();
         }
 
         public void FixedUpdate()
         {
+            enemy4Animation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
             if(enemyMain.IsCleaned)
                 objectStateMachine.TransitionTo(new Enemy4CleanedState());
             else if(enemyMain.IsDead())
                 objectStateMachine.TransitionTo(new Enemy4DeadState());
-            else if(!enemy4Attack2.IsAttacking)
-                objectStateMachine.TransitionTo(new Enemy4Move1State());
+            else if(enemy4Move.CanAttack)
+                objectStateMachine.TransitionTo(new Enemy4AttackState());
         }
 
         public void Exit()
         {
-            enemy4Attack2.StopAttack();
-            enemy4Attack2.enabled = false;
-            enemy4Animation.StopAttack();
+            enemy4Move.enabled = false;
+            enemy4Animation.StopMove();
         }
     }
 }

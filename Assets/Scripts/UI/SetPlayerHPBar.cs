@@ -2,7 +2,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using Assets.ScriptableObjects;
 using Assets.Scripts.Player;
-using Assets.Scripts.Objects;
 using Cysharp.Threading.Tasks;
 using System;
 
