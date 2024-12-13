@@ -18,9 +18,9 @@ GameObject:
   - component: {fileID: 8952679492432715010}
   - component: {fileID: 5917392397109037494}
   - component: {fileID: 7406274233063326733}
-  - component: {fileID: 6665956939150584698}
   - component: {fileID: 2540380648455740566}
   - component: {fileID: -8878478634855989575}
+  - component: {fileID: 7549171109559037009}
   m_Layer: 0
   m_Name: SetGameEnemyPrefab
   m_TagString: Untagged
@@ -207,18 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aef0b60a18b3b14e9c3cd216cc31b78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6665956939150584698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835981607064012740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c8990493825034288ed08e6df83f5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2540380648455740566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +230,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a727a5ef00e72244b8569395e79c8f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7549171109559037009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835981607064012740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8793fdeb0568a6d409f6276c61a16743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3785928015093024069

@@ -14,18 +14,20 @@ namespace Assets.Scripts.Player
         public bool IsAttacking => isAttacking;
         private bool isDamaging = false;
         public bool IsDamaging => isDamaging;
+        private PlayerMain playerMain;
 
         public void Initialize(PlayerParameter playerParameter)
         {
             this.playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
+            playerMain = GetComponent<PlayerMain>();
         }
 
         private async void OnEnable()
         {
             isAttacking = true;
             isDamaging = true;
-            PlayerMain.ConsumeEnergy(playerParameter.AttackEnergyConsumption);
+            playerMain.ConsumeEnergy(playerParameter.AttackEnergyConsumption);
             await UniTask.Delay(TimeSpan.FromSeconds(playerParameter.AttackingTime));
             isDamaging = false;
             isAttacking = false;

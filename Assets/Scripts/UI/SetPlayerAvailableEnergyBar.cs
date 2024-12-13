@@ -1,8 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
 using Assets.ScriptableObjects;
-using Assets.Scripts.Player;
-using Assets.Scripts.Objects;
 
 namespace Assets.Scripts.UI
 {
@@ -11,8 +9,9 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameObject _separateUIPrefab;
         [SerializeField] private PlayerParameter _playerParameter;
         private Image image;
+        public static SetPlayerAvailableEnergyBar _SingletonInstance;
 
-        private void Start()
+        private void Awake()
         {
             image = GetComponent<Image>();
             float barWidth = GetComponent<RectTransform>().rect.width;
@@ -22,12 +21,17 @@ namespace Assets.Scripts.UI
                 newSeparateUIPrefab.transform.SetParent(transform);
                 newSeparateUIPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(barWidth * (i / (float)_playerParameter.MaxEnergy - 0.5f), 0, 0);
             }
+            _SingletonInstance = this;
         }
 
-        private void FixedUpdate()
+        public void SetValue(int energyValue)
         {
-            if(!ObjectFacade.IsPlayerLiving()) return;
-            image.fillAmount = PlayerMain.CurrentAvailableEnergy / (float)_playerParameter.MaxEnergy;
+            image.fillAmount = (float)energyValue / _playerParameter.MaxEnergy;
+        }
+
+        public void ResetValue()
+        {
+            image.fillAmount = 1;
         }
     }
 }

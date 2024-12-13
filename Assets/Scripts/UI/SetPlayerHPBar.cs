@@ -1,7 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
 using Assets.ScriptableObjects;
-using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
 using System;
 
@@ -12,9 +11,9 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameObject _SeparateUIPrefab;
         [SerializeField] private PlayerParameter _playerParameter;
         private Image image;
-        private int latestCurrentHP;
+        public static SetPlayerHPBar _SingletonInstance;
 
-        private void Start()
+        private void Awake()
         {
             image = GetComponent<Image>();
             float barWidth = GetComponent<RectTransform>().rect.width;
@@ -24,14 +23,13 @@ namespace Assets.Scripts.UI
                 newSeparateUIPrefab.transform.SetParent(transform);
                 newSeparateUIPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(barWidth * (i / (float)_playerParameter.MaxHP - 0.5f), 0, 0);
             }
+            _SingletonInstance = this;
         }
 
-        private void FixedUpdate()
+        public void TakeDamage(int hPValue)
         {
-            image.fillAmount = PlayerMain.CurrentHP / (float)_playerParameter.MaxHP;
-            if(latestCurrentHP > PlayerMain.CurrentHP)
-                Flash().Forget();
-            latestCurrentHP = PlayerMain.CurrentHP;
+            image.fillAmount = (float)hPValue / _playerParameter.MaxHP;
+            Flash().Forget();
         }
 
         private async UniTask Flash()
@@ -43,6 +41,11 @@ namespace Assets.Scripts.UI
                 image.enabled = true;
                 await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6));
             }
+        }
+
+        public void ResetValue()
+        {
+            image.fillAmount = 1;
         }
     }
 }

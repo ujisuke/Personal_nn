@@ -1,10 +1,10 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
-using Unity.Mathematics;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
+using Assets.Scripts.Sounds;
 
 namespace Assets.Scripts.Enemy2
 {
@@ -37,6 +37,7 @@ namespace Assets.Scripts.Enemy2
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
                 ObjectCreator.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);
+                PlaySE.SingletonInstance.PlayInstantiateEnemy2DamageObject();
                 await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
             } 
         }

@@ -12,17 +12,19 @@ namespace Assets.Scripts.Player
         private ObjectMove objectMove;
         private bool isDashing = true;
         public bool IsDashing => isDashing;
+        PlayerMain playerMain;
         
         public void Initialize(PlayerParameter playerParameter)
         {
             objectMove = GetComponent<ObjectMove>();
+            playerMain = GetComponent<PlayerMain>();
             this.playerParameter = playerParameter;
         }
 
         private async void OnEnable()
         {
             isDashing = true;
-            PlayerMain.ConsumeEnergy(playerParameter.DashEnergyConsumption);
+            playerMain.ConsumeEnergy(playerParameter.DashEnergyConsumption);
             objectMove.StartDash(playerParameter.DashSpeedRatio);
             await UniTask.Delay(TimeSpan.FromSeconds(playerParameter.DashingTime));
             objectMove.StopDash();
