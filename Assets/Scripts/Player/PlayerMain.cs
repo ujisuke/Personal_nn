@@ -47,7 +47,7 @@ namespace Assets.Scripts.Player
             hP = hP.TakeDamage(damage);
             BecomeInvincible().SuppressCancellationThrow().Forget();
             SetPlayerHPBar._SingletonInstance.TakeDamage(hP.CurrentHP);
-            PlaySE._SingletonInstance.PlayTakeDamage();
+            PlaySE.SingletonInstance.PlayTakeDamage();
         }
 
         public async UniTask BecomeInvincible()
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Player
         public async void DestroyDeadObject()
         {
             StopTokenSources();
-            PlaySE._SingletonInstance.PlayDead();
+            PlaySE.SingletonInstance.PlayDead();
             await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
             Destroy(gameObject);
         }

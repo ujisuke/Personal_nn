@@ -67,7 +67,7 @@ namespace Assets.Scripts.Objects
         public async void DestroyDeadObject()
         {
             StopTokenSources();
-            PlaySE._SingletonInstance.PlayDead();
+            PlaySE.SingletonInstance.PlayDead();
             await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.DeadTime));
             Destroy(gameObject);
         }

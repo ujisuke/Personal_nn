@@ -1,6 +1,7 @@
 using Assets.Scripts.Stage;
 using Assets.Scripts.Objects;
 using Cysharp.Threading.Tasks;
+using Assets.Scripts.Sounds;
 
 namespace Assets.Scripts.Room
 {
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Room
             ObjectStorage.IsStartBattleEnemyLiving = true;
             ObjectStorage.IsBackToLobbyEnemyLiving = true;
             ObjectStorage.IsSetGameEnemyLiving = true;
+            PlayBGM.SingletonInstance.PlayLobby();
             isSet = true;
         }
 

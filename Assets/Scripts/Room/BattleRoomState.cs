@@ -1,5 +1,6 @@
 using Assets.Scripts.Battle;
 using Assets.Scripts.Objects;
+using Assets.Scripts.Sounds;
 using Assets.Scripts.Stage;
 using Cysharp.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Room
             this.roomStateMachine = roomStateMachine;
             await StageFacade.CreateBattleStage();
             await ObjectFacade.CreateBattleObjects();
+            PlayBGM.SingletonInstance.PlayBattleRoom();
             isSet = true;
         }
 
