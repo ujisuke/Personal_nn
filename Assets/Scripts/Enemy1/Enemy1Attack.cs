@@ -5,6 +5,7 @@ using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
+using Assets.Scripts.Sounds;
 
 namespace Assets.Scripts.Enemy1
 {
@@ -38,6 +39,7 @@ namespace Assets.Scripts.Enemy1
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
                 ObjectCreator.InstantiateEnemyDamageObject(damageObjectRePos3List[i], _enemy1Parameter.EnemyDamageObjectParameter, enemy);
+            PlaySE._SingletonInstance.PlayInstantiateEnemy1DamageObject();
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
         }
 

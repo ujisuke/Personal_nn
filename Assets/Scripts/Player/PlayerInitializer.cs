@@ -11,7 +11,7 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             GetComponent<ObjectStateMachine>().Initialize(new PlayerReadyState());
-            gameObject.GetComponent<PlayerMain>().InitializePlayer(_playerParameter);
+            gameObject.GetComponent<PlayerMain>().Initialize(_playerParameter);
             gameObject.GetComponent<PlayerMove>().Initialize(_playerParameter);
             gameObject.GetComponent<PlayerDash>().Initialize(_playerParameter);
             gameObject.GetComponent<PlayerAttack>().Initialize(_playerParameter);

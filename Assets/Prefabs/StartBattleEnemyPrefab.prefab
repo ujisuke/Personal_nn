@@ -17,10 +17,10 @@ GameObject:
   - component: {fileID: 2031393404491179437}
   - component: {fileID: 8547664932779157491}
   - component: {fileID: 8097509609440199434}
-  - component: {fileID: 8148255970680834773}
   - component: {fileID: 1937526149385358940}
   - component: {fileID: -7211953483559702259}
   - component: {fileID: -7333788745390236513}
+  - component: {fileID: 1042184578084766938}
   m_Layer: 0
   m_Name: StartBattleEnemyPrefab
   m_TagString: Untagged
@@ -195,18 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9685b2163b26d6a41a239191ba11ac55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8148255970680834773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835981607064012740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c8990493825034288ed08e6df83f5a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1937526149385358940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +232,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiEnemyParameter: {fileID: 11400000, guid: 44deae161840c6549a04be9be3d86f31, type: 2}
+--- !u!114 &1042184578084766938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835981607064012740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8793fdeb0568a6d409f6276c61a16743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1095416692223756311
 GameObject:
   m_ObjectHideFlags: 0

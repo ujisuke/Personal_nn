@@ -9,7 +9,7 @@ namespace Assets.Scripts.Objects
         {
             GetComponent<ObjectMove>().Freeze();
             GetComponent<SetShadow>().DestroyShadow();
-            GetComponent<ObjectMainBase>().DestroyDeadObject().Forget();
+            GetComponent<IObjectMain>().DestroyDeadObject();
         }
     }
 }
