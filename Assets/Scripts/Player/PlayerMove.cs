@@ -33,13 +33,13 @@ namespace Assets.Scripts.Player
             objectMove.HeadToPlusImX(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S));
             objectMove.TryToJump(Input.GetKey(KeyCode.Space));
 
-            if(isAfterAttack && !Input.GetMouseButton(0)) isAfterAttack = false;
+            if(isAfterAttack && !Input.GetKey(KeyCode.Return)) isAfterAttack = false;
             if(isAfterDash && !Input.GetMouseButton(1)) isAfterDash = false;
         }
 
         public bool CanAttack()
         {
-            return Input.GetMouseButton(0) && !isAfterAttack && playerMain.CanUseEnergy(playerParameter.AttackEnergyConsumption);
+            return Input.GetKey(KeyCode.Return) && !isAfterAttack && playerMain.CanUseEnergy(playerParameter.AttackEnergyConsumption);
         }
 
         public bool CanDash()
