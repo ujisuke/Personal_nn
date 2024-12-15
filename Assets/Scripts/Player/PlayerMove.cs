@@ -9,7 +9,6 @@ namespace Assets.Scripts.Player
         private PlayerParameter playerParameter;
         private ObjectMove objectMove;
         private bool isAfterAttack = true;
-        private bool isAfterDash = true;
         private PlayerMain playerMain;
 
         public void Initialize(PlayerParameter playerParameter)
@@ -22,7 +21,6 @@ namespace Assets.Scripts.Player
         private void OnEnable()
         {
             isAfterAttack = true;
-            isAfterDash = true;
         }
 
         private void FixedUpdate()
@@ -34,17 +32,11 @@ namespace Assets.Scripts.Player
             objectMove.TryToJump(Input.GetKey(KeyCode.Space));
 
             if(isAfterAttack && !Input.GetKey(KeyCode.Return)) isAfterAttack = false;
-            if(isAfterDash && !Input.GetMouseButton(1)) isAfterDash = false;
         }
 
         public bool CanAttack()
         {
             return Input.GetKey(KeyCode.Return) && !isAfterAttack && playerMain.CanUseEnergy(playerParameter.AttackEnergyConsumption);
-        }
-
-        public bool CanDash()
-        {
-            return Input.GetMouseButton(1) && !isAfterDash && playerMain.CanUseEnergy(playerParameter.DashEnergyConsumption);
         }
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()

@@ -18,7 +18,6 @@ namespace Assets.Scripts.Objects
         private bool isFalling = false;
         public bool IsFalling => isFalling;
         private float prevImZ = 0;
-        private float dashSpeed = 1f;
         private SpriteRenderer objectSpriteRenderer;
         private bool isHeadingToMinusImX = false;
         private bool isHeadingToPlusImY = false;
@@ -105,7 +104,7 @@ namespace Assets.Scripts.Objects
         {
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(transform.position);
             
-            float weight = objectParameter.MoveSpeed * Time.deltaTime * dashSpeed;
+            float weight = objectParameter.MoveSpeed * Time.deltaTime;
             if(isHeadingToPlusImY) newImPos3.y += weight;
             if(isHeadingToMinusImY) newImPos3.y -= weight;
             if(isHeadingToMinusImX) newImPos3.x -= weight;
@@ -387,17 +386,6 @@ namespace Assets.Scripts.Objects
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
             return destinationTileImZ < objectRePos3.z - 1f + objectParameter.JumpHeight && objectRePos3.z - 1f < destinationTileImZ;
-        }
-
-        public void StartDash(float speed)
-        {
-            dashSpeed = speed;
-            prevImZ = ConvertToImPos3FromRePos3(transform.position).z;
-        }
-
-        public void StopDash()
-        {
-            dashSpeed = 1f;
         }
 
         public static int CalculateSortingOrderFromRePos3(Vector3 rePos3)

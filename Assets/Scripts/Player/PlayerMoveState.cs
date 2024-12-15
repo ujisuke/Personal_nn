@@ -26,8 +26,6 @@ namespace Assets.Scripts.Player
                 objectStateMachine.TransitionTo(new PlayerCleanedState());
             else if(playerMain.IsDead())
                 objectStateMachine.TransitionTo(new PlayerDeadState());
-            else if(playerMove.CanDash())
-                objectStateMachine.TransitionTo(new PlayerDashState());
             else if(playerMove.CanAttack())
                 objectStateMachine.TransitionTo(new PlayerAttackState());
         }
