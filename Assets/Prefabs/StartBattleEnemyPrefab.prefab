@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519995f7177a3de48921f9acccfc07dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shear: {x: 0, y: 0.5}
+  shear: {x: 0, y: -0.5}
 --- !u!114 &4705912141679681715
 MonoBehaviour:
   m_ObjectHideFlags: 0

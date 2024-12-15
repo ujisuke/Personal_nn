@@ -31,8 +31,8 @@ namespace Assets.Scripts.Objects
         public async UniTask CreateLobbyObjects()
         {
             await InstantiateAsync(_playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
-            await InstantiateAsync(_startBattleEnemyPrefab, ObjectMove.ConvertToRePos3FromTileIndex((StageFacade.StageSide - 3, 0)), Quaternion.identity);
-            await InstantiateAsync(_resetDataEnemyPrefab, ObjectMove.ConvertToRePos3FromTileIndex((2, 0)), Quaternion.identity);
+            await InstantiateAsync(_startBattleEnemyPrefab, ObjectMove.ConvertToRePos3FromTileIndex((0, 1)), Quaternion.identity);
+            await InstantiateAsync(_resetDataEnemyPrefab, ObjectMove.ConvertToRePos3FromTileIndex((0, 3)), Quaternion.identity);
             await InstantiateAsync(_exitGameEnemyPrefab, ObjectMove.ConvertToRePos3FromTileIndex((0, StageFacade.StageSide - 2)), Quaternion.identity);
             ObjectStorage.SetAllObjectsReady();
         }
