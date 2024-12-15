@@ -29,8 +29,6 @@ namespace Assets.Scripts.Room
                 return;
             if(!ObjectFacade.IsStartBattleEnemyLiving())
                 await roomStateMachine.TransitionTo(new BattleRoomState());
-            else if(!ObjectFacade.IsSetGameEnemyLiving())
-                await roomStateMachine.TransitionTo(new SettingRoomState());
         }
 
         public void Exit()

@@ -20,10 +20,5 @@ namespace Assets.Scripts.Stage
         {
             await StageCreator.CreateLobbyStage();
         }
-
-        public static async UniTask CreateSettingStage()
-        {
-            await StageCreator.CreateSettingStage();
-        }
     }
 }

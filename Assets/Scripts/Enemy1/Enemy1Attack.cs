@@ -38,7 +38,7 @@ namespace Assets.Scripts.Enemy1
             _enemy1Parameter.AttackPanelMinImRadius, _enemy1Parameter.AttackPanelMaxImRadius);
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
-                ObjectCreator.InstantiateEnemyDamageObject(damageObjectRePos3List[i], _enemy1Parameter.EnemyDamageObjectParameter, enemy);
+                ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(damageObjectRePos3List[i], _enemy1Parameter.EnemyDamageObjectParameter, enemy);
             PlaySE.SingletonInstance.PlayInstantiateEnemy1DamageObject();
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
         }

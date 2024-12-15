@@ -40,7 +40,7 @@ namespace Assets.Scripts.Enemy3
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
-                    ObjectCreator.InstantiateEnemyDamageObject(objectRePos3List[j], enemy3Parameter.EnemyDamageObjectParameter, enemy);
+                    ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[j], enemy3Parameter.EnemyDamageObjectParameter, enemy);
                 PlaySE.SingletonInstance.PlayInstantiateEnemy3DamageObject();
                 await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime), cancellationToken: cancellationTokenSource.Token);
             }
