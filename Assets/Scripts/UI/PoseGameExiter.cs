@@ -6,7 +6,7 @@ namespace Assets.Scripts.UI
     {
         private void OnEnable()
         {
-            // BackToLobby
+            Application.Quit();
         }
     }
 }
