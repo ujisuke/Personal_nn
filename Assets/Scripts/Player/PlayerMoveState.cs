@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
             playerMove = objectStateMachine.GetComponent<PlayerMove>();
             playerAnimation = objectStateMachine.GetComponent<PlayerAnimation>();
             playerMove.enabled = true;
-            playerAnimation.StartWalk();
+            playerAnimation.StartMove();
         }
 
         public void FixedUpdate()
@@ -35,7 +35,7 @@ namespace Assets.Scripts.Player
         public void Exit()
         {
             playerMove.enabled = false;
-            playerAnimation.StopWalk();
+            playerAnimation.StopMove();
         }
     }
 }

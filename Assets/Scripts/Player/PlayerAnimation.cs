@@ -6,14 +6,13 @@ namespace Assets.Scripts.Player
     public class PlayerAnimation : MonoBehaviour
     {
         private Animator animator;
-        private PlayerParameter _playerParameter;
 
         public void Initialize(PlayerParameter playerParameter)
         {
-            _playerParameter = playerParameter;
             animator = GetComponent<Animator>();
-            animator.SetFloat("DeadSpeed", 1f / _playerParameter.DeadTime);
-            animator.SetFloat("ReadySpeed", 1f / _playerParameter.ReadyTime);
+            animator.SetFloat("DeadSpeed", 1f / playerParameter.DeadTime);
+            animator.SetFloat("ReadySpeed", 1f / playerParameter.ReadyTime);
+            animator.SetFloat("AttackSpeed", 1f / playerParameter.AttackingTime);
         }
 
         public void SetLookingDirection((bool PlusImX, bool MinusImX, bool PlusImY, bool MinusImY) isLooking)
@@ -35,24 +34,19 @@ namespace Assets.Scripts.Player
             animator.SetBool("IsLookingMinusImY", newIsLooking.MinusImY);
         }
 
-        public void StartWalk()
+        public void StartMove()
         {
             animator.SetBool("IsWalking", true);
         }
 
-        public void StopWalk()
+        public void StopMove()
         {
             animator.SetBool("IsWalking", false);
         }
 
         public void StartAttack()
         {
-            animator.SetBool("IsAttacking", true);
-        }
-
-        public void StopAttack()
-        {
-            animator.SetBool("IsAttacking", false);
+            animator.SetTrigger("Attack");
         }
 
         public void StartDead()

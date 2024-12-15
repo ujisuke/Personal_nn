@@ -8,6 +8,7 @@ namespace Assets.Scripts.Player
         private PlayerMain playerMain;
         private PlayerAttack playerAttack;
         private PlayerAnimation playerAnimation;
+        private PlayerAttackEffectAnimation playerAttackEffectAnimation;
 
         public void Enter(ObjectStateMachine objectStateMachine)
         {
@@ -15,8 +16,10 @@ namespace Assets.Scripts.Player
             playerMain = objectStateMachine.GetComponent<PlayerMain>();
             playerAttack = objectStateMachine.GetComponent<PlayerAttack>();
             playerAnimation = objectStateMachine.GetComponent<PlayerAnimation>();
+            playerAttackEffectAnimation = objectStateMachine.GetComponentInChildren<PlayerAttackEffectAnimation>();
             playerAttack.enabled = true;
             playerAnimation.StartAttack();
+            playerAttackEffectAnimation.StartAttack();
         }
 
         public void FixedUpdate()
@@ -32,7 +35,6 @@ namespace Assets.Scripts.Player
         public void Exit()
         {
             playerAttack.enabled = false;
-            playerAnimation.StopAttack();
         }
     }
 }
