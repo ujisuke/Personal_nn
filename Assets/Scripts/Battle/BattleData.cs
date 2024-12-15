@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Battle
@@ -12,10 +13,17 @@ namespace Assets.Scripts.Battle
         public static int StageCount => stageCount;
         private static int deathCount = 0;
         public static int DeathCount => deathCount;
+        private static int seed = 3;
+        public static int Seed => seed;
 
         public static void AddStageCount()
         {
             stageCount++;
+        }
+
+        public static void ResetSeed()
+        {
+            seed = DateTime.Now.Millisecond;
         }
 
         public static void AddDeathCount()
@@ -27,6 +35,7 @@ namespace Assets.Scripts.Battle
         {
             stageCount = 1;
             deathCount = 0;
+            seed = DateTime.Now.Millisecond;
         }
     }
 }

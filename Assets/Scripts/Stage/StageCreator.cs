@@ -85,7 +85,7 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs2()
         {
-            Random.InitState(DateTime.Now.Millisecond);
+            Random.InitState(BattleFacade.Seed);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
             int clossI = Random.Range(2, _StageSide - 2);
             int clossJ = Random.Range(2, _StageSide - 2);
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs3OrMoreThan()
         {
-            Random.InitState(DateTime.Now.Millisecond);
+            Random.InitState(BattleFacade.Seed);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
             int clossI = Random.Range(2, _StageSide - 2);
             int clossJ = Random.Range(2, _StageSide - 2);

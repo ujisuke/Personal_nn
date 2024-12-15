@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.Battle;
 using UnityEngine;
 
 namespace Assets.Scripts.Stage
@@ -36,7 +37,7 @@ namespace Assets.Scripts.Stage
 
         public static void AssignStageElementZs(int[,] area)
         {
-            Random.InitState(System.DateTime.Now.Millisecond);
+            Random.InitState(BattleData.Seed);
             int[,] selectedElementZs = _StageElementZs[Random.Range(0, _StageElementZs.Count)];
             if(Random.Range(0, 2) == 1) FlipElementMatrix(selectedElementZs);
             
