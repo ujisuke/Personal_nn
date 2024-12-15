@@ -15,7 +15,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private string _exitGameText;
         private int index = 0;
         private bool isPushed = false;
-        private List<Option> optionList = new();
+        private readonly List<Option> optionList = new();
         [SerializeField] private Color32 _targetTextColor;
         private static string _targetTextColorCode;
         public static string TargetTextColorCode => _targetTextColorCode;
@@ -62,7 +62,7 @@ namespace Assets.Scripts.UI
 
         private void Update()
         {
-            if(isPushed && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space))
+            if(isPushed && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Return))
                 isPushed = false;
             if(isPushed) 
                 return;
@@ -78,7 +78,7 @@ namespace Assets.Scripts.UI
                 index = math.max(index - 1, 0);
                 ChangeTargetText();
             }
-            else if (Input.GetKey(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Return))
                 optionList[index].Action();
         }
 

@@ -17,7 +17,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private string _returnText;
         private int index = 0;
         private bool isPushed = false;
-        private List<SoundOption> soundOptionList = new();
+        private readonly List<SoundOption> soundOptionList = new();
         private bool isReturnSelected = false;
         public bool IsReturnSelected => isReturnSelected;
 
@@ -38,7 +38,7 @@ namespace Assets.Scripts.UI
         
         private void Update()
         {
-            if(isPushed && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            if(isPushed && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Return) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
                 isPushed = false;
             if(isPushed)
                 return;
@@ -70,7 +70,7 @@ namespace Assets.Scripts.UI
                 soundOptionList[index].DecreaseVolume();
                 ChangeTargetText();
             }
-            else if (Input.GetKey(KeyCode.Space))
+            else if (Input.GetKey(KeyCode.Return))
             {
                 if (index != soundOptionList.Count)
                     return;
