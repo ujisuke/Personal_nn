@@ -305,7 +305,7 @@ AudioSource:
   m_GameObject: {fileID: 85531997}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9000469977949341489, guid: b67d357c3d39fd849a187f1f2172e244, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -846,9 +846,7 @@ MonoBehaviour:
   _enemyDamageObjectPrefab: {fileID: 5202028710676642513, guid: 27e1af04158bd8e458d6ee26b0ab26b1, type: 3}
   _startBattleEnemyPrefab: {fileID: 835981607064012740, guid: 64a9ad9b73f90a6459a8330ef4931daa, type: 3}
   _resetDataEnemyPrefab: {fileID: 835981607064012740, guid: c5c05997e55e16b45b2b1ae9299ee602, type: 3}
-  _setGameEnemyPrefab: {fileID: 835981607064012740, guid: 1148853c3d505de4099874052c280a7f, type: 3}
   _exitGameEnemyPrefab: {fileID: 835981607064012740, guid: 0263c5dad94777045ab21181c3ece351, type: 3}
-  _backToLobbyEnemyPrefab: {fileID: 835981607064012740, guid: e92e8a51b8c8cfb47b29f7c02b24f44e, type: 3}
 --- !u!114 &429188287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,7 +1165,7 @@ AudioSource:
   m_GameObject: {fileID: 502060413}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4936358345879651493, guid: b67d357c3d39fd849a187f1f2172e244, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0

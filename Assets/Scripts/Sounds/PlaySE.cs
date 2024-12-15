@@ -14,8 +14,7 @@ namespace Assets.Scripts.Sounds
 
         private void Awake()
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.outputAudioMixerGroup = _audioMixer.FindMatchingGroups("SE")[0];
+            audioSource = gameObject.GetComponent<AudioSource>();
             SingletonInstance = this;
         }
 

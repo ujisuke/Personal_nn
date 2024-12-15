@@ -11,23 +11,20 @@ namespace Assets.Scripts.Stage
     public class StageCreator : MonoBehaviour
     {
         [SerializeField] private Tilemap[] stageTilemapList = new Tilemap[_StageSide * 2 - 1];
-        private static Tilemap[] _singletonStageTilemapList;
         [SerializeField] private ScriptableObjects.TileData _tileData;
-        private static ScriptableObjects.TileData _singletonTileData;
-
         public const int _StageSide = 8;
         public const int _StageHeight = _StageSide * 2;
         public const float _TileHeight = 0.25f;
         public const float _YOffset = 1.75f;
         public static int[,] TileImZs{ get; private set; } = new int[_StageSide, _StageSide];
+        public static StageCreator SingletonInstance;
 
         private void Awake()
         {
-            _singletonStageTilemapList = stageTilemapList;
-            _singletonTileData = _tileData;
+            SingletonInstance = this;
         }
 
-        public static async UniTask CreateLobbyStage()
+        public async UniTask CreateLobbyStage()
         {
             SetLobbyStageMatrix();
             await SetAllTiles();
@@ -35,27 +32,20 @@ namespace Assets.Scripts.Stage
 
         private static void SetLobbyStageMatrix()
         {
-            InitializeMatrix(TileImZs);
-            for(int i = 0; i < _StageSide; i++)
-                for(int j = 0; j < _StageSide; j++)
-                    TileImZs[i, j] = 1;
+            TileImZs = new int[_StageSide, _StageSide]
+            {
+                {6, 6, 6, 6, 6, 6, 6, 6},
+                {6, 6, 6, 6, 6, 6, 6, 6},
+                {5, 6, 6, 6, 6, 6, 6, 6},
+                {4, 1, 1, 1, 1, 1, 1, 1},
+                {3, 1, 1, 1, 1, 1, 1, 1},
+                {2, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1}
+            };
         }
 
-        public static async UniTask CreateSettingStage()
-        {
-            SetSettingStageMatrix();
-            await SetAllTiles();
-        }
-
-        private static void SetSettingStageMatrix()
-        {
-            InitializeMatrix(TileImZs);
-            for(int i = 0; i < _StageSide; i++)
-                for(int j = 0; j < _StageSide; j++)
-                    TileImZs[i, j] = 2;
-        }
-
-        public static async UniTask CreateBattleStage()
+        public async UniTask CreateBattleStage()
         {
             SetNewStageMatrix();
             await SetAllTiles();
@@ -192,7 +182,7 @@ namespace Assets.Scripts.Stage
             }
         }
 
-        private static async UniTask SetAllTiles()
+        private async UniTask SetAllTiles()
         {
             for(int n = 0; n < _StageSide * 2 - 1; n++)
             {
@@ -202,7 +192,7 @@ namespace Assets.Scripts.Stage
                     if(i >= _StageSide || i < 0 || j >= _StageSide || j < 0) continue;
                     int tileHeight = TileImZs[i, j];
                     Vector3Int tilePosition = new((_StageSide - 1) / 2 - i, (_StageSide - 1) / 2 - j, 0);
-                    _singletonTileData.SetTile(tileHeight, tilePosition, _singletonStageTilemapList[_StageSide * 2 - 2 - n]);
+                    _tileData.SetTile(tileHeight, tilePosition, stageTilemapList[_StageSide * 2 - 2 - n]);
                 }
                 await UniTask.Delay(TimeSpan.FromSeconds(0.03f));
             }

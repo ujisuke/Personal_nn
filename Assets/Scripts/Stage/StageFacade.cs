@@ -13,17 +13,12 @@ namespace Assets.Scripts.Stage
 
         public static async UniTask CreateBattleStage()
         {
-            await StageCreator.CreateBattleStage();
+            await StageCreator.SingletonInstance.CreateBattleStage();
         }
 
         public static async UniTask CreateLobbyStage()
         {
-            await StageCreator.CreateLobbyStage();
-        }
-
-        public static async UniTask CreateSettingStage()
-        {
-            await StageCreator.CreateSettingStage();
+            await StageCreator.SingletonInstance.CreateLobbyStage();
         }
     }
 }

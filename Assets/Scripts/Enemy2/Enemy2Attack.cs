@@ -36,7 +36,7 @@ namespace Assets.Scripts.Enemy2
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < enemy2Parameter.AttackCount; i++)
             {
-                ObjectCreator.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);
+                ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);
                 PlaySE.SingletonInstance.PlayInstantiateEnemy2DamageObject();
                 await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
             } 
