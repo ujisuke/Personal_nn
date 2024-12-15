@@ -2,6 +2,7 @@ using Assets.Scripts.Stage;
 using Assets.Scripts.Objects;
 using Cysharp.Threading.Tasks;
 using Assets.Scripts.Sounds;
+using Assets.Scripts.UI;
 
 namespace Assets.Scripts.Room
 {
@@ -16,8 +17,8 @@ namespace Assets.Scripts.Room
             await StageFacade.CreateLobbyStage();
             await ObjectFacade.CreateLobbyObjects();
             ObjectStorage.IsStartBattleEnemyLiving = true;
-            ObjectStorage.IsBackToLobbyEnemyLiving = true;
             ObjectStorage.IsSetGameEnemyLiving = true;
+            PoseMain.IsInLobby = true;
             PlayBGM.SingletonInstance.PlayLobby();
             isSet = true;
         }
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Room
         public void Exit()
         {
             ObjectFacade.CleanAllObjects();
+            PoseMain.IsInLobby = false;
         }
     }
 }

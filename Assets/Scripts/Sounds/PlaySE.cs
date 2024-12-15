@@ -59,5 +59,16 @@ namespace Assets.Scripts.Sounds
             audioSource.pitch = 0.5f;
             audioSource.PlayOneShot(_instantiateDamageObjectSE);
         }
+
+        public float GetSEVolume()
+        {
+            _audioMixer.GetFloat("SEVolume", out float volume);
+            return volume + 80f;
+        }
+
+        public void SetSEVolume(float volume)
+        {
+            _audioMixer.SetFloat("SEVolume", volume - 80f);
+        }
     }
 }

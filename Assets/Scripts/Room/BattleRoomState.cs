@@ -2,6 +2,7 @@ using Assets.Scripts.Battle;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Sounds;
 using Assets.Scripts.Stage;
+using Assets.Scripts.UI;
 using Cysharp.Threading.Tasks;
 
 namespace Assets.Scripts.Room
@@ -30,6 +31,12 @@ namespace Assets.Scripts.Room
             {
                 BattleFacade.AddStageCount();
                 await roomStateMachine.TransitionTo(new BattleRoomState());
+            }
+            else if(PoseBackerToLobby.IsBackingToLobby)
+            {
+                PoseBackerToLobby.IsBackingToLobby = false;
+                BattleFacade.ResetData();
+                await roomStateMachine.TransitionTo(new LobbyState());
             }
         }
 

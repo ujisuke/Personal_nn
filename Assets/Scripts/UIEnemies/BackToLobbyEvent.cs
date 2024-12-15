@@ -7,7 +7,7 @@ namespace Assets.Scripts.UIEnemies
     {
         public void Execute()
         {
-            ObjectStorage.IsBackToLobbyEnemyLiving = false;
+
         }
     }
 }

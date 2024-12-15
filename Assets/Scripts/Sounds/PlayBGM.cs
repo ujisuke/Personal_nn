@@ -50,5 +50,16 @@ namespace Assets.Scripts.Sounds
             }
             audioSource.outputAudioMixerGroup.audioMixer.SetFloat("BGMVolume", maxVolume);
         }
+
+        public float GetBGMVolume()
+        {
+            _audioMixer.GetFloat("BGMVolume", out float volume);
+            return volume + 80f;
+        }
+
+        public void SetBGMVolume(float volume)
+        {
+            _audioMixer.SetFloat("BGMVolume", volume - 80f);
+        }
     }
 }

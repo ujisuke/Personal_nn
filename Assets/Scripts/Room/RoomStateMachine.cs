@@ -7,6 +7,7 @@ namespace Assets.Scripts.Room
     public class RoomStateMachine : MonoBehaviour
     {
         private IRoomState currentState;
+        public IRoomState CurrentState => currentState;
 
         private void Awake()
         {

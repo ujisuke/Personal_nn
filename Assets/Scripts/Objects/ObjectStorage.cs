@@ -12,7 +12,6 @@ namespace Assets.Scripts.Objects
         private static List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectList = new();
         public static bool IsStartBattleEnemyLiving = false;
         public static bool IsSetGameEnemyLiving = false;
-        public static bool IsBackToLobbyEnemyLiving = false;
 
         private void FixedUpdate()
         {

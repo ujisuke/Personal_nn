@@ -44,10 +44,5 @@ namespace Assets.Scripts.Objects
         {
             return ObjectStorage.IsSetGameEnemyLiving;
         }
-
-        public static bool IsBackToLobbyEnemyLiving()
-        {
-            return ObjectStorage.IsBackToLobbyEnemyLiving;
-        }
     }
 }
