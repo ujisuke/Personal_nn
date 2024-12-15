@@ -5,6 +5,7 @@ namespace Assets.Scripts.Sounds
 {
     public class PlaySE : MonoBehaviour
     {
+        [SerializeField] private AudioClip _attackSE;
         [SerializeField] private AudioClip _takeDamageSE;
         [SerializeField] private AudioClip _deadSE;
         [SerializeField] private AudioClip _instantiateDamageObjectSE;
@@ -16,6 +17,12 @@ namespace Assets.Scripts.Sounds
         {
             audioSource = gameObject.GetComponent<AudioSource>();
             SingletonInstance = this;
+        }
+
+        public void PlayAttack()
+        {
+            audioSource.pitch = 1f;
+            audioSource.PlayOneShot(_attackSE);
         }
 
         public void PlayTakeDamage()

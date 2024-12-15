@@ -1,4 +1,5 @@
 using Assets.Scripts.Objects;
+using Assets.Scripts.Sounds;
 
 namespace Assets.Scripts.Player
 {
@@ -20,6 +21,7 @@ namespace Assets.Scripts.Player
             playerAttack.enabled = true;
             playerAnimation.StartAttack();
             playerAttackEffectAnimation.StartAttack();
+            PlaySE.SingletonInstance.PlayAttack();
         }
 
         public void FixedUpdate()

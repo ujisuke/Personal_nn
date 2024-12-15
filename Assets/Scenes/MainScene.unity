@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c98149646c4ed418a0f7b02f7f703d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackSE: {fileID: 8300000, guid: a98d98426a59a0d4fa70ff59becf4d97, type: 3}
   _takeDamageSE: {fileID: 8300000, guid: c9e0b4ba44531254d82d4773a3f54db2, type: 3}
   _deadSE: {fileID: 8300000, guid: bfaa3b855db8637439ad6653cd6245eb, type: 3}
   _instantiateDamageObjectSE: {fileID: 8300000, guid: 69b20673a7b86ef4e894c63edda57932, type: 3}
