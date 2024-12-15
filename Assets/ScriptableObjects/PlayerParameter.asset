@@ -18,13 +18,13 @@ MonoBehaviour:
   _jumpTime: 0.6
   _attackPower: 5
   _maxHP: 5
+  _invincibleTime: 0.5
   _deadTime: 0.3
-  _damageObjectParameter: {fileID: 0}
+  _enemyDamageObjectParameter: {fileID: 0}
   _maxEnergy: 3
   _chargingEnergyTime: 1
-  _attackingTime: 0.1
+  _attackingTime: 0.2
   _attackEnergyConsumption: 1
   _dashSpeedRatio: 3
   _dashingTime: 0.1
   _dashEnergyConsumption: 1
-  _invincibleTime: 0.5

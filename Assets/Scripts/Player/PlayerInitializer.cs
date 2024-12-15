@@ -16,6 +16,7 @@ namespace Assets.Scripts.Player
             gameObject.GetComponent<PlayerDash>().Initialize(_playerParameter);
             gameObject.GetComponent<PlayerAttack>().Initialize(_playerParameter);
             GetComponent<PlayerAnimation>().Initialize(_playerParameter);
+            GetComponentInChildren<PlayerAttackEffectAnimation>().Initialize(_playerParameter);
         }
     }
 }
