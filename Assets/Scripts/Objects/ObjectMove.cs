@@ -183,11 +183,18 @@ namespace Assets.Scripts.Objects
                     if(Math.Abs(i - pivotTileNumber.i) > maximumRadius || Math.Abs(j - pivotTileNumber.j) > maximumRadius) continue;
                     tileIndexList.Add((i, j));
                 }
-            tileIndexList = tileIndexList.OrderBy(a => Guid.NewGuid()).ToList();
-            List<Vector3> rePos3List = new();
-            for(int i = 0; i < math.min(PosCount, tileIndexList.Count); i++)
+            List<(int i, int j)> shuffledTileIndexList = new();
+            for(int i = 0; i < tileIndexList.Count; i++)
             {
-                Vector3 rePos3 = ConvertToRePos3FromTileIndex(tileIndexList[i]);
+                int r = UnityEngine.Random.Range(0, tileIndexList.Count - i);
+                shuffledTileIndexList.Add(tileIndexList[r]);
+                tileIndexList.RemoveAt(r);
+            }
+            
+            List<Vector3> rePos3List = new();
+            for(int i = 0; i < math.min(PosCount, shuffledTileIndexList.Count); i++)
+            {
+                Vector3 rePos3 = ConvertToRePos3FromTileIndex(shuffledTileIndexList[i]);
                 rePos3List.Add(rePos3);
             }
             return rePos3List;

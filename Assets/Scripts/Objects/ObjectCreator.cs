@@ -44,6 +44,7 @@ namespace Assets.Scripts.Objects
             int objectCount = math.min(BattleFacade.EnemyDifficulty, StageFacade.StageSide * StageFacade.StageSide - minimumDistanceBetweenPlayerAndEnemy * minimumDistanceBetweenPlayerAndEnemy);
             List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectCount, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade.StageSide);
 
+            UnityEngine.Random.InitState(BattleFacade.Seed);
             for (int i = 0; i < objectCount; i++)
             {
                 int randomIndex = UnityEngine.Random.Range(0, _enemyPrefabList.Count);
