@@ -16,11 +16,13 @@ namespace Assets.Scripts.Enemy1
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         private CancellationTokenSource cancellationTokenSource = null;
+        private AudioSource audioSource;
 
         public void Initialize(Enemy1Parameter enemy1Parameter)
         {
-            objectMove = GetComponent<ObjectMove>();
             _enemy1Parameter = enemy1Parameter;
+            objectMove = GetComponent<ObjectMove>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private async void OnEnable()
@@ -39,7 +41,7 @@ namespace Assets.Scripts.Enemy1
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < damageObjectRePos3List.Count; i++)
                 ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(damageObjectRePos3List[i], _enemy1Parameter.EnemyDamageObjectParameter, enemy);
-            SEPlayer.SingletonInstance.PlayInstantiateEnemy1DamageObject();
+            SEPlayer.SingletonInstance.PlayInstantiateEnemy1DamageObject(audioSource);
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy1Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
         }
 

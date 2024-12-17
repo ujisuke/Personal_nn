@@ -22,6 +22,7 @@ namespace Assets.Scripts.Player
         private bool isInvincible = false;
         CancellationTokenSource cancellationTokenSource = null;
         private PlayerAttack playerAttack;
+        private AudioSource audioSource;
 
         public void Initialize(PlayerParameter playerParameter)
         {
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Player
             PlayerHPBar.SingletonInstance.ResetValue();
             PlayerEnergyBar.SingletonInstance.ResetValue();
             PlayerAvailableEnergyBar.SingletonInstance.ResetValue();
+            audioSource = GetComponent<AudioSource>();
             ChargeEnergy().Forget();
         }
 
@@ -47,7 +49,7 @@ namespace Assets.Scripts.Player
             hP = hP.TakeDamage(damage);
             BecomeInvincible().SuppressCancellationThrow().Forget();
             PlayerHPBar.SingletonInstance.TakeDamage(hP.CurrentHP);
-            SEPlayer.SingletonInstance.PlayTakeDamage();
+            SEPlayer.SingletonInstance.PlayTakeDamage(audioSource);
         }
 
         public async UniTask BecomeInvincible()
@@ -78,7 +80,7 @@ namespace Assets.Scripts.Player
         public async void DestroyDeadObject()
         {
             StopTokenSources();
-            SEPlayer.SingletonInstance.PlayDead();
+            SEPlayer.SingletonInstance.PlayDead(audioSource);
             await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
             Destroy(gameObject);
         }

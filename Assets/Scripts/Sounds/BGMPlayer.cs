@@ -11,12 +11,13 @@ namespace Assets.Scripts.Sounds
         [SerializeField] private AudioClip _battleRoomBGM;
         [SerializeField] private AudioMixer _audioMixer;
         private static AudioSource audioSource;
-        public static BGMPlayer SingletonInstance;
+        private static BGMPlayer singletonInstance;
+        public static BGMPlayer SingletonInstance => singletonInstance;
 
         private void Awake()
         {
             audioSource = gameObject.GetComponent<AudioSource>();
-            SingletonInstance = this;
+            singletonInstance = this;
         }
 
         public void PlayLobby()

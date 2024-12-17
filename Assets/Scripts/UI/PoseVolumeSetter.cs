@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Assets.Scripts.Sounds;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
@@ -20,6 +19,7 @@ namespace Assets.Scripts.UI
         private readonly List<SoundOption> soundOptionList = new();
         private bool isReturnSelected = false;
         public bool IsReturnSelected => isReturnSelected;
+        private AudioSource audioSource;
 
         private void OnEnable()
         {
@@ -31,9 +31,10 @@ namespace Assets.Scripts.UI
 
         private void Awake()
         {
-            text = GetComponent<Text>();
+            text = GetComponentInChildren<Text>();
             soundOptionList.Add(new SoundOption(_bgmVolumeText, (int)BGMPlayer.SingletonInstance.GetBGMVolume(), volume => { BGMPlayer.SingletonInstance.SetBGMVolume(volume); }));
             soundOptionList.Add(new SoundOption(_seVolumeText, (int)SEPlayer.SingletonInstance.GetSEVolume(), volume => { SEPlayer.SingletonInstance.SetSEVolume(volume); }));
+            audioSource = GetComponent<AudioSource>();
         }
         
         private void Update()
@@ -58,6 +59,7 @@ namespace Assets.Scripts.UI
             {
                 if (index == soundOptionList.Count)
                     return;
+                SEPlayer.SingletonInstance.PlaySelect(audioSource);
                 isPushed = true;
                 soundOptionList[index].IncreaseVolume();
                 ChangeTargetText();
@@ -66,6 +68,7 @@ namespace Assets.Scripts.UI
             {
                 if (index == soundOptionList.Count)
                     return;
+                SEPlayer.SingletonInstance.PlaySelect(audioSource);
                 isPushed = true;
                 soundOptionList[index].DecreaseVolume();
                 ChangeTargetText();
@@ -74,6 +77,7 @@ namespace Assets.Scripts.UI
             {
                 if (index != soundOptionList.Count)
                     return;
+                SEPlayer.SingletonInstance.PlaySelect(audioSource);
                 isPushed = true;
                 isReturnSelected = true;
             }

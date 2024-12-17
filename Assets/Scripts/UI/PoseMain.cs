@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Sounds;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,12 +30,14 @@ namespace Assets.Scripts.UI
         private bool isExitGameSelected = false;
         public bool IsExitGameSelected => isExitGameSelected;
         public static bool IsInLobby = false;
+        private AudioSource audioSource;
 
         private void Awake()
         {
-            text = GetComponent<Text>();
+            text = GetComponentInChildren<Text>();
             _targetTextColorCode = ColorUtility.ToHtmlStringRGB(_targetTextColor);
             _nonTargetTextColorCode = ColorUtility.ToHtmlStringRGB(_nonTargetTextColor);
+            audioSource = GetComponent<AudioSource>();
             ChangeTargetText();
         }
 
@@ -79,7 +82,10 @@ namespace Assets.Scripts.UI
                 ChangeTargetText();
             }
             else if (Input.GetKey(KeyCode.Return))
+            {
+                SEPlayer.SingletonInstance.PlaySelect(audioSource);
                 optionList[index].Action();
+            }
         }
 
         private void ChangeTargetText()

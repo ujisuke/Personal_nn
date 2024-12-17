@@ -67,7 +67,7 @@ namespace Assets.Scripts.Objects
         public async void DestroyDeadObject()
         {
             StopTokenSources();
-            SEPlayer.SingletonInstance.PlayDead();
+            SEPlayer.SingletonInstance.PlayDead(GetComponent<AudioSource>());
             await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.DeadTime));
             Destroy(gameObject);
         }

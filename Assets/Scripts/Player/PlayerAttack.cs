@@ -3,6 +3,7 @@ using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
 using Cysharp.Threading.Tasks;
 using System;
+using Assets.Scripts.Sounds;
 
 namespace Assets.Scripts.Player
 {
@@ -15,18 +16,21 @@ namespace Assets.Scripts.Player
         private bool isDamaging = false;
         public bool IsDamaging => isDamaging;
         private PlayerMain playerMain;
+        private AudioSource audioSource;
 
         public void Initialize(PlayerParameter playerParameter)
         {
             _playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
             playerMain = GetComponent<PlayerMain>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private async void OnEnable()
         {
             isAttacking = true;
             isDamaging = true;
+            SEPlayer.SingletonInstance.PlayAttack(audioSource);
             playerMain.ConsumeEnergy(_playerParameter.AttackEnergyConsumption);
             await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.AttackingTime));
             isDamaging = false;

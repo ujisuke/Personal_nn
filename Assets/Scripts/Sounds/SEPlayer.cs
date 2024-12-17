@@ -9,61 +9,62 @@ namespace Assets.Scripts.Sounds
         [SerializeField] private AudioClip _takeDamageSE;
         [SerializeField] private AudioClip _deadSE;
         [SerializeField] private AudioClip _instantiateDamageObjectSE;
+        [SerializeField] private AudioClip _selectSE;
         [SerializeField] private AudioMixer _audioMixer;
-        private static AudioSource audioSource;
-        public static SEPlayer SingletonInstance;
+        private static SEPlayer singletonInstance;
+        public static SEPlayer SingletonInstance => singletonInstance;
 
         private void Awake()
         {
-            audioSource = gameObject.GetComponent<AudioSource>();
-            SingletonInstance = this;
+            singletonInstance = this;
         }
 
-        public void PlayAttack()
+        public void PlayAttack(AudioSource audioSource)
         {
             audioSource.pitch = 1f;
             audioSource.PlayOneShot(_attackSE);
         }
 
-        public void PlayTakeDamage()
+        public void PlayTakeDamage(AudioSource audioSource)
         {
             audioSource.pitch = 1f;
             audioSource.PlayOneShot(_takeDamageSE);
         }
 
-        public void PlayDead()
+        public void PlayDead(AudioSource audioSource)
         {
             audioSource.pitch = 1f;
             audioSource.PlayOneShot(_deadSE);
         }
 
-        public void PlayInstantiateEnemyDamageObject()
-        {
-            audioSource.PlayOneShot(_instantiateDamageObjectSE);
-        }
-
-        public void PlayInstantiateEnemy1DamageObject()
+        public void PlayInstantiateEnemy1DamageObject(AudioSource audioSource)
         {
             audioSource.pitch = 1f;
             audioSource.PlayOneShot(_instantiateDamageObjectSE);
         }
 
-        public void PlayInstantiateEnemy2DamageObject()
+        public void PlayInstantiateEnemy2DamageObject(AudioSource audioSource)
         {
-            audioSource.pitch = 4f;
+            audioSource.pitch = 3f;
             audioSource.PlayOneShot(_instantiateDamageObjectSE);
         }
 
-        public void PlayInstantiateEnemy3DamageObject()
+        public void PlayInstantiateEnemy3DamageObject(AudioSource audioSource)
         {
             audioSource.pitch = 2f;
             audioSource.PlayOneShot(_instantiateDamageObjectSE);
         }
 
-        public void PlayInstantiateEnemy4DamageObject()
+        public void PlayInstantiateEnemy4DamageObject(AudioSource audioSource)
         {
             audioSource.pitch = 0.5f;
             audioSource.PlayOneShot(_instantiateDamageObjectSE);
+        }
+
+        public void PlaySelect(AudioSource audioSource)
+        {
+            audioSource.pitch = 1f;
+            audioSource.PlayOneShot(_selectSE);
         }
 
         public float GetSEVolume()
