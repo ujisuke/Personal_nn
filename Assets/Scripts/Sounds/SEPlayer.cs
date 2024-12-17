@@ -3,7 +3,7 @@ using UnityEngine.Audio;
 
 namespace Assets.Scripts.Sounds
 {
-    public class PlaySE : MonoBehaviour
+    public class SEPlayer : MonoBehaviour
     {
         [SerializeField] private AudioClip _attackSE;
         [SerializeField] private AudioClip _takeDamageSE;
@@ -11,7 +11,7 @@ namespace Assets.Scripts.Sounds
         [SerializeField] private AudioClip _instantiateDamageObjectSE;
         [SerializeField] private AudioMixer _audioMixer;
         private static AudioSource audioSource;
-        public static PlaySE SingletonInstance;
+        public static SEPlayer SingletonInstance;
 
         private void Awake()
         {

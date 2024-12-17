@@ -1,7 +1,6 @@
 using UnityEngine;
 using Assets.Scripts.Objects;
 using Assets.ScriptableObjects;
-using Unity.Mathematics;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
@@ -10,7 +9,7 @@ namespace Assets.Scripts.Enemy3
 {
     public class Enemy3Move : MonoBehaviour
     {
-        private Enemy3Parameter enemy3Parameter;
+        private Enemy3Parameter _enemy3Parameter;
         private ObjectMove objectMove;
         private bool canAttack = false;
         public bool CanAttack => canAttack;
@@ -18,7 +17,7 @@ namespace Assets.Scripts.Enemy3
 
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
-            this.enemy3Parameter = enemy3Parameter;
+            _enemy3Parameter = enemy3Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
@@ -27,7 +26,7 @@ namespace Assets.Scripts.Enemy3
             canAttack = false;
             objectMove.Stop();
             cancellationTokenSource = new();
-            await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemy3Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
             canAttack = true;
         }
 

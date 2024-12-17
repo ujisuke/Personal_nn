@@ -7,44 +7,47 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectHittingCalculator : MonoBehaviour
     {
-        public static void CalculateHitting(PlayerMain player, List<EnemyMain> enemyMainList, List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectMainList)
+        public static void CalculateHitting(PlayerMain player, List<EnemyGroup> enemyGroupList)
         {
-            CalculateHittingPlayerToEnemy(player, enemyMainList);
-            CalculateHittingEnemyDamageObjectToPlayer(player, enemyDamageObjectMainList);
+            CalculateHittingPlayerToEnemy(player, enemyGroupList);
+            CalculateHittingEnemyDamageObjectToPlayer(player, enemyGroupList);
         }
 
-        private static void CalculateHittingPlayerToEnemy(PlayerMain player, List<EnemyMain> enemyMainList)
+        private static void CalculateHittingPlayerToEnemy(PlayerMain player, List<EnemyGroup> enemyGroupList)
         {
-            if(player == null || !player.IsDamaging() || enemyMainList.Count == 0)
+            if(player == null || !player.IsDamaging() || enemyGroupList.Count == 0)
                 return;
             (Vector3 playerMinImPos3, Vector3 playerMaxImPos3) = player.GetImPos3s();
-            foreach(EnemyMain enemy in enemyMainList)
+            for(int i = 0; i < enemyGroupList.Count; i++)
             {
-                (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemy.GetImPos3s();
+                (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemyGroupList[i].Enemy.GetImPos3s();
                 if(playerMaxImPos3.x < enemyMinImPos3.x || playerMinImPos3.x > enemyMaxImPos3.x
                 || playerMaxImPos3.y < enemyMinImPos3.y || playerMinImPos3.y > enemyMaxImPos3.y
                 || playerMaxImPos3.z < enemyMinImPos3.z || playerMinImPos3.z > enemyMaxImPos3.z)
                     continue;
-                player.DamageTo(enemy);
+                player.DamageTo(enemyGroupList[i].Enemy);
             }
         }
 
-        private static void CalculateHittingEnemyDamageObjectToPlayer(PlayerMain player, List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectMainList)
+        private static void CalculateHittingEnemyDamageObjectToPlayer(PlayerMain player, List<EnemyGroup> enemyGroupList)
         {
-            if(player == null || enemyDamageObjectMainList.Count == 0)
+            if(player == null || enemyGroupList.Count == 0)
                 return;
             (Vector3 playerMinImPos3, Vector3 playerMaxImPos3) = player.GetImPos3s();
-            for(int i = 0; i < enemyDamageObjectMainList.Count; i++)
+            for(int i = 0; i < enemyGroupList.Count; i++)
             {
-                EnemyDamageObjectMain enemyDamageObject = enemyDamageObjectMainList[i].enemyDamageObject;
-                if(!enemyDamageObject.IsDamaging())
-                    continue;
-                (Vector3 enemyDamageObjectMinImPos3, Vector3 enemyDamageObjectMaxImPos3) = enemyDamageObject.GetImPos3s();
-                if(playerMaxImPos3.x < enemyDamageObjectMinImPos3.x || playerMinImPos3.x > enemyDamageObjectMaxImPos3.x
-                || playerMaxImPos3.y < enemyDamageObjectMinImPos3.y || playerMinImPos3.y > enemyDamageObjectMaxImPos3.y
-                || playerMaxImPos3.z < enemyDamageObjectMinImPos3.z || playerMinImPos3.z > enemyDamageObjectMaxImPos3.z)
-                    continue;
-                enemyDamageObject.DamageTo(player);
+                for(int j = 0; j < enemyGroupList[i].EnemyDamageObjectList.Count; j++)
+                {
+                    EnemyDamageObjectMain enemyDamageObject = enemyGroupList[i].EnemyDamageObjectList[j];
+                    if(!enemyDamageObject.IsDamaging())
+                        continue;
+                    (Vector3 enemyDamageObjectMinImPos3, Vector3 enemyDamageObjectMaxImPos3) = enemyDamageObject.GetImPos3s();
+                    if(playerMaxImPos3.x < enemyDamageObjectMinImPos3.x || playerMinImPos3.x > enemyDamageObjectMaxImPos3.x
+                    || playerMaxImPos3.y < enemyDamageObjectMinImPos3.y || playerMinImPos3.y > enemyDamageObjectMaxImPos3.y
+                    || playerMaxImPos3.z < enemyDamageObjectMinImPos3.z || playerMinImPos3.z > enemyDamageObjectMaxImPos3.z)
+                        continue;
+                    enemyDamageObject.DamageTo(player);
+                }
             }
         }
     }

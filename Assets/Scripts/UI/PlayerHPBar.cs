@@ -6,12 +6,13 @@ using System;
 
 namespace Assets.Scripts.UI
 {
-    public class SetPlayerHPBar : MonoBehaviour
+    public class PlayerHPBar : MonoBehaviour
     {
         [SerializeField] private GameObject _SeparateUIPrefab;
         [SerializeField] private PlayerParameter _playerParameter;
         private Image image;
-        public static SetPlayerHPBar _SingletonInstance;
+        private static PlayerHPBar singletonInstance;
+        public static PlayerHPBar SingletonInstance => singletonInstance;
 
         private void Awake()
         {
@@ -23,7 +24,7 @@ namespace Assets.Scripts.UI
                 newSeparateUIPrefab.transform.SetParent(transform);
                 newSeparateUIPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(barWidth * (i / (float)_playerParameter.MaxHP - 0.5f), 0, 0);
             }
-            _SingletonInstance = this;
+            singletonInstance = this;
         }
 
         public void TakeDamage(int hPValue)

@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5079295e3bcd14cb118facce2f608f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadow: {fileID: 7880669499801853529}
+  shadowPrefab: {fileID: 7880669499801853529}
 --- !u!114 &7804296378385064449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 4188059298848304047}
   - component: {fileID: 3843869319181777187}
   m_Layer: 0
-  m_Name: Shadow
+  m_Name: ShadowPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 3851158430706194908}
   - component: {fileID: 3637139415288190434}
   m_Layer: 0
-  m_Name: AttackEffect
+  m_Name: AttackEffectPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

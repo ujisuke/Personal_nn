@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Objects
@@ -8,7 +7,7 @@ namespace Assets.Scripts.Objects
         private void OnEnable()
         {
             GetComponent<ObjectMove>().Freeze();
-            GetComponent<SetShadow>().DestroyShadow();
+            GetComponent<ShadowSetter>().DestroyShadow();
             GetComponent<IObjectMain>().DestroyDeadObject();
         }
     }

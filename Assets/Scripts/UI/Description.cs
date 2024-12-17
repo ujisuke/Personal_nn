@@ -10,7 +10,7 @@ namespace Assets.Scripts.UI
         private void Awake()
         {
             enemyMain = transform.parent.GetComponent<EnemyMain>();
-            transform.SetParent(CanvasStorage.SingletonDescriptionCanvas.transform);
+            transform.SetParent(CanvasStorage.SingletonInstance.DescriptionCanvas.transform);
         }
 
         private void FixedUpdate()

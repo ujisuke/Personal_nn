@@ -20,12 +20,13 @@ namespace Assets.Scripts.Objects
         [SerializeField] private GameObject _startBattleEnemyPrefab;
         [SerializeField] private GameObject _resetDataEnemyPrefab;
         [SerializeField] private GameObject _exitGameEnemyPrefab;
-        public static ObjectCreator SingletonInstance;
+        private static ObjectCreator singletonInstance;
+        public static ObjectCreator SingletonInstance => singletonInstance;
 
 
         private void Awake()
         {
-            SingletonInstance = this;
+            singletonInstance = this;
         }
 
         public async UniTask CreateLobbyObjects()

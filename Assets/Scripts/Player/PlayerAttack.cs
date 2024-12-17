@@ -8,7 +8,7 @@ namespace Assets.Scripts.Player
 {
     public class PlayerAttack : MonoBehaviour
     {
-        private PlayerParameter playerParameter;
+        private PlayerParameter _playerParameter;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Player
 
         public void Initialize(PlayerParameter playerParameter)
         {
-            this.playerParameter = playerParameter;
+            _playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
             playerMain = GetComponent<PlayerMain>();
         }
@@ -27,8 +27,8 @@ namespace Assets.Scripts.Player
         {
             isAttacking = true;
             isDamaging = true;
-            playerMain.ConsumeEnergy(playerParameter.AttackEnergyConsumption);
-            await UniTask.Delay(TimeSpan.FromSeconds(playerParameter.AttackingTime));
+            playerMain.ConsumeEnergy(_playerParameter.AttackEnergyConsumption);
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.AttackingTime));
             isDamaging = false;
             isAttacking = false;
         }

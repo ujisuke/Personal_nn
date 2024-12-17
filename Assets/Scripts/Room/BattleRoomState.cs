@@ -17,7 +17,7 @@ namespace Assets.Scripts.Room
             this.roomStateMachine = roomStateMachine;
             await StageFacade.CreateBattleStage();
             await ObjectFacade.CreateBattleObjects();
-            PlayBGM.SingletonInstance.PlayBattleRoom();
+            BGMPlayer.SingletonInstance.PlayBattleRoom();
             isSet = true;
         }
 

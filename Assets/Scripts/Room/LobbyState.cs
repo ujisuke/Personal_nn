@@ -19,7 +19,7 @@ namespace Assets.Scripts.Room
             ObjectStorage.IsStartBattleEnemyLiving = true;
             ObjectStorage.IsSetGameEnemyLiving = true;
             PoseMain.IsInLobby = true;
-            PlayBGM.SingletonInstance.PlayLobby();
+            BGMPlayer.SingletonInstance.PlayLobby();
             isSet = true;
         }
 

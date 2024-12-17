@@ -5,13 +5,13 @@ using UnityEngine.Audio;
 
 namespace Assets.Scripts.Sounds
 {
-    public class PlayBGM : MonoBehaviour
+    public class BGMPlayer : MonoBehaviour
     {
         [SerializeField] private AudioClip _lobbyBGM;
         [SerializeField] private AudioClip _battleRoomBGM;
         [SerializeField] private AudioMixer _audioMixer;
         private static AudioSource audioSource;
-        public static PlayBGM SingletonInstance;
+        public static BGMPlayer SingletonInstance;
 
         private void Awake()
         {

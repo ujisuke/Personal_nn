@@ -4,7 +4,7 @@ using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.UI
 {
-    public class SetStageCountAndDeathCount : MonoBehaviour
+    public class StageCountAndDeathCountDisplay : MonoBehaviour
     {
         [SerializeField] private int textFontSize = 0;
         [SerializeField] private int countFontSize = 0;

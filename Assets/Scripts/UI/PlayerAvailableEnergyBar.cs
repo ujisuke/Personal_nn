@@ -4,12 +4,13 @@ using Assets.ScriptableObjects;
 
 namespace Assets.Scripts.UI
 {
-    public class SetPlayerEnergyBar : MonoBehaviour
+    public class PlayerAvailableEnergyBar : MonoBehaviour
     {
         [SerializeField] private GameObject _separateUIPrefab;
         [SerializeField] private PlayerParameter _playerParameter;
         private Image image;
-        public static SetPlayerEnergyBar _SingletonInstance;
+        private static PlayerAvailableEnergyBar singletonInstance;
+        public static PlayerAvailableEnergyBar SingletonInstance => singletonInstance;
 
         private void Awake()
         {
@@ -21,12 +22,12 @@ namespace Assets.Scripts.UI
                 newSeparateUIPrefab.transform.SetParent(transform);
                 newSeparateUIPrefab.GetComponent<RectTransform>().anchoredPosition = new Vector3(barWidth * (i / (float)_playerParameter.MaxEnergy - 0.5f), 0, 0);
             }
-            _SingletonInstance = this;
+            singletonInstance = this;
         }
 
-        public void SetValue(float energyValue)
+        public void SetValue(int energyValue)
         {
-            image.fillAmount = energyValue / _playerParameter.MaxEnergy;
+            image.fillAmount = (float)energyValue / _playerParameter.MaxEnergy;
         }
 
         public void ResetValue()

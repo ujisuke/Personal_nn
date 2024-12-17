@@ -20,7 +20,7 @@ namespace Assets.Scripts.UI
         public void Exit()
         {
             poseBackerToLobby.enabled = false;
-            CanvasStorage.HidePoseCanvas();
+            CanvasStorage.SingletonInstance.HidePoseCanvas();
         }
     }
 }

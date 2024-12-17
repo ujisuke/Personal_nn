@@ -10,7 +10,7 @@ namespace Assets.Scripts.Enemy2
 {
     public class Enemy2Attack : MonoBehaviour
     {
-        private Enemy2Parameter enemy2Parameter;
+        private Enemy2Parameter _enemy2Parameter;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Enemy2
         
         public void Initialize(Enemy2Parameter enemy2Parameter)
         {
-            this.enemy2Parameter = enemy2Parameter;
+            this._enemy2Parameter = enemy2Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
@@ -34,11 +34,11 @@ namespace Assets.Scripts.Enemy2
         private async UniTask Attack()
         {
             EnemyMain enemy = GetComponent<EnemyMain>();
-            for(int i = 0; i < enemy2Parameter.AttackCount; i++)
+            for(int i = 0; i < _enemy2Parameter.AttackCount; i++)
             {
-                ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, enemy2Parameter.SearchedTargetZ)), enemy2Parameter.EnemyDamageObjectParameter, enemy);
-                PlaySE.SingletonInstance.PlayInstantiateEnemy2DamageObject();
-                await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
+                ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, _enemy2Parameter.SearchedTargetZ)), _enemy2Parameter.EnemyDamageObjectParameter, enemy);
+                SEPlayer.SingletonInstance.PlayInstantiateEnemy2DamageObject();
+                await UniTask.Delay(TimeSpan.FromSeconds(_enemy2Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
             } 
         }
 

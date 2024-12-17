@@ -21,7 +21,7 @@ namespace Assets.Scripts.Player
             playerAttack.enabled = true;
             playerAnimation.StartAttack();
             playerAttackEffectAnimation.StartAttack();
-            PlaySE.SingletonInstance.PlayAttack();
+            SEPlayer.SingletonInstance.PlayAttack();
         }
 
         public void FixedUpdate()
