@@ -16,11 +16,13 @@ namespace Assets.Scripts.Enemy3
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         private CancellationTokenSource cancellationTokenSource = null;
-    
+        private AudioSource audioSource;
+
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
             _enemy3Parameter = enemy3Parameter;
             objectMove = GetComponent<ObjectMove>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private async void OnEnable()
@@ -41,7 +43,7 @@ namespace Assets.Scripts.Enemy3
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
                     ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[j], _enemy3Parameter.EnemyDamageObjectParameter, enemy);
-                SEPlayer.SingletonInstance.PlayInstantiateEnemy3DamageObject();
+                SEPlayer.SingletonInstance.PlayInstantiateEnemy3DamageObject(audioSource);
                 await UniTask.Delay(TimeSpan.FromSeconds(_enemy3Parameter.WaveMoveTime), cancellationToken: cancellationTokenSource.Token);
             }
         }

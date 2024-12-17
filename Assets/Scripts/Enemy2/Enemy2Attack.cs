@@ -15,11 +15,13 @@ namespace Assets.Scripts.Enemy2
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
         private CancellationTokenSource cancellationTokenSource = null;
+        private AudioSource audioSource;
         
         public void Initialize(Enemy2Parameter enemy2Parameter)
         {
-            this._enemy2Parameter = enemy2Parameter;
+            _enemy2Parameter = enemy2Parameter;
             objectMove = GetComponent<ObjectMove>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private async void OnEnable()
@@ -37,7 +39,7 @@ namespace Assets.Scripts.Enemy2
             for(int i = 0; i < _enemy2Parameter.AttackCount; i++)
             {
                 ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(ObjectMove.ConvertToTileRePos3FromImPos3(ObjectMove.ConvertToImPos3FromRePos3(ObjectStorage.GetPlayerRePos3()) + new Vector3(0f, 0f, _enemy2Parameter.SearchedTargetZ)), _enemy2Parameter.EnemyDamageObjectParameter, enemy);
-                SEPlayer.SingletonInstance.PlayInstantiateEnemy2DamageObject();
+                SEPlayer.SingletonInstance.PlayInstantiateEnemy2DamageObject(audioSource);
                 await UniTask.Delay(TimeSpan.FromSeconds(_enemy2Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
             } 
         }
