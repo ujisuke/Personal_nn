@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class ShearUI : BaseMeshEffect
+    public class UIShearer : BaseMeshEffect
     {
         [SerializeField] private Vector2 shear = new(0f, 0f);
 

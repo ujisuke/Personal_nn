@@ -30,9 +30,9 @@ namespace Assets.Scripts.Player
             energy = Energy.Initialize(_playerParameter.MaxEnergy);
             GetComponent<ObjectMove>().Initialize(_playerParameter, transform.position);
             playerAttack = GetComponent<PlayerAttack>();
-            SetPlayerHPBar._SingletonInstance.ResetValue();
-            SetPlayerEnergyBar._SingletonInstance.ResetValue();
-            SetPlayerAvailableEnergyBar._SingletonInstance.ResetValue();
+            PlayerHPBar.SingletonInstance.ResetValue();
+            PlayerEnergyBar.SingletonInstance.ResetValue();
+            PlayerAvailableEnergyBar.SingletonInstance.ResetValue();
             ChargeEnergy().Forget();
         }
 
@@ -46,8 +46,8 @@ namespace Assets.Scripts.Player
             if(isInvincible) return;
             hP = hP.TakeDamage(damage);
             BecomeInvincible().SuppressCancellationThrow().Forget();
-            SetPlayerHPBar._SingletonInstance.TakeDamage(hP.CurrentHP);
-            PlaySE.SingletonInstance.PlayTakeDamage();
+            PlayerHPBar.SingletonInstance.TakeDamage(hP.CurrentHP);
+            SEPlayer.SingletonInstance.PlayTakeDamage();
         }
 
         public async UniTask BecomeInvincible()
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Player
         public async void DestroyDeadObject()
         {
             StopTokenSources();
-            PlaySE.SingletonInstance.PlayDead();
+            SEPlayer.SingletonInstance.PlayDead();
             await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.DeadTime));
             Destroy(gameObject);
         }
@@ -117,16 +117,16 @@ namespace Assets.Scripts.Player
                 await UniTask.WaitUntil(() => !energy.IsFull());
                 energy = energy.Charge(0.1f);
                 await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.ChargingEnergyTime * 0.1f));
-                SetPlayerEnergyBar._SingletonInstance.SetValue(energy.CurrentEnergy);
-                SetPlayerAvailableEnergyBar._SingletonInstance.SetValue(energy.CurrentAvailableEnergy);                      
+                PlayerEnergyBar.SingletonInstance.SetValue(energy.CurrentEnergy);
+                PlayerAvailableEnergyBar.SingletonInstance.SetValue(energy.CurrentAvailableEnergy);                      
             }
         }
 
         public void ConsumeEnergy(int consumption)
         {
             energy = energy.Consume(consumption);
-            SetPlayerEnergyBar._SingletonInstance.SetValue(energy.CurrentEnergy);
-            SetPlayerAvailableEnergyBar._SingletonInstance.SetValue(energy.CurrentAvailableEnergy);
+            PlayerEnergyBar.SingletonInstance.SetValue(energy.CurrentEnergy);
+            PlayerAvailableEnergyBar.SingletonInstance.SetValue(energy.CurrentAvailableEnergy);
         }
     }
 }

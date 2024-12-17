@@ -32,8 +32,8 @@ namespace Assets.Scripts.UI
         private void Awake()
         {
             text = GetComponent<Text>();
-            soundOptionList.Add(new SoundOption(_bgmVolumeText, (int)PlayBGM.SingletonInstance.GetBGMVolume(), volume => { PlayBGM.SingletonInstance.SetBGMVolume(volume); }));
-            soundOptionList.Add(new SoundOption(_seVolumeText, (int)PlaySE.SingletonInstance.GetSEVolume(), volume => { PlaySE.SingletonInstance.SetSEVolume(volume); }));
+            soundOptionList.Add(new SoundOption(_bgmVolumeText, (int)BGMPlayer.SingletonInstance.GetBGMVolume(), volume => { BGMPlayer.SingletonInstance.SetBGMVolume(volume); }));
+            soundOptionList.Add(new SoundOption(_seVolumeText, (int)SEPlayer.SingletonInstance.GetSEVolume(), volume => { SEPlayer.SingletonInstance.SetSEVolume(volume); }));
         }
         
         private void Update()

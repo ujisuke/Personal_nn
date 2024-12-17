@@ -6,14 +6,14 @@ namespace Assets.Scripts.Player
 {
     public class PlayerMove : MonoBehaviour
     {
-        private PlayerParameter playerParameter;
+        private PlayerParameter _playerParameter;
         private ObjectMove objectMove;
         private bool isAfterAttack = true;
         private PlayerMain playerMain;
 
         public void Initialize(PlayerParameter playerParameter)
         {
-            this.playerParameter = playerParameter;
+            _playerParameter = playerParameter;
             objectMove = GetComponent<ObjectMove>();
             playerMain = GetComponent<PlayerMain>();
         }
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Player
 
         public bool CanAttack()
         {
-            return Input.GetKey(KeyCode.Return) && !isAfterAttack && playerMain.CanUseEnergy(playerParameter.AttackEnergyConsumption);
+            return Input.GetKey(KeyCode.Return) && !isAfterAttack && playerMain.CanUseEnergy(_playerParameter.AttackEnergyConsumption);
         }
 
         public (bool isLookingPlusImX, bool isLookingMinusImX, bool isLookingPlusImY, bool isLookingMinusImY) GetLookingDirection()

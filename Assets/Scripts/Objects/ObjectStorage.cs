@@ -8,14 +8,13 @@ namespace Assets.Scripts.Objects
     public class ObjectStorage : MonoBehaviour
     {
         private static PlayerMain player;
-        private static List<EnemyMain> enemyList = new();
-        private static List<(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)> enemyDamageObjectList = new();
+        private static List<EnemyGroup> enemyGroupList = new();
         public static bool IsStartBattleEnemyLiving = false;
         public static bool IsSetGameEnemyLiving = false;
 
         private void FixedUpdate()
         {
-            ObjectHittingCalculator.CalculateHitting(player, enemyList, enemyDamageObjectList);
+            ObjectHittingCalculator.CalculateHitting(player, enemyGroupList);
         }
 
         public static void AddPlayer(PlayerMain newPlayer)
@@ -30,27 +29,18 @@ namespace Assets.Scripts.Objects
 
         public static void AddEnemy(EnemyMain enemy)
         {
-            enemyList.Add(enemy);
+            enemyGroupList.Add(new(enemy));
         }
 
         public static void RemoveEnemyAndDestroyDamageObject(EnemyMain enemy)
         {
-            enemyList.Remove(enemy);
-            RemoveAndDestroyEnemyDamageObjects(enemy);
-        }
-
-        private static void RemoveAndDestroyEnemyDamageObjects(EnemyMain enemy)
-        {
-            int i = 0;
-            while(true)
+            for(int i = 0; i < enemyGroupList.Count; i++)
             {
-                if(i >= enemyDamageObjectList.Count) break;
-                if(enemyDamageObjectList[i].enemy != enemy)
-                {
-                    i++;
+                if(enemyGroupList[i].Enemy != enemy)
                     continue;
-                }
-                enemyDamageObjectList[i].enemyDamageObject.DestroyObject();
+                enemyGroupList[i].DestroyAllEnemyDamageObjects();
+                enemyGroupList.RemoveAt(i);
+                break;
             }
         }
 
@@ -58,25 +48,31 @@ namespace Assets.Scripts.Objects
         {
             if(player != null) 
                 player.SetCleaned();
-            for(int i = 0; i < enemyList.Count; i++)
-                enemyList[i].SetCleaned();
-            int enemyDamageObjectListCount = enemyDamageObjectList.Count;
-            for(int i = 0; i < enemyDamageObjectListCount; i++)
-                enemyDamageObjectList[0].enemyDamageObject.DestroyObject();
+            for(int i = 0; i < enemyGroupList.Count; i++)
+            {
+                enemyGroupList[i].Enemy.SetCleaned();
+                enemyGroupList[i].DestroyAllEnemyDamageObjects();
+            }
         }
 
         public static void AddEnemyDamageObject(EnemyDamageObjectMain enemyDamageObject, EnemyMain enemy)
         {
-            enemyDamageObjectList.Add((enemyDamageObject, enemy));
+            for(int i = 0; i < enemyGroupList.Count; i++)
+            {
+                if(enemyGroupList[i].Enemy != enemy)
+                    continue;
+                enemyGroupList[i].EnemyDamageObjectList.Add(enemyDamageObject);
+                return;
+            }
         }
 
         public static void RemoveEnemyDamageObject(EnemyDamageObjectMain enemyDamageObject)
         {
-            for(int i = 0; i < enemyDamageObjectList.Count; i++)
+            for(int i = 0; i < enemyGroupList.Count; i++)
             {
-                if(enemyDamageObjectList[i].enemyDamageObject != enemyDamageObject)
+                if(!enemyGroupList[i].EnemyDamageObjectList.Contains(enemyDamageObject))
                     continue;
-                enemyDamageObjectList.RemoveAt(i);
+                enemyGroupList[i].EnemyDamageObjectList.Remove(enemyDamageObject);
                 return;
             }
         }
@@ -86,8 +82,8 @@ namespace Assets.Scripts.Objects
             if(player == null)
                 return;
             player.SetReady();
-            foreach(EnemyMain enemy in enemyList)
-                enemy.SetReady();
+            for(int i = 0; i < enemyGroupList.Count; i++)
+                enemyGroupList[i].Enemy.SetReady();
         }
 
         public static Vector3 GetPlayerRePos3()
@@ -104,7 +100,27 @@ namespace Assets.Scripts.Objects
 
         public static bool IsEnemyLiving()
         {
-            return enemyList.Count > 0 || enemyDamageObjectList.Count > 0;
+            return enemyGroupList.Count > 0;
+        }
+    }
+
+    public class EnemyGroup
+    {
+        private readonly EnemyMain enemy;
+        public EnemyMain Enemy => enemy;
+        private readonly List<EnemyDamageObjectMain> enemyDamageObjectList = new();
+        public List<EnemyDamageObjectMain> EnemyDamageObjectList => enemyDamageObjectList;
+
+        public EnemyGroup(EnemyMain enemy)
+        {
+            this.enemy = enemy;
+        }
+
+        public void DestroyAllEnemyDamageObjects()
+        {
+            int count = enemyDamageObjectList.Count;
+            for(int i = 0; i < count; i++)
+                enemyDamageObjectList[0].DestroyObject();
         }
     }
 }

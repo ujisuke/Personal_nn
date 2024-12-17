@@ -6,14 +6,12 @@ namespace Assets.Scripts.Enemy1
     public class Enemy1Animation : MonoBehaviour
     {
         private Animator animator;
-        private Enemy1Parameter _enemy1Parameter;
 
         public void Initialize(Enemy1Parameter enemy1Parameter)
         {
-            _enemy1Parameter = enemy1Parameter;
             animator = GetComponent<Animator>();
-            animator.SetFloat("DeadSpeed" , 1f / _enemy1Parameter.DeadTime);
-            animator.SetFloat("ReadySpeed", 1f / _enemy1Parameter.ReadyTime);
+            animator.SetFloat("DeadSpeed" , 1f / enemy1Parameter.DeadTime);
+            animator.SetFloat("ReadySpeed", 1f / enemy1Parameter.ReadyTime);
         }
 
         public void SetLookingDirection((bool plusImX, bool minusImX, bool plusImY, bool minusImY) isLooking)

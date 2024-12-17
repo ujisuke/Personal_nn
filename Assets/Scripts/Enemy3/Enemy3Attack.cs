@@ -11,7 +11,7 @@ namespace Assets.Scripts.Enemy3
 {
     public class Enemy3Attack : MonoBehaviour
     {
-        private Enemy3Parameter enemy3Parameter;
+        private Enemy3Parameter _enemy3Parameter;
         private ObjectMove objectMove;
         private bool isAttacking = true;
         public bool IsAttacking => isAttacking;
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Enemy3
     
         public void Initialize(Enemy3Parameter enemy3Parameter)
         {
-            this.enemy3Parameter = enemy3Parameter;
+            _enemy3Parameter = enemy3Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
@@ -40,9 +40,9 @@ namespace Assets.Scripts.Enemy3
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
                 for(int j = 0; j < objectRePos3List.Count; j++)
-                    ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[j], enemy3Parameter.EnemyDamageObjectParameter, enemy);
-                PlaySE.SingletonInstance.PlayInstantiateEnemy3DamageObject();
-                await UniTask.Delay(TimeSpan.FromSeconds(enemy3Parameter.WaveMoveTime), cancellationToken: cancellationTokenSource.Token);
+                    ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[j], _enemy3Parameter.EnemyDamageObjectParameter, enemy);
+                SEPlayer.SingletonInstance.PlayInstantiateEnemy3DamageObject();
+                await UniTask.Delay(TimeSpan.FromSeconds(_enemy3Parameter.WaveMoveTime), cancellationToken: cancellationTokenSource.Token);
             }
         }
 

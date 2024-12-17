@@ -7,7 +7,7 @@ namespace Assets.Scripts.Objects
         private void OnEnable()
         {
             GetComponent<ObjectMove>().Freeze();
-            GetComponent<SetShadow>().DestroyShadow();
+            GetComponent<ShadowSetter>().DestroyShadow();
             GetComponent<IObjectMain>().DestroyAliveObject();
         }
     }

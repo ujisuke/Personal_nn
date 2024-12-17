@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 978616997346183147}
   - component: {fileID: 7780694992736413012}
   m_Layer: 5
-  m_Name: Description
+  m_Name: DescriptionPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf5079295e3bcd14cb118facce2f608f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadow: {fileID: 5383507365034433712}
+  shadowPrefab: {fileID: 5383507365034433712}
 --- !u!114 &2053361705975305330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 1132578694502849140}
   - component: {fileID: 1455566168461102493}
   m_Layer: 0
-  m_Name: Shadow
+  m_Name: ShadowPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

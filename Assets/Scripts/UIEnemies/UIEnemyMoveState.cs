@@ -5,23 +5,23 @@ namespace Assets.Scripts.UIEnemies
     public class UIEnemyMoveState : IObjectState
     {
         private ObjectStateMachine objectStateMachine;
-        private UIEnemyMove uIEnemyMove;
+        private UIEnemyMove uiEnemyMove;
         private EnemyMain enemyMain;
-        private UIEnemyAnimation uIEnemyAnimation;
+        private UIEnemyAnimation uiEnemyAnimation;
         
         public void Enter(ObjectStateMachine objectStateMachine)
         {
             this.objectStateMachine = objectStateMachine;
-            uIEnemyMove = objectStateMachine.GetComponent<UIEnemyMove>();
+            uiEnemyMove = objectStateMachine.GetComponent<UIEnemyMove>();
             enemyMain = objectStateMachine.GetComponent<EnemyMain>();
-            uIEnemyAnimation = objectStateMachine.GetComponent<UIEnemyAnimation>();
-            uIEnemyMove.enabled = true;
-            uIEnemyAnimation.StartMove();
+            uiEnemyAnimation = objectStateMachine.GetComponent<UIEnemyAnimation>();
+            uiEnemyMove.enabled = true;
+            uiEnemyAnimation.StartMove();
         }
 
         public void FixedUpdate()
         {
-            uIEnemyAnimation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
+            uiEnemyAnimation.SetLookingDirection(ObjectMove.GetLookingAtPlayerDirection(objectStateMachine.transform.position));
             if(enemyMain.IsCleaned)
                 objectStateMachine.TransitionTo(new UIEnemyCleanedState());
             else if(enemyMain.IsDead())
@@ -30,8 +30,8 @@ namespace Assets.Scripts.UIEnemies
 
         public void Exit()
         {
-            uIEnemyMove.enabled = false;
-            uIEnemyAnimation.StopMove();
+            uiEnemyMove.enabled = false;
+            uiEnemyAnimation.StopMove();
         }
     }
 }

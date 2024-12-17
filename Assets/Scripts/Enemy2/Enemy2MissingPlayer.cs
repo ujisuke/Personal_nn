@@ -9,7 +9,7 @@ namespace Assets.Scripts.Enemy2
 {
     public class Enemy2MissingPlayer : MonoBehaviour
     {
-        private Enemy2Parameter enemy2Parameter;
+        private Enemy2Parameter _enemy2Parameter;
         private ObjectMove objectMove;
         private bool isMissingPlayer = true;
         public bool IsMissingPlayer => isMissingPlayer;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Enemy2
         
         public void Initialize(Enemy2Parameter enemy2Parameter)
         {
-            this.enemy2Parameter = enemy2Parameter;
+            this._enemy2Parameter = enemy2Parameter;
             objectMove = GetComponent<ObjectMove>();
         }
 
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Enemy2
             isMissingPlayer = true;
             objectMove.Stop();
             cancellationTokenSource = new();
-            await UniTask.Delay(TimeSpan.FromSeconds(enemy2Parameter.MissingPlayerTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
+            await UniTask.Delay(TimeSpan.FromSeconds(_enemy2Parameter.MissingPlayerTime), cancellationToken: cancellationTokenSource.Token).SuppressCancellationThrow();
             isMissingPlayer = false;
         }
 

@@ -38,7 +38,7 @@ namespace Assets.Scripts.Enemy4
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < objectRePos3List.Count; i++)
                 ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[i], _enemy4Parameter.EnemyDamageObjectParameter, enemy);
-            PlaySE.SingletonInstance.PlayInstantiateEnemy4DamageObject();
+            SEPlayer.SingletonInstance.PlayInstantiateEnemy4DamageObject();
             await UniTask.Delay(TimeSpan.FromSeconds(_enemy4Parameter.AttackCoolDownTime), cancellationToken: cancellationTokenSource.Token);
         }
 

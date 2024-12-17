@@ -5,16 +5,15 @@ namespace Assets.Scripts.UI
     public class CanvasStorage : MonoBehaviour
     {
         [SerializeField] private Canvas descriptionCanvas;
-        private static Canvas singletonDescriptionCanvas;
-        public static Canvas SingletonDescriptionCanvas => singletonDescriptionCanvas;
+        public Canvas DescriptionCanvas => descriptionCanvas;
         [SerializeField] private Canvas poseCanvas;
-        private static Canvas singletonPoseCanvas;
         private bool isEscapePushed = false;
-
+        private static CanvasStorage singletonInstance;
+        public static CanvasStorage SingletonInstance => singletonInstance;
+    
         private void Awake()
         {
-            singletonDescriptionCanvas = descriptionCanvas;
-            singletonPoseCanvas = poseCanvas;
+            singletonInstance = this;
         }
 
         private void Update()
@@ -26,22 +25,22 @@ namespace Assets.Scripts.UI
             if (Input.GetKey(KeyCode.Escape))
             {
                 isEscapePushed = true;
-                if(singletonPoseCanvas.gameObject.activeSelf)
+                if(poseCanvas.gameObject.activeSelf)
                     HidePoseCanvas();
                 else
                     ShowPoseCanvas();
             }
         }
 
-        public static void ShowPoseCanvas()
+        public void ShowPoseCanvas()
         {
-            singletonPoseCanvas.gameObject.SetActive(true);
+            poseCanvas.gameObject.SetActive(true);
             Time.timeScale = 0;
         }
 
-        public static void HidePoseCanvas()
+        public void HidePoseCanvas()
         {
-            singletonPoseCanvas.gameObject.SetActive(false);
+            poseCanvas.gameObject.SetActive(false);
             Time.timeScale = 1;
         }
     }

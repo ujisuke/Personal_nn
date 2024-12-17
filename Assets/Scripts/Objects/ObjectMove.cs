@@ -11,7 +11,7 @@ namespace Assets.Scripts.Objects
 {
     public class ObjectMove : MonoBehaviour
     {
-        private ObjectParameter objectParameter;
+        private ObjectParameter _objectParameter;
         private readonly int[,] _tileImZs = StageFacade.TileImZs;
         private bool isJumping = false;
         public bool IsJumping => isJumping;
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Objects
 
         public void Initialize(ObjectParameter objectParameter, Vector3 objectRePos3)
         {
-            this.objectParameter = objectParameter;
+            _objectParameter = objectParameter;
             prevImZ = objectRePos3.z;
             objectSpriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -104,7 +104,7 @@ namespace Assets.Scripts.Objects
         {
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(transform.position);
             
-            float weight = objectParameter.MoveSpeed * Time.deltaTime;
+            float weight = _objectParameter.MoveSpeed * Time.deltaTime;
             if(isHeadingToPlusImY) newImPos3.y += weight;
             if(isHeadingToMinusImY) newImPos3.y -= weight;
             if(isHeadingToMinusImX) newImPos3.x -= weight;
@@ -114,12 +114,12 @@ namespace Assets.Scripts.Objects
                 isJumping = true;
                 isFalling = false;
                 prevImZ = newImPos3.z;
-                newImPos3.z += 4f * objectParameter.JumpHeight / objectParameter.JumpTime * Time.deltaTime - 4f * objectParameter.JumpHeight / (objectParameter.JumpTime * objectParameter.JumpTime) * (Time.deltaTime * Time.deltaTime);
+                newImPos3.z += 4f * _objectParameter.JumpHeight / _objectParameter.JumpTime * Time.deltaTime - 4f * _objectParameter.JumpHeight / (_objectParameter.JumpTime * _objectParameter.JumpTime) * (Time.deltaTime * Time.deltaTime);
             }
             else
             {
                 float tmpPrevZ = newImPos3.z;
-                newImPos3.z += newImPos3.z - prevImZ - 8f * objectParameter.JumpHeight / (objectParameter.JumpTime * objectParameter.JumpTime) * (Time.deltaTime * Time.deltaTime);
+                newImPos3.z += newImPos3.z - prevImZ - 8f * _objectParameter.JumpHeight / (_objectParameter.JumpTime * _objectParameter.JumpTime) * (Time.deltaTime * Time.deltaTime);
                 prevImZ = tmpPrevZ;
                 isFalling = newImPos3.z < prevImZ && newImPos3.z > _tileImZs[ConvertToTileIndexFromImPos3(newImPos3).i, ConvertToTileIndexFromImPos3(newImPos3).j] + 1f;
             }
@@ -323,7 +323,7 @@ namespace Assets.Scripts.Objects
 
         public bool IsReachable(Vector3 targetRePos3, Vector3 objectRePos3)
         {
-            return targetRePos3.z < objectRePos3.z + objectParameter.JumpHeight;
+            return targetRePos3.z < objectRePos3.z + _objectParameter.JumpHeight;
         }
     
         public void HeadToMinusImX(bool isHeading)
@@ -392,7 +392,7 @@ namespace Assets.Scripts.Objects
         
         public bool IsDestinationTileZReachableWithJumping(Vector3 objectRePos3)
         {
-            return destinationTileImZ < objectRePos3.z - 1f + objectParameter.JumpHeight && objectRePos3.z - 1f < destinationTileImZ;
+            return destinationTileImZ < objectRePos3.z - 1f + _objectParameter.JumpHeight && objectRePos3.z - 1f < destinationTileImZ;
         }
 
         public static int CalculateSortingOrderFromRePos3(Vector3 rePos3)
