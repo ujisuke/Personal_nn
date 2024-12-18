@@ -30,7 +30,6 @@ namespace Assets.Scripts.Room
             else if (!ObjectFacade.IsEnemyLiving())
             {
                 BattleData.AddStageCount();
-                BattleData.UpdateSeed();
                 await roomStateMachine.TransitionTo(new BattleRoomState());
             }
             else if(PoseBackerToLobby.IsBackingToLobby)

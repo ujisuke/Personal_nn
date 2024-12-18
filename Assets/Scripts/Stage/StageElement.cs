@@ -36,7 +36,7 @@ namespace Assets.Scripts.Stage
 
         public static void AssignStageElementZs(int[,] area, int count)
         {
-            Random.InitState(BattleData.Seed + count);
+            Random.InitState(BattleData.BattleSeed + count);
             int[,] selectedElementZs = _StageElementZs[Random.Range(0, _StageElementZs.Count)];
             if(Random.Range(0, 2) == 1) FlipElementMatrix(selectedElementZs);
             

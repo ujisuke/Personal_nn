@@ -15,15 +15,11 @@ namespace Assets.Scripts.Battle
         public static int DeathCount => deathCount;
         private static int seed = 3;
         public static int Seed => seed;
+        public static int BattleSeed => seed + stageCount;
 
         public static void AddStageCount()
         {
             stageCount++;
-        }
-
-        public static void UpdateSeed()
-        {
-            seed++;
         }
 
         public static void AddDeathCount()
@@ -36,6 +32,11 @@ namespace Assets.Scripts.Battle
             stageCount = 1;
             deathCount = 0;
             seed = DateTime.Now.Millisecond;
+        }
+
+        public static void ReplaceSeed(int inputSeed)
+        {
+            seed = inputSeed;
         }
     }
 }
