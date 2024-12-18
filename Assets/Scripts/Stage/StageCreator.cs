@@ -77,7 +77,7 @@ namespace Assets.Scripts.Stage
         private static void SetAllZsWhenDifficultyIs1()
         {
             int[,] _stageArea = new int[_StageSide, _StageSide];
-            StageElement.AssignStageElementZs(_stageArea);
+            StageElement.AssignStageElementZs(_stageArea, 0);
             for(int i = 0; i < _StageSide; i++)
                 for(int j = 0; j < _StageSide; j++)
                     TileImZs[i, j] = _stageArea[i, j];
@@ -110,7 +110,7 @@ namespace Assets.Scripts.Stage
                 int h = stageAreaPointList[i].endI - stageAreaPointList[i].startI + 1;
                 int w = stageAreaPointList[i].endJ - stageAreaPointList[i].startJ + 1;
                 int[,] _stageArea = new int[h, w];
-                StageElement.AssignStageElementZs(_stageArea);
+                StageElement.AssignStageElementZs(_stageArea, i);
                 for(int I = 0; I < h; I++)
                     for(int J = 0; J < w; J++)
                         TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
@@ -169,7 +169,7 @@ namespace Assets.Scripts.Stage
                 int h = stageAreaPointList[i].endI - stageAreaPointList[i].startI + 1;
                 int w = stageAreaPointList[i].endJ - stageAreaPointList[i].startJ + 1;
                 int[,] _stageArea = new int[h, w];
-                StageElement.AssignStageElementZs(_stageArea);
+                StageElement.AssignStageElementZs(_stageArea, i);
                 for(int I = 0; I < h; I++)
                     for(int J = 0; J < w; J++)
                         TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;

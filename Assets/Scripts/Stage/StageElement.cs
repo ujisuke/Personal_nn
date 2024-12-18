@@ -8,36 +8,35 @@ namespace Assets.Scripts.Stage
     {
         private static readonly List<int[,]> _StageElementZs = new()
         {
-            new int[3,3]{
-                {4, 4, 3},
-                {4, 4, 2},
-                {4, 4, 1}
+            new int[4,4]{
+                {4, 4, 3, 2},
+                {4, 1, 1, 1},
+                {3, 1, 1, 1},
+                {2, 1, 1, 1}
             },
-            new int[3,3]{
-                {4, 3, 2},
-                {1, 1, 1},
-                {1, 1, 1}
+            new int[4,4]{
+                {3, 3, 2, 2},
+                {3, 3, 2, 2},
+                {4, 4, 1, 1},
+                {4, 4, 1, 1}
             },
-            new int[3,3]{
-                {4, 2, 2},
-                {3, 2, 1},
-                {3, 3, 1}
+            new int[4,4]{
+                {1, 1, 2, 2},
+                {1, 1, 2, 2},
+                {2, 2, 1, 1},
+                {2, 2, 1, 1}
             },
-            new int[3,3]{
-                {3, 1, 2},
-                {3, 1, 2},
-                {3, 1, 2}
+            new int[4,4]{
+                {5, 5, 5, 3},
+                {5, 5, 3, 3},
+                {5, 3, 3, 1},
+                {3, 3, 1, 1}
             },
-            new int[3,3]{
-                {3, 3, 3},
-                {2, 2, 2},
-                {1, 1, 1}
-            }
         }; 
 
-        public static void AssignStageElementZs(int[,] area)
+        public static void AssignStageElementZs(int[,] area, int count)
         {
-            Random.InitState(BattleData.Seed);
+            Random.InitState(BattleData.Seed + count);
             int[,] selectedElementZs = _StageElementZs[Random.Range(0, _StageElementZs.Count)];
             if(Random.Range(0, 2) == 1) FlipElementMatrix(selectedElementZs);
             
@@ -48,14 +47,15 @@ namespace Assets.Scripts.Stage
             for(int i = 0; i < areaH; i++)
                 for(int j = 0; j < areaW; j++)
                 {
-                    int adjustedI = 1;
+                    int adjustedI;
                     if(i == 0) adjustedI = 0;
                     else if(i == areaH - 1) adjustedI = elementH - 1;
+                    else adjustedI = i / (areaH / 2) + 1;
 
-                    int adjustedJ = 1;
+                    int adjustedJ;
                     if(j == 0) adjustedJ = 0;
                     else if(j == areaW - 1) adjustedJ = elementW - 1;
-
+                    else adjustedJ = j / (areaW / 2) + 1;
                     area[i, j] = selectedElementZs[adjustedI, adjustedJ];
                 }
         }
