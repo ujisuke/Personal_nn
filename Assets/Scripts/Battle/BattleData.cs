@@ -21,9 +21,9 @@ namespace Assets.Scripts.Battle
             stageCount++;
         }
 
-        public static void ResetSeed()
+        public static void UpdateSeed()
         {
-            seed = DateTime.Now.Millisecond;
+            seed++;
         }
 
         public static void AddDeathCount()

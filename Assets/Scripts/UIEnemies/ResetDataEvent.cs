@@ -7,7 +7,7 @@ namespace Assets.Scripts.UIEnemies
     {
         public void Execute()
         {
-            BattleFacade.ResetData();
+            BattleData.Reset();
         }
     }
 }

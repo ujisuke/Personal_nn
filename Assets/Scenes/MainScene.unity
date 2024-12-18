@@ -3691,10 +3691,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1652296233}
-  - component: {fileID: 1652296234}
   - component: {fileID: 1652296235}
   m_Layer: 0
-  m_Name: BattleFacade
+  m_Name: BattleData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3715,18 +3714,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1652296234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652296232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c98ddabb2de6944ada1941a1d0b66e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1652296235
 MonoBehaviour:
   m_ObjectHideFlags: 0
