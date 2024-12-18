@@ -42,10 +42,10 @@ namespace Assets.Scripts.Objects
         {
             await InstantiateAsync(_playerPrefab, ObjectMove.ConvertToRePos3FromTileIndex(playerFirstTileIndex), Quaternion.identity);
 
-            int objectCount = math.min(BattleFacade.EnemyDifficulty, StageFacade.StageSide * StageFacade.StageSide - minimumDistanceBetweenPlayerAndEnemy * minimumDistanceBetweenPlayerAndEnemy);
+            int objectCount = math.min(BattleData.EnemyDifficulty, StageFacade.StageSide * StageFacade.StageSide - minimumDistanceBetweenPlayerAndEnemy * minimumDistanceBetweenPlayerAndEnemy);
             List<Vector3> enemyRePos3List = ObjectMove.DrawSomeRePos3AtRandom(objectCount, playerFirstTileIndex, minimumDistanceBetweenPlayerAndEnemy, StageFacade.StageSide);
 
-            UnityEngine.Random.InitState(BattleFacade.Seed);
+            UnityEngine.Random.InitState(BattleData.BattleSeed);
             for (int i = 0; i < objectCount; i++)
             {
                 int randomIndex = UnityEngine.Random.Range(0, _enemyPrefabList.Count);

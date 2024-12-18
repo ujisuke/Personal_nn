@@ -66,11 +66,11 @@ namespace Assets.Scripts.Stage
         
         private static void SetAllZs()
         {
-            if(BattleFacade.StageDifficulty == 1)
+            if(BattleData.StageDifficulty == 1)
                 SetAllZsWhenDifficultyIs1();
-            else if(BattleFacade.StageDifficulty == 2)
+            else if(BattleData.StageDifficulty == 2)
                 SetAllZsWhenDifficultyIs2();
-            else if(BattleFacade.StageDifficulty >= 3)
+            else if(BattleData.StageDifficulty >= 3)
                 SetAllZsWhenDifficultyIs3OrMoreThan();
         }
 
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs2()
         {
-            Random.InitState(BattleFacade.Seed);
+            Random.InitState(BattleData.BattleSeed);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
             int clossI = Random.Range(2, _StageSide - 2);
             int clossJ = Random.Range(2, _StageSide - 2);
@@ -126,7 +126,7 @@ namespace Assets.Scripts.Stage
 
         private static void SetAllZsWhenDifficultyIs3OrMoreThan()
         {
-            Random.InitState(BattleFacade.Seed);
+            Random.InitState(BattleData.BattleSeed);
             List<(int startI, int startJ, int endI, int endJ)> stageAreaPointList = new();
             int clossI = Random.Range(2, _StageSide - 2);
             int clossJ = Random.Range(2, _StageSide - 2);

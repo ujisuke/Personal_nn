@@ -29,14 +29,12 @@ namespace Assets.Scripts.Room
                 await roomStateMachine.TransitionTo(new LobbyState());
             else if (!ObjectFacade.IsEnemyLiving())
             {
-                BattleFacade.AddStageCount();
-                BattleFacade.ResetSeed();
+                BattleData.AddStageCount();
                 await roomStateMachine.TransitionTo(new BattleRoomState());
             }
             else if(PoseBackerToLobby.IsBackingToLobby)
             {
                 PoseBackerToLobby.IsBackingToLobby = false;
-                BattleFacade.ResetData();
                 await roomStateMachine.TransitionTo(new LobbyState());
             }
         }

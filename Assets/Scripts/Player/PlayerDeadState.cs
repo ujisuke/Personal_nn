@@ -10,7 +10,7 @@ namespace Assets.Scripts.Player
             ObjectStorage.RemovePlayer();
             objectStateMachine.GetComponent<ObjectDead>().enabled = true;
             objectStateMachine.GetComponent<PlayerAnimation>().StartDead();
-            BattleFacade.AddDeathCount();
+            BattleData.AddDeathCount();
         }
 
         public void FixedUpdate()

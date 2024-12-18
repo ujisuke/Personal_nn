@@ -13,6 +13,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private string _titleText;
         [SerializeField] private string _setVolumeText;
         [SerializeField] private string _backToLobbyText;
+        [SerializeField] private string _setSeedText;
         [SerializeField] private string _exitGameText;
         private int index = 0;
         private bool isPushed = false;
@@ -27,6 +28,8 @@ namespace Assets.Scripts.UI
         public bool IsSetVolumeSelected => isSetVolumeSelected;
         private bool isBackToLobbySelected = false;
         public bool IsBackToLobbySelected => isBackToLobbySelected;
+        private bool isSetSeedSelected = false;
+        public bool IsSetSeedSelected => isSetSeedSelected;
         private bool isExitGameSelected = false;
         public bool IsExitGameSelected => isExitGameSelected;
         public static bool IsInLobby = false;
@@ -47,6 +50,7 @@ namespace Assets.Scripts.UI
             if(IsInLobby)
             {
                 optionList.Add(new Option(_setVolumeText, () => isSetVolumeSelected = true));
+                optionList.Add(new Option(_setSeedText, () => isSetSeedSelected = true));
                 optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));
             }
             else
@@ -59,6 +63,7 @@ namespace Assets.Scripts.UI
             isPushed = true;
             isSetVolumeSelected = false;
             isBackToLobbySelected = false;
+            isSetSeedSelected = false;
             isExitGameSelected = false;
             ChangeTargetText();
         }
@@ -102,7 +107,7 @@ namespace Assets.Scripts.UI
     }
 
     
-    class Option
+    public class Option
     {
         private readonly string text;
         public string Text => text;
