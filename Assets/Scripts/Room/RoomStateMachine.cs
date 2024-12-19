@@ -11,7 +11,7 @@ namespace Assets.Scripts.Room
 
         private void Awake()
         {
-            currentState = new LobbyState();
+            currentState = new TitleRoomState();
             currentState.Enter(this);
         }
 

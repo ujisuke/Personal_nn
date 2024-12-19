@@ -7,7 +7,10 @@ namespace Assets.Scripts.UI
         [SerializeField] private Canvas descriptionCanvas;
         public Canvas DescriptionCanvas => descriptionCanvas;
         [SerializeField] private Canvas poseCanvas;
+        [SerializeField] private Canvas manualCanvas;
+        [SerializeField] private Canvas uiCanvas;
         private bool isEscapePushed = false;
+        public bool IsInTitleRoom = true;
         private static CanvasStorage singletonInstance;
         public static CanvasStorage SingletonInstance => singletonInstance;
     
@@ -22,7 +25,7 @@ namespace Assets.Scripts.UI
                 isEscapePushed = false;
             if(isEscapePushed)
                 return;
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKey(KeyCode.Escape) && !IsInTitleRoom)
             {
                 isEscapePushed = true;
                 if(poseCanvas.gameObject.activeSelf)
@@ -42,6 +45,13 @@ namespace Assets.Scripts.UI
         {
             poseCanvas.gameObject.SetActive(false);
             Time.timeScale = 1;
+        }
+
+        public void ShowCanvases()
+        {
+            uiCanvas.gameObject.SetActive(true);
+            manualCanvas.gameObject.SetActive(true);
+            descriptionCanvas.gameObject.SetActive(true);
         }
     }
 }

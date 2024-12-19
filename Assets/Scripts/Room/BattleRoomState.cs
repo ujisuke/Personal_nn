@@ -4,6 +4,7 @@ using Assets.Scripts.Sounds;
 using Assets.Scripts.Stage;
 using Assets.Scripts.UI;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Room
 {
