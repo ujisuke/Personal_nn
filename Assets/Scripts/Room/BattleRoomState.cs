@@ -26,7 +26,7 @@ namespace Assets.Scripts.Room
             if (!isSet)
                 return;
             if (!ObjectFacade.IsPlayerLiving())
-                await roomStateMachine.TransitionTo(new LobbyState());
+                await roomStateMachine.TransitionTo(new BattleRoomState());
             else if (!ObjectFacade.IsEnemyLiving())
             {
                 BattleData.AddStageCount();

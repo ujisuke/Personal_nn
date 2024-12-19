@@ -31,7 +31,7 @@ namespace Assets.Scripts.Enemy1
         private async UniTask Move()
         {
             targetRePos3 = ObjectStorage.GetPlayerRePos3();
-            while(ObjectFacade.IsPlayerLiving())
+            while (!cancellationTokenSource.Token.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: cancellationTokenSource.Token);   
                 targetRePos3 = ObjectStorage.GetPlayerRePos3();
