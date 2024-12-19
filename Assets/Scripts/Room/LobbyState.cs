@@ -14,6 +14,7 @@ namespace Assets.Scripts.Room
         public async UniTask Enter(RoomStateMachine roomStateMachine)
         {
             this.roomStateMachine = roomStateMachine;
+            CanvasStorage.SingletonInstance.ShowCanvases();
             await StageFacade.CreateLobbyStage();
             await ObjectFacade.CreateLobbyObjects();
             ObjectStorage.IsStartBattleEnemyLiving = true;

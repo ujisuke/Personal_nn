@@ -51,13 +51,13 @@ namespace Assets.Scripts.UI
             {
                 optionList.Add(new Option(_setVolumeText, () => isSetVolumeSelected = true));
                 optionList.Add(new Option(_setSeedText, () => isSetSeedSelected = true));
-                optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));
+                optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));   
             }
             else
             {
                 optionList.Add(new Option(_setVolumeText, () => isSetVolumeSelected = true));
                 optionList.Add(new Option(_backToLobbyText, () => isBackToLobbySelected = true));
-                optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));
+                optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));   
             }
             index = 0;
             isPushed = true;
