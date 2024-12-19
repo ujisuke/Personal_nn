@@ -13,9 +13,23 @@ namespace Assets.Scripts.Battle
         public static int StageCount => stageCount;
         private static int deathCount = 0;
         public static int DeathCount => deathCount;
-        private static int seed = 3;
+        private static int seed = 0;
         public static int Seed => seed;
         public static int BattleSeed => seed + stageCount;
+
+        private void Awake()
+        {
+            stageCount = PlayerPrefs.GetInt("StageCount", 1);
+            deathCount = PlayerPrefs.GetInt("DeathCount", 0);
+            seed = PlayerPrefs.GetInt("Seed", DateTime.Now.Millisecond);
+        }
+
+        public static void Save()
+        {
+            PlayerPrefs.SetInt("StageCount", stageCount);
+            PlayerPrefs.SetInt("DeathCount", deathCount);
+            PlayerPrefs.SetInt("Seed", seed);
+        }
 
         public static void AddStageCount()
         {
