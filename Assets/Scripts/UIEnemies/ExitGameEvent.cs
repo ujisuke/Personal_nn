@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.UIEnemies
 {
@@ -6,6 +7,7 @@ namespace Assets.Scripts.UIEnemies
     {
         public void Execute()
         {
+            BattleData.Save();
             Application.Quit();
         }
     }

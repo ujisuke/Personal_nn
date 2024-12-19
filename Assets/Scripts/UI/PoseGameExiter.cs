@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.Battle;
 
 namespace Assets.Scripts.UI
 {
@@ -6,6 +7,7 @@ namespace Assets.Scripts.UI
     {
         private void OnEnable()
         {
+            BattleData.Save();
             Application.Quit();
         }
     }
