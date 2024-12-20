@@ -32,6 +32,11 @@ namespace Assets.Scripts.Sounds
             ChangeBGM(_battleRoomBGM).Forget();
         }
 
+        public void PlayClearRoom()
+        {
+            ChangeBGM(_lobbyBGM).Forget();
+        }
+
         private static async UniTask ChangeBGM(AudioClip audioClip)
         {
             audioSource.outputAudioMixerGroup.audioMixer.GetFloat("BGMVolume", out float maxVolume);

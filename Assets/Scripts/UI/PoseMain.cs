@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Battle;
+using Assets.Scripts.Room;
 using Assets.Scripts.Sounds;
 using Unity.Mathematics;
 using UnityEngine;
@@ -26,12 +28,8 @@ namespace Assets.Scripts.UI
         public static string NonTargetTextColorCode => _nonTargetTextColorCode;
         private bool isSetVolumeSelected = false;
         public bool IsSetVolumeSelected => isSetVolumeSelected;
-        private bool isBackToLobbySelected = false;
-        public bool IsBackToLobbySelected => isBackToLobbySelected;
         private bool isSetSeedSelected = false;
         public bool IsSetSeedSelected => isSetSeedSelected;
-        private bool isExitGameSelected = false;
-        public bool IsExitGameSelected => isExitGameSelected;
         public static bool IsInLobby = false;
         private AudioSource audioSource;
 
@@ -51,20 +49,18 @@ namespace Assets.Scripts.UI
             {
                 optionList.Add(new Option(_setVolumeText, () => isSetVolumeSelected = true));
                 optionList.Add(new Option(_setSeedText, () => isSetSeedSelected = true));
-                optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));   
+                optionList.Add(new Option(_exitGameText, () => { BattleData.Save(); Application.Quit(); }));   
             }
             else
             {
                 optionList.Add(new Option(_setVolumeText, () => isSetVolumeSelected = true));
-                optionList.Add(new Option(_backToLobbyText, () => isBackToLobbySelected = true));
-                optionList.Add(new Option(_exitGameText, () => isExitGameSelected = true));   
+                optionList.Add(new Option(_backToLobbyText, () => { CanvasStorage.SingletonInstance.HidePoseCanvas(); LobbyState.IsBackingToLobby = true; }));
+                optionList.Add(new Option(_exitGameText, () => { BattleData.Save(); Application.Quit(); }));   
             }
             index = 0;
             isPushed = true;
             isSetVolumeSelected = false;
-            isBackToLobbySelected = false;
             isSetSeedSelected = false;
-            isExitGameSelected = false;
             ChangeTargetText();
         }
 

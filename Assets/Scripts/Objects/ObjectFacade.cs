@@ -30,6 +30,11 @@ namespace Assets.Scripts.Objects
             await ObjectCreator.SingletonInstance.CreateLobbyObjects();
         }
 
+        public static async UniTask CreateClearObjects()
+        {
+            await ObjectCreator.SingletonInstance.CreateClearObjects();
+        }
+
         public static bool IsStartBattleEnemyLiving()
         {
             return ObjectStorage.IsStartBattleEnemyLiving;

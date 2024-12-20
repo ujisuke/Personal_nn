@@ -56,17 +56,15 @@ namespace Assets.Scripts.UI
                 index = math.max(index - 1, 0);
                 ChangeTargetText();
             }
+            else if(index == 0)
+                AdjustInputNumber();
             else if (Input.GetKey(KeyCode.Return))
             {
-                if(index == 0)
-                    return;
                 BattleData.ReplaceSeed(inputSeed);
                 SEPlayer.SingletonInstance.PlaySelect(audioSource);
                 isPushed = true;
                 isReturnSelected = true;
             }
-            else if(index == 0)
-                AdjustInputNumber();
         }
 
         private void ChangeTargetText()
@@ -115,7 +113,7 @@ namespace Assets.Scripts.UI
             ChangeTargetText();
         }
 
-        private bool IsInputtingSeed()
+        private static bool IsInputtingSeed()
         {
             return Input.GetKey(KeyCode.Alpha0) || Input.GetKey(KeyCode.Alpha1) || Input.GetKey(KeyCode.Alpha2) || Input.GetKey(KeyCode.Alpha3) || Input.GetKey(KeyCode.Alpha4) || Input.GetKey(KeyCode.Alpha5) || Input.GetKey(KeyCode.Alpha6) || Input.GetKey(KeyCode.Alpha7) || Input.GetKey(KeyCode.Alpha8) || Input.GetKey(KeyCode.Alpha9) || Input.GetKey(KeyCode.Backspace);
         }

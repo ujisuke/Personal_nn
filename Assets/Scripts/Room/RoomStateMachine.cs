@@ -9,7 +9,7 @@ namespace Assets.Scripts.Room
         private IRoomState currentState;
         public IRoomState CurrentState => currentState;
 
-        private void Awake()
+        private void Start()
         {
             currentState = new TitleRoomState();
             currentState.Enter(this);

@@ -2,9 +2,7 @@ using Assets.Scripts.Battle;
 using Assets.Scripts.Objects;
 using Assets.Scripts.Sounds;
 using Assets.Scripts.Stage;
-using Assets.Scripts.UI;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Scripts.Room
 {
@@ -16,7 +14,7 @@ namespace Assets.Scripts.Room
         public async UniTask Enter(RoomStateMachine roomStateMachine)
         {
             this.roomStateMachine = roomStateMachine;
-            await StageFacade.CreateBattleStage();
+            await StageCreator.SingletonInstance.CreateBattleStage();
             await ObjectFacade.CreateBattleObjects();
             BGMPlayer.SingletonInstance.PlayBattleRoom();
             isSet = true;
@@ -30,14 +28,16 @@ namespace Assets.Scripts.Room
                 await roomStateMachine.TransitionTo(new BattleRoomState());
             else if (!ObjectFacade.IsEnemyLiving())
             {
-                BattleData.AddStageCount();
-                await roomStateMachine.TransitionTo(new BattleRoomState());
+                if(BattleData.IsClearedNow())
+                    await roomStateMachine.TransitionTo(new ClearRoomState());
+                else
+                {
+                    BattleData.AddStageCount();
+                    await roomStateMachine.TransitionTo(new BattleRoomState());
+                }
             }
-            else if(PoseBackerToLobby.IsBackingToLobby)
-            {
-                PoseBackerToLobby.IsBackingToLobby = false;
+            else if(LobbyState.IsBackingToLobby)
                 await roomStateMachine.TransitionTo(new LobbyState());
-            }
         }
 
         public void Exit()

@@ -16,12 +16,15 @@ namespace Assets.Scripts.Battle
         private static int seed = 0;
         public static int Seed => seed;
         public static int BattleSeed => seed + stageCount;
+        private static readonly int _clearStageCount = 30;
+        private static int clearFlag = 0;
 
         private void Awake()
         {
             stageCount = PlayerPrefs.GetInt("StageCount", 1);
             deathCount = PlayerPrefs.GetInt("DeathCount", 0);
             seed = PlayerPrefs.GetInt("Seed", DateTime.Now.Millisecond);
+            clearFlag = PlayerPrefs.GetInt("ClearFlag", 0);
         }
 
         public static void Save()
@@ -29,6 +32,7 @@ namespace Assets.Scripts.Battle
             PlayerPrefs.SetInt("StageCount", stageCount);
             PlayerPrefs.SetInt("DeathCount", deathCount);
             PlayerPrefs.SetInt("Seed", seed);
+            PlayerPrefs.SetInt("ClearFlag", clearFlag);
         }
 
         public static void AddStageCount()
@@ -51,6 +55,21 @@ namespace Assets.Scripts.Battle
         public static void ReplaceSeed(int inputSeed)
         {
             seed = inputSeed;
+        }
+
+        public static void Clear()
+        {
+            clearFlag = 1;
+        }
+
+        public static bool IsClearedNow()
+        {
+            return stageCount == _clearStageCount;
+        }
+
+        public static bool IsClearedBefore()
+        {
+            return clearFlag == 1;
         }
     }
 }
