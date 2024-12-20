@@ -48,10 +48,18 @@ namespace Assets.Scripts.Player
         public void TakeDamage(int damage)
         {
             if(isInvincible) return;
+            HitStop().Forget();
             hP = hP.TakeDamage(damage);
             BecomeInvincible().SuppressCancellationThrow().Forget();
             PlayerHPBar.SingletonInstance.TakeDamage(hP.CurrentHP);
             SEPlayer.SingletonInstance.PlayTakeDamage(audioSource);
+        }
+
+        public static async UniTask HitStop()
+        {
+            Time.timeScale = 0.2f;
+            await UniTask.Delay(TimeSpan.FromSeconds(0.01f));
+            Time.timeScale = 1f;
         }
 
         public async UniTask BecomeInvincible()
@@ -112,6 +120,7 @@ namespace Assets.Scripts.Player
         public void DamageTo(EnemyMain enemy)
         {
             enemy.TakeDamage(_playerParameter.AttackPower);
+            HitStop().Forget();
         }
 
         public bool CanUseEnergy(int consumption)
