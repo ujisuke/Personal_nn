@@ -2974,7 +2974,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3044\u3069\u3046:AWSD\n\u3053\u3046\u3052\u304D:Enter\n\u30B8\u30E3\u30F3\u30D7:Space\n\n\u30DD\u30FC\u30BA:ESC\n\u3051\u3063\u3066\u3044:Enter"
+  m_Text: "\u3044\u3069\u3046:WASD\n\u3053\u3046\u3052\u304D:Enter\n\u30B8\u30E3\u30F3\u30D7:Space\n\n\u30DD\u30FC\u30BA:ESC\n\u3051\u3063\u3066\u3044:Enter"
 --- !u!222 &1068851789
 CanvasRenderer:
   m_ObjectHideFlags: 0
