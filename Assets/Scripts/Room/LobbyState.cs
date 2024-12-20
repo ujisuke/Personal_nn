@@ -10,13 +10,15 @@ namespace Assets.Scripts.Room
     {
         private RoomStateMachine roomStateMachine;
         private bool isSet = false;
+        public static bool IsBackingToLobby = false;
 
         public async UniTask Enter(RoomStateMachine roomStateMachine)
         {
             this.roomStateMachine = roomStateMachine;
+            IsBackingToLobby = false;
             PoseMain.IsInLobby = true;
-            CanvasStorage.SingletonInstance.ShowCanvases();
-            await StageFacade.CreateLobbyStage();
+            CanvasStorage.SingletonInstance.ActivateCanvases();
+            await StageCreator.SingletonInstance.CreateLobbyStage();
             await ObjectFacade.CreateLobbyObjects();
             ObjectStorage.IsStartBattleEnemyLiving = true;
             ObjectStorage.IsSetGameEnemyLiving = true;

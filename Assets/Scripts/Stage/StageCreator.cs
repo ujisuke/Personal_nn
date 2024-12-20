@@ -29,7 +29,7 @@ namespace Assets.Scripts.Stage
             SetLobbyStageMatrix();
             await SetAllTiles();
         }
-
+        
         private static void SetLobbyStageMatrix()
         {
             TileImZs = new int[_StageSide, _StageSide]
@@ -41,6 +41,27 @@ namespace Assets.Scripts.Stage
                 {3, 1, 1, 1, 1, 1, 1, 1},
                 {2, 1, 1, 1, 1, 1, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1}
+            };
+        }
+
+        public async UniTask CreateClearStage()
+        {
+            SetClearStageMatrix();
+            await SetAllTiles();
+        }
+
+        private static void SetClearStageMatrix()
+        {
+            TileImZs = new int[_StageSide, _StageSide]
+            {
+                {1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1}
             };
         }

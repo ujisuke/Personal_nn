@@ -6,24 +6,25 @@ namespace Assets.Scripts.Room
     public class TitleRoomState : IRoomState
     {
         private RoomStateMachine roomStateMachine;
+        private bool isSet = false;
 
         public async UniTask Enter(RoomStateMachine roomStateMachine)
         {
+            isSet = false;
             this.roomStateMachine = roomStateMachine;
-            await UniTask.WaitUntil(() => CanvasStorage.SingletonInstance != null);
-            CanvasStorage.SingletonInstance.IsInTitleRoom = true;
-            TitleDisplay.SingletonInstance.Display();
+            await TitleDisplay.Display();
+            isSet = true;
         }
 
         public async void FixedUpdate()
         {
-            if(!TitleDisplay.SingletonInstance.IsDisplaying)
+            if(isSet)
                 await roomStateMachine.TransitionTo(new LobbyState());
         }
 
         public void Exit()
         {
-            CanvasStorage.SingletonInstance.IsInTitleRoom = false;
+
         }
     }
 }

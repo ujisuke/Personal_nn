@@ -18,7 +18,7 @@ namespace Assets.Scripts.Objects
             if (shadowPrefab == null) return;
             Vector3 shadowImPos3 = ObjectMove.ConvertToImPos3FromRePos3(transform.position);
             (int i, int j) objectTileIndex = ObjectMove.ConvertToTileIndexFromRePos3(transform.position);
-            shadowImPos3.z = StageFacade.TileImZs[objectTileIndex.i, objectTileIndex.j] + 1f;
+            shadowImPos3.z = StageCreator.TileImZs[objectTileIndex.i, objectTileIndex.j] + 1f;
             shadowPrefab.transform.position = ObjectMove.ConvertToRePos3FromImPos3(shadowImPos3);
             shadowSpriteRenderer.sortingOrder = ObjectMove.CalculateSortingOrderFromRePos3(shadowPrefab.transform.position);
             shadowPrefab.transform.position = new Vector3(shadowPrefab.transform.position.x, shadowPrefab.transform.position.y, transform.position.z - 0.1f);

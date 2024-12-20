@@ -16,12 +16,8 @@ namespace Assets.Scripts.UI
         {
             if (poseMain.IsSetVolumeSelected)
                 poseStateMachine.TransitionTo(new PoseVolumeSetterState());
-            else if (poseMain.IsBackToLobbySelected)
-                poseStateMachine.TransitionTo(new PoseBackerToLobbyState());
             else if (poseMain.IsSetSeedSelected)
                 poseStateMachine.TransitionTo(new PoseSeedSetterState());
-            else if (poseMain.IsExitGameSelected)
-                poseStateMachine.TransitionTo(new PoseGameExiterState());
         }
 
         public void Exit()
