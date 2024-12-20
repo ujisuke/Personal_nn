@@ -130,15 +130,15 @@ namespace Assets.Scripts.Objects
         {
             Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1f) * StageCreator._TileHeight + StageCreator._YOffset);
             Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageCreator._TileHeight), newRePos2.x + 2f * (newRePos2.y + StageCreator._TileHeight), rePos3.z);
-            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
-            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
+            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
+            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
             return newImPos3;
         }
 
         private static (int i, int j) ConvertToTileIndexFromImPos3(Vector3 imPos3)
         {
-            imPos3.x = Mathf.Clamp(imPos3.x, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
-            imPos3.y = Mathf.Clamp(imPos3.y, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
+            imPos3.x = Mathf.Clamp(imPos3.x, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
+            imPos3.y = Mathf.Clamp(imPos3.y, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
             return (StageCreator._StageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._StageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 

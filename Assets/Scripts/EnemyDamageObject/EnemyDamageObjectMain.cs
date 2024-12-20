@@ -47,7 +47,6 @@ namespace Assets.Scripts.EnemyDamageObject
         {
             Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x * 0.3f, 0f, 0f);
             Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x * 0.3f, transform.localScale.y * StageCreator._TileHeight, transform.localScale.y);
-            Debug.Log(ObjectMove.ConvertToImPos3FromRePos3(minRePos3) + " " + ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
 
