@@ -22,6 +22,7 @@ namespace Assets.Scripts.Player
         private bool isInvincible = false;
         CancellationTokenSource cancellationTokenSource = null;
         private PlayerAttack playerAttack;
+        private PlayerAttackEffect playerAttackEffect;
         private AudioSource audioSource;
 
         public void Initialize(PlayerParameter playerParameter)
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Player
             PlayerHPBar.SingletonInstance.ResetValue();
             PlayerEnergyBar.SingletonInstance.ResetValue();
             PlayerAvailableEnergyBar.SingletonInstance.ResetValue();
+            playerAttackEffect = GetComponentInChildren<PlayerAttackEffect>();
             audioSource = GetComponent<AudioSource>();
             ChargeEnergy().Forget();
         }
@@ -67,10 +69,15 @@ namespace Assets.Scripts.Player
 
         public (Vector3 minImPos3, Vector3 maxImPos3) GetImPos3s()
         {
-            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x / 4f, 0f, 0f);
-            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x / 4f, transform.localScale.y, transform.localScale.y / StageCreator._TileHeight);
+            Vector3 minRePos3 = transform.position - new Vector3(transform.localScale.x * 0.25f, 0f, 0f);
+            Vector3 maxRePos3 = transform.position + new Vector3(transform.localScale.x * 0.25f, transform.localScale.y * 0.6f, transform.localScale.y * 0.6f / StageCreator._TileHeight);
             return (ObjectMove.ConvertToImPos3FromRePos3(minRePos3), ObjectMove.ConvertToImPos3FromRePos3(maxRePos3));
         }
+
+        public (Vector3 minImPos3, Vector3 maxImPos3) GetAttackEffectImPos3s()
+        {
+            return playerAttackEffect.GetImPos3s();
+        } 
         
         public void SetCleaned()
         {

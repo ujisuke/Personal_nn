@@ -441,6 +441,7 @@ GameObject:
   - component: {fileID: 1075749003448672036}
   - component: {fileID: 3851158430706194908}
   - component: {fileID: 3637139415288190434}
+  - component: {fileID: 4669220051905174184}
   m_Layer: 0
   m_Name: AttackEffectPrefab
   m_TagString: Untagged
@@ -457,7 +458,7 @@ Transform:
   m_GameObject: {fileID: 8374274938552449791}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -550,5 +551,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47306476ea3c201408dd7d55216b1b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4669220051905174184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374274938552449791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22789807482d90d448703cf60f945c38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
