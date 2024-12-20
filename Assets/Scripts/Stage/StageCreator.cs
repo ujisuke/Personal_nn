@@ -195,7 +195,8 @@ namespace Assets.Scripts.Stage
                     for(int J = 0; J < w; J++)
                         TileImZs[stageAreaPointList[i].startI + I, stageAreaPointList[i].startJ + J] = _stageArea[I, J] + offsetZ;
                 
-                if(clossPointList.Count < i + 1) break;
+                if(clossPointList.Count < i + 1)
+                    break;
                 for(int I = clossPointList[i].startI; I < clossPointList[i].endI + 1; I++)
                     for(int J = clossPointList[i].startJ; J < clossPointList[i].endJ + 1; J++)
                         TileImZs[I, J] = _stageArea[0, 0] + offsetZ;
@@ -210,7 +211,8 @@ namespace Assets.Scripts.Stage
                 for(int m = 0; m < _StageSide; m++)
                 {
                     (int i, int j) = (_StageSide - 1 - m, _StageSide - 1 - n + m);
-                    if(i >= _StageSide || i < 0 || j >= _StageSide || j < 0) continue;
+                    if(i >= _StageSide || i < 0 || j >= _StageSide || j < 0) 
+                        continue;
                     int tileHeight = TileImZs[i, j];
                     Vector3Int tilePosition = new((_StageSide - 1) / 2 - i, (_StageSide - 1) / 2 - j, 0);
                     _tileData.SetTile(tileHeight, tilePosition, stageTilemapList[_StageSide * 2 - 2 - n]);
