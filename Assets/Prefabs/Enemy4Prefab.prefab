@@ -18,10 +18,11 @@ GameObject:
   - component: {fileID: 1647686956614318996}
   - component: {fileID: 2525615898051364751}
   - component: {fileID: 7730141918932099894}
-  - component: {fileID: 596375153673371645}
   - component: {fileID: 5905260140551697866}
   - component: {fileID: 8059059644671500307}
   - component: {fileID: 8228867168267999122}
+  - component: {fileID: -8107159493343493579}
+  - component: {fileID: 8144783479494402965}
   m_Layer: 0
   m_Name: Enemy4Prefab
   m_TagString: Untagged
@@ -208,18 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0a2fc88d854d645b0dceeedc9429c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &596375153673371645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 835981607064012740}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 981ab51e2dbde574cbb893cdcb0b7c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5905260140551697866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +330,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8107159493343493579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835981607064012740}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc267ac1c1f44646bdc0cb6084fe9c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8144783479494402965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835981607064012740}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1899892b7be6c5849b510099ce945850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8056333855467172348
 GameObject:
   m_ObjectHideFlags: 0

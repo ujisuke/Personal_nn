@@ -1,4 +1,5 @@
 using Assets.Scripts.Objects;
+using UnityEngine;
 
 namespace Assets.Scripts.Enemy4
 {
@@ -17,7 +18,12 @@ namespace Assets.Scripts.Enemy4
         public void FixedUpdate()
         {
             if(enemyMain.IsReady)
-                objectStateMachine.TransitionTo(new Enemy4MoveState());
+            {
+                if(Random.Range(0, 2) == 0)
+                    objectStateMachine.TransitionTo(new Enemy4HorizontalMoveState());
+                else
+                    objectStateMachine.TransitionTo(new Enemy4VerticalMoveState());
+            }
         }
 
         public void Exit()

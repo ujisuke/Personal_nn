@@ -217,7 +217,7 @@ namespace Assets.Scripts.Objects
             return candidateTargetPos3List[0];
         }
 
-        public static List<List<Vector3>> GetAllRePos3ReachableWithoutJumping(Vector3 rePos3)
+        public static List<List<Vector3>> GetAllReachableRePos3WithoutJumping(Vector3 rePos3)
         {
             List<List<Vector3>> rePos3ListList = new() { new List<Vector3> { rePos3 } };
             (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
@@ -275,33 +275,36 @@ namespace Assets.Scripts.Objects
             return isVisited;
         }
 
-        public static List<Vector3> GetAllRePos3Cross(Vector3 rePos3)
+        public static List<Vector3> GetAllCrossRePos3(Vector3 rePos3)
         {
             List<Vector3> rePos3List = new();
             (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
             for(int i = 0; i < StageCreator._StageSide; i++)
                 rePos3List.Add(ConvertToRePos3FromTileIndex((i, pivotTileIndex.j)));
             for(int j = 0; j < StageCreator._StageSide; j++)
+            {
+                if(j == pivotTileIndex.j)
+                    continue;
+                rePos3List.Add(ConvertToRePos3FromTileIndex((pivotTileIndex.i, j)));
+            }
+            return rePos3List;
+        }
+
+        public static List<Vector3> GetAllHorizontalRePos3(Vector3 rePos3)
+        {
+            List<Vector3> rePos3List = new();
+            (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
+            for(int j = 0; j < StageCreator._StageSide; j++)
                 rePos3List.Add(ConvertToRePos3FromTileIndex((pivotTileIndex.i, j)));
             return rePos3List;
         }
 
-        public static List<Vector3> GetAllRePos3DiagonalCross(Vector3 rePos3)
+        public static List<Vector3> GetAllVerticalRePos3(Vector3 rePos3)
         {
             List<Vector3> rePos3List = new();
             (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
             for(int i = 0; i < StageCreator._StageSide; i++)
-            {
-                int j = pivotTileIndex.j + i - pivotTileIndex.i;
-                if(j < 0 || StageCreator._StageSide <= j) continue;
-                rePos3List.Add(ConvertToRePos3FromTileIndex((i, j)));
-            }
-            for(int i = 0; i < StageCreator._StageSide; i++)
-            {
-                int j = pivotTileIndex.j - i + pivotTileIndex.i;
-                if(j < 0 || StageCreator._StageSide <= j) continue;
-                rePos3List.Add(ConvertToRePos3FromTileIndex((i, j)));
-            }
+                rePos3List.Add(ConvertToRePos3FromTileIndex((i, pivotTileIndex.j)));
             return rePos3List;
         }
 

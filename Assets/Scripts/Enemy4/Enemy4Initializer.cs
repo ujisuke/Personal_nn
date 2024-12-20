@@ -11,7 +11,8 @@ namespace Assets.Scripts.Enemy4
         {
             GetComponent<ObjectStateMachine>().Initialize(new Enemy4ReadyState());
             GetComponent<EnemyMain>().Initialize(_enemy4Parameter);
-            GetComponent<Enemy4Attack>().Initialize(_enemy4Parameter);
+            GetComponent<Enemy4HorizontalAttack>().Initialize(_enemy4Parameter);
+            GetComponent<Enemy4VerticalAttack>().Initialize(_enemy4Parameter);
             GetComponent<Enemy4Move>().Initialize(_enemy4Parameter);
             GetComponent<Enemy4Animation>().Initialize(_enemy4Parameter);
         }

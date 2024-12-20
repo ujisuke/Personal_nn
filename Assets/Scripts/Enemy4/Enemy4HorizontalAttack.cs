@@ -9,7 +9,7 @@ using Assets.Scripts.Sounds;
 
 namespace Assets.Scripts.Enemy4
 {
-    public class Enemy4Attack : MonoBehaviour
+    public class Enemy4HorizontalAttack : MonoBehaviour
     {
         private Enemy4Parameter _enemy4Parameter;
         private ObjectMove objectMove;
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Enemy4
 
         private async UniTask Attack()
         {
-            List<Vector3> objectRePos3List = ObjectMove.GetAllCrossRePos3(transform.position);
+            List<Vector3> objectRePos3List = ObjectMove.GetAllHorizontalRePos3(transform.position);
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < objectRePos3List.Count; i++)
                 ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[i], _enemy4Parameter.EnemyDamageObjectParameter, enemy);
