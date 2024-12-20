@@ -65,7 +65,7 @@ namespace Assets.Scripts.UI
                 isPushed = true;
                 isReturnSelected = true;
             }
-            else
+            else if(index == 0)
                 AdjustInputNumber();
         }
 
