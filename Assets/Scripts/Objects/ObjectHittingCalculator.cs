@@ -17,13 +17,13 @@ namespace Assets.Scripts.Objects
         {
             if(player == null || !player.IsDamaging() || enemyGroupList.Count == 0)
                 return;
-            (Vector3 playerMinImPos3, Vector3 playerMaxImPos3) = player.GetImPos3s();
+            (Vector3 playerAttackEffectMinImPos3, Vector3 playerAttackEffectMaxImPos3) = player.GetAttackEffectImPos3s();
             for(int i = 0; i < enemyGroupList.Count; i++)
             {
                 (Vector3 enemyMinImPos3, Vector3 enemyMaxImPos3) = enemyGroupList[i].Enemy.GetImPos3s();
-                if(playerMaxImPos3.x < enemyMinImPos3.x || playerMinImPos3.x > enemyMaxImPos3.x
-                || playerMaxImPos3.y < enemyMinImPos3.y || playerMinImPos3.y > enemyMaxImPos3.y
-                || playerMaxImPos3.z < enemyMinImPos3.z || playerMinImPos3.z > enemyMaxImPos3.z)
+                if(playerAttackEffectMaxImPos3.x < enemyMinImPos3.x || playerAttackEffectMinImPos3.x > enemyMaxImPos3.x
+                || playerAttackEffectMaxImPos3.y < enemyMinImPos3.y || playerAttackEffectMinImPos3.y > enemyMaxImPos3.y
+                || playerAttackEffectMaxImPos3.z < enemyMinImPos3.z || playerAttackEffectMinImPos3.z > enemyMaxImPos3.z)
                     continue;
                 player.DamageTo(enemyGroupList[i].Enemy);
             }
