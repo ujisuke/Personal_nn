@@ -36,11 +36,12 @@ namespace Assets.Scripts.Enemy3
 
         private async UniTask Attack()
         {
-            List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllRePos3ReachableWithoutJumping(transform.position);
+            List<List<Vector3>> objectRePos3ListList = ObjectMove.GetAllReachableRePos3WithoutJumping(transform.position);
             EnemyMain enemy = GetComponent<EnemyMain>();
             for(int i = 0; i < objectRePos3ListList.Count; i++)
             {
                 List<Vector3> objectRePos3List = objectRePos3ListList[i];
+                if(objectRePos3List.Count == 0) continue;
                 for(int j = 0; j < objectRePos3List.Count; j++)
                     ObjectCreator.SingletonInstance.InstantiateEnemyDamageObject(objectRePos3List[j], _enemy3Parameter.EnemyDamageObjectParameter, enemy);
                 SEPlayer.SingletonInstance.PlayInstantiateEnemy3DamageObject(audioSource);

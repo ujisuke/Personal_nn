@@ -38,9 +38,9 @@ namespace Assets.Scripts.UI
             for(int i = 0; i < 3; i++)
             {
                 image.enabled = false;
-                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6));
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6), ignoreTimeScale: true);
                 image.enabled = true;
-                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6));
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6), ignoreTimeScale: true);
             }
         }
 

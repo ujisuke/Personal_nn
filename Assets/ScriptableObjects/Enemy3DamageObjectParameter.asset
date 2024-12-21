@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Enemy3DamageObjectParameter
   m_EditorClassIdentifier: 
   _attackPower: 1
-  _readyTime: 0.6
-  _damagingTime: 0.3
+  _readyTime: 0
+  _damagingTime: 0.2
   _animatorController: {fileID: 9100000, guid: 290a4eeb2f250524988173a60a83a903, type: 2}

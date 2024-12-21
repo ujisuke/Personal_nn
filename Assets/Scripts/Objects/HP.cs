@@ -34,5 +34,10 @@ namespace Assets.Scripts.Objects
         {
             return _currentHP <= 0f;
         }
+
+        public bool IsFatalDamage(int damage)
+        {
+            return _currentHP - damage <= 0f;
+        }
     }
 }

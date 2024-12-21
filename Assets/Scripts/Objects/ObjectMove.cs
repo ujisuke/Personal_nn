@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.ScriptableObjects;
 using Unity.Mathematics;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using Assets.Scripts.Effect;
 
 
 namespace Assets.Scripts.Objects
@@ -26,6 +29,8 @@ namespace Assets.Scripts.Objects
         private bool isTryingToJump = false;
         private int destinationTileImZ = 0;
         private bool isDead = false;
+        private Vector3 knockBackedImPos3 = new();
+        private bool isKnockBacked = false;
 
         public void Initialize(ObjectParameter objectParameter, Vector3 objectRePos3)
         {
@@ -102,6 +107,10 @@ namespace Assets.Scripts.Objects
 
         private Vector3 GetDestinationImPos3()
         {
+            if(isKnockBacked)
+            {
+                return Vector3.Lerp(ConvertToImPos3FromRePos3(transform.position), knockBackedImPos3, 0.5f);
+            }
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(transform.position);
             
             float weight = _objectParameter.MoveSpeed * Time.deltaTime;
@@ -130,15 +139,15 @@ namespace Assets.Scripts.Objects
         {
             Vector2 newRePos2 = new(rePos3.x, rePos3.y - (rePos3.z - 1f) * StageCreator._TileHeight + StageCreator._YOffset);
             Vector3 newImPos3 = new(newRePos2.x - 2f * (newRePos2.y + StageCreator._TileHeight), newRePos2.x + 2f * (newRePos2.y + StageCreator._TileHeight), rePos3.z);
-            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
-            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
+            newImPos3.x = Mathf.Clamp(newImPos3.x, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
+            newImPos3.y = Mathf.Clamp(newImPos3.y, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
             return newImPos3;
         }
 
         private static (int i, int j) ConvertToTileIndexFromImPos3(Vector3 imPos3)
         {
-            imPos3.x = Mathf.Clamp(imPos3.x, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
-            imPos3.y = Mathf.Clamp(imPos3.y, -StageCreator._StageSide / 2f + 0.01f, StageCreator._StageSide / 2f - 0.01f);
+            imPos3.x = Mathf.Clamp(imPos3.x, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
+            imPos3.y = Mathf.Clamp(imPos3.y, -StageCreator._StageSide / 2f + 0.2f, StageCreator._StageSide / 2f - 0.2f);
             return (StageCreator._StageSide / 2 - (int)Math.Floor(imPos3.y) - 1, StageCreator._StageSide / 2 + (int)Math.Floor(imPos3.x));
         }
 
@@ -217,7 +226,7 @@ namespace Assets.Scripts.Objects
             return candidateTargetPos3List[0];
         }
 
-        public static List<List<Vector3>> GetAllRePos3ReachableWithoutJumping(Vector3 rePos3)
+        public static List<List<Vector3>> GetAllReachableRePos3WithoutJumping(Vector3 rePos3)
         {
             List<List<Vector3>> rePos3ListList = new() { new List<Vector3> { rePos3 } };
             (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
@@ -275,33 +284,36 @@ namespace Assets.Scripts.Objects
             return isVisited;
         }
 
-        public static List<Vector3> GetAllRePos3Cross(Vector3 rePos3)
+        public static List<Vector3> GetAllCrossRePos3(Vector3 rePos3)
         {
             List<Vector3> rePos3List = new();
             (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
             for(int i = 0; i < StageCreator._StageSide; i++)
                 rePos3List.Add(ConvertToRePos3FromTileIndex((i, pivotTileIndex.j)));
             for(int j = 0; j < StageCreator._StageSide; j++)
+            {
+                if(j == pivotTileIndex.j)
+                    continue;
+                rePos3List.Add(ConvertToRePos3FromTileIndex((pivotTileIndex.i, j)));
+            }
+            return rePos3List;
+        }
+
+        public static List<Vector3> GetAllHorizontalRePos3(Vector3 rePos3)
+        {
+            List<Vector3> rePos3List = new();
+            (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
+            for(int j = 0; j < StageCreator._StageSide; j++)
                 rePos3List.Add(ConvertToRePos3FromTileIndex((pivotTileIndex.i, j)));
             return rePos3List;
         }
 
-        public static List<Vector3> GetAllRePos3DiagonalCross(Vector3 rePos3)
+        public static List<Vector3> GetAllVerticalRePos3(Vector3 rePos3)
         {
             List<Vector3> rePos3List = new();
             (int i, int j) pivotTileIndex = ConvertToTileIndexFromRePos3(rePos3);
             for(int i = 0; i < StageCreator._StageSide; i++)
-            {
-                int j = pivotTileIndex.j + i - pivotTileIndex.i;
-                if(j < 0 || StageCreator._StageSide <= j) continue;
-                rePos3List.Add(ConvertToRePos3FromTileIndex((i, j)));
-            }
-            for(int i = 0; i < StageCreator._StageSide; i++)
-            {
-                int j = pivotTileIndex.j - i + pivotTileIndex.i;
-                if(j < 0 || StageCreator._StageSide <= j) continue;
-                rePos3List.Add(ConvertToRePos3FromTileIndex((i, j)));
-            }
+                rePos3List.Add(ConvertToRePos3FromTileIndex((i, pivotTileIndex.j)));
             return rePos3List;
         }
 
@@ -399,6 +411,21 @@ namespace Assets.Scripts.Objects
         {
             (int i, int j) tileIndex = ConvertToTileIndexFromRePos3(rePos3);
             return tileIndex.i + tileIndex.j;
+        }
+
+        public async UniTask KnockBack()
+        {
+            Vector3 imDirection3 = CalculateImDirection3BetWeenTwoRePos3(ObjectStorage.GetPlayerRePos3(), transform.position).normalized;
+            knockBackedImPos3 = ConvertToImPos3FromRePos3(transform.position) + imDirection3 * 3f;
+            isKnockBacked = true;
+
+            for(int i = 1; i <= 10; i++)
+            {
+                FixedUpdate();
+                await UniTask.Delay(TimeSpan.FromSeconds(ViewEffect.SingletonInstance.EnemyTakeDamageHitStopTime * 0.1f));
+            }
+
+            isKnockBacked = false;
         }
     }   
 }
