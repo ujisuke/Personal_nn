@@ -18,7 +18,6 @@ MonoBehaviour:
   _jumpTime: 0
   _attackPower: 0
   _maxHP: 1
-  _invincibleTime: 0
+  _invincibleTime: 0.5
   _deadTime: 0.3
   _enemyDamageObjectParameter: {fileID: 0}
-  _uIEnemyList: 2

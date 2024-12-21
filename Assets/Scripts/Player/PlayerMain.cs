@@ -7,6 +7,7 @@ using System.Threading;
 using Assets.Scripts.Stage;
 using Assets.Scripts.UI;
 using Assets.Scripts.Sounds;
+using Assets.Scripts.Effect;
 
 namespace Assets.Scripts.Player
 {
@@ -23,6 +24,8 @@ namespace Assets.Scripts.Player
         CancellationTokenSource cancellationTokenSource = null;
         private PlayerAttack playerAttack;
         private PlayerAttackEffect playerAttackEffect;
+        private SpriteRenderer spriteRenderer;
+        private Color32 playerColor;
         private AudioSource audioSource;
 
         public void Initialize(PlayerParameter playerParameter)
@@ -36,7 +39,10 @@ namespace Assets.Scripts.Player
             PlayerEnergyBar.SingletonInstance.ResetValue();
             PlayerAvailableEnergyBar.SingletonInstance.ResetValue();
             playerAttackEffect = GetComponentInChildren<PlayerAttackEffect>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            playerColor = spriteRenderer.color;
             audioSource = GetComponent<AudioSource>();
+            cancellationTokenSource = new();
             ChargeEnergy().Forget();
         }
 
@@ -45,29 +51,43 @@ namespace Assets.Scripts.Player
             isReady = true;
         }
 
-        public void TakeDamage(int damage)
+        public async void TakeDamage(int damage)
         {
             if(isInvincible) return;
-            HitStop().Forget();
-            hP = hP.TakeDamage(damage);
             BecomeInvincible().SuppressCancellationThrow().Forget();
-            PlayerHPBar.SingletonInstance.TakeDamage(hP.CurrentHP);
             SEPlayer.SingletonInstance.PlayTakeDamage(audioSource);
-        }
-
-        public static async UniTask HitStop()
-        {
-            Time.timeScale = 0.2f;
-            await UniTask.Delay(TimeSpan.FromSeconds(0.01f));
-            Time.timeScale = 1f;
+            ViewEffect.SingletonInstance.PlayerTakeDamage();
+            if(hP.IsFatalDamage(damage))
+            {
+                PlayerHPBar.SingletonInstance.TakeDamage(0);
+                spriteRenderer.color = new Color32(0, 0, 0, playerColor.a);
+                await ViewEffect.SingletonInstance.PlayerTakeFatalDamage(cancellationTokenSource.Token);
+                spriteRenderer.color = playerColor;
+            }
+            else
+                Flash().SuppressCancellationThrow().Forget();
+            hP = hP.TakeDamage(damage);
+            PlayerHPBar.SingletonInstance.TakeDamage(hP.CurrentHP);
         }
 
         public async UniTask BecomeInvincible()
         {
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
             isInvincible = true;
-            cancellationTokenSource = new();
-            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime), cancellationToken : cancellationTokenSource.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime), cancellationToken: cancellationTokenSource.Token);
             isInvincible = false;
+        }
+
+        private async UniTask Flash()
+        {
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
+            for(int i = 0; i < 3; i++)
+            {
+                spriteRenderer.color = new Color32(playerColor.r, playerColor.g, playerColor.b, 0);
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6f), cancellationToken: cancellationTokenSource.Token);
+                spriteRenderer.color = playerColor;
+                await UniTask.Delay(TimeSpan.FromSeconds(_playerParameter.InvincibleTime / 6f), cancellationToken: cancellationTokenSource.Token);
+            }
         }
         
         public bool IsDead()
@@ -120,7 +140,6 @@ namespace Assets.Scripts.Player
         public void DamageTo(EnemyMain enemy)
         {
             enemy.TakeDamage(_playerParameter.AttackPower);
-            HitStop().Forget();
         }
 
         public bool CanUseEnergy(int consumption)

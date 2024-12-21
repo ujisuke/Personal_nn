@@ -5,6 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using System;
 using Assets.Scripts.Sounds;
+using Assets.Scripts.Effect;
 
 namespace Assets.Scripts.Objects
 {
@@ -17,6 +18,9 @@ namespace Assets.Scripts.Objects
         private bool isCleaned = false;
         public bool IsCleaned => isCleaned;
         private bool isInvincible = false;
+        private ObjectMove objectMove;
+        private SpriteRenderer spriteRenderer;
+        private Color32 enemyColor;
         CancellationTokenSource cancellationTokenSource = null;
 
         public void Initialize(ObjectParameter objectParameter)
@@ -24,6 +28,9 @@ namespace Assets.Scripts.Objects
             _objectParameter = objectParameter;
             hP = HP.Initialize(_objectParameter.MaxHP);
             GetComponent<ObjectMove>().Initialize(_objectParameter, transform.position);
+            objectMove = GetComponent<ObjectMove>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            enemyColor = spriteRenderer.color;
             cancellationTokenSource = new();
         }
 
@@ -32,19 +39,40 @@ namespace Assets.Scripts.Objects
             isReady = true;
         }
 
-        public void TakeDamage(int damage)
+        public async void TakeDamage(int damage)
         {
             if(isInvincible) return;
-            hP = hP.TakeDamage(damage);
             BecomeInvincible().SuppressCancellationThrow().Forget();
+            if(hP.IsFatalDamage(damage))
+            {
+                GetComponent<SpriteRenderer>().color = new Color32(0, 0, 0, enemyColor.a);
+                await ViewEffect.SingletonInstance.EnemyTakeFatalDamage(cancellationTokenSource.Token);
+                GetComponent<SpriteRenderer>().color = enemyColor;
+            }
+            else
+                await Flash();
+            objectMove.KnockBack().Forget();
+            hP = hP.TakeDamage(damage);
         }
 
         public async UniTask BecomeInvincible()
         {
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
             isInvincible = true;
-            cancellationTokenSource = new();
-            await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.InvincibleTime), cancellationToken : cancellationTokenSource.Token);
+            await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.InvincibleTime), cancellationToken: cancellationTokenSource.Token);
             isInvincible = false;
+        }
+
+        private async UniTask Flash()
+        {
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
+            for(int i = 0; i < 3; i++)
+            {
+                spriteRenderer.color = new Color32(enemyColor.r, enemyColor.g, enemyColor.b, 0);
+                await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.InvincibleTime / 6f), cancellationToken: cancellationTokenSource.Token);
+                spriteRenderer.color = enemyColor;
+                await UniTask.Delay(TimeSpan.FromSeconds(_objectParameter.InvincibleTime / 6f), cancellationToken: cancellationTokenSource.Token);
+            }
         }
         
         public bool IsDead()

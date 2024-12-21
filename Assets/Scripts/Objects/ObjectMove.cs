@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.ScriptableObjects;
 using Unity.Mathematics;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using Assets.Scripts.Effect;
 
 
 namespace Assets.Scripts.Objects
@@ -26,6 +29,8 @@ namespace Assets.Scripts.Objects
         private bool isTryingToJump = false;
         private int destinationTileImZ = 0;
         private bool isDead = false;
+        private Vector3 knockBackedImPos3 = new();
+        private bool isKnockBacked = false;
 
         public void Initialize(ObjectParameter objectParameter, Vector3 objectRePos3)
         {
@@ -102,6 +107,10 @@ namespace Assets.Scripts.Objects
 
         private Vector3 GetDestinationImPos3()
         {
+            if(isKnockBacked)
+            {
+                return Vector3.Lerp(ConvertToImPos3FromRePos3(transform.position), knockBackedImPos3, 0.5f);
+            }
             Vector3 newImPos3 = ConvertToImPos3FromRePos3(transform.position);
             
             float weight = _objectParameter.MoveSpeed * Time.deltaTime;
@@ -402,6 +411,21 @@ namespace Assets.Scripts.Objects
         {
             (int i, int j) tileIndex = ConvertToTileIndexFromRePos3(rePos3);
             return tileIndex.i + tileIndex.j;
+        }
+
+        public async UniTask KnockBack()
+        {
+            Vector3 imDirection3 = CalculateImDirection3BetWeenTwoRePos3(ObjectStorage.GetPlayerRePos3(), transform.position).normalized;
+            knockBackedImPos3 = ConvertToImPos3FromRePos3(transform.position) + imDirection3 * 3f;
+            isKnockBacked = true;
+
+            for(int i = 1; i <= 10; i++)
+            {
+                FixedUpdate();
+                await UniTask.Delay(TimeSpan.FromSeconds(ViewEffect.SingletonInstance.EnemyTakeDamageHitStopTime * 0.1f));
+            }
+
+            isKnockBacked = false;
         }
     }   
 }

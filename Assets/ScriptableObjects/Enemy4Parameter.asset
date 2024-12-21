@@ -18,7 +18,7 @@ MonoBehaviour:
   _jumpTime: 0
   _attackPower: 0
   _maxHP: 1
-  _invincibleTime: 0
+  _invincibleTime: 0.5
   _deadTime: 0.3
   _enemyDamageObjectParameter: {fileID: 11400000, guid: c0d69286c1314124b91d31e3a84d0525, type: 2}
   _attackCoolDownTime: 0.5
